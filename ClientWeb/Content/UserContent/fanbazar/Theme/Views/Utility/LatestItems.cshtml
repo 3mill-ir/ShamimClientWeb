@@ -1,0 +1,138 @@
+﻿<div class="container">
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="row">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <!-- Tabs -->
+                            <ul class="nav panel-tabs">
+                                <li style="width: 33%;">
+                                    <a href="#tab1" data-toggle="tab">
+                                        <i class="flaticon-computer" data-toggle="tooltip" data-placement="left" title="Tooltip on left"></i>
+                                        <div class="hidden-xs hidden-sm">آخرین عرضه ها</div>
+                                    </a>
+                                </li>
+                                <li class="active" style="width: 34%;">
+                                    <a href="#tab2" data-toggle="tab">
+                                        <i class="flaticon-technology-23"></i>
+                                        <div class="hidden-xs hidden-sm">پر بازدید ترین عرضه ها</div>
+                                    </a>
+                                </li>
+                                <li style="width: 33%;">
+                                    <a href="#tab3" data-toggle="tab">
+                                        <i class="flaticon-interface"></i>
+                                        <div class="hidden-xs hidden-sm">آخرین تقاضاها</div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="tab-content">
+                            <div class="tab-pane animated fadeInUp" id="tab1">
+                                <div class="row">
+                                    @foreach (var item in ViewBag.LatestOffers)
+                                    {
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <div class="listing-post">
+                                                <div class="col-md-4 col-sm-12 col-xs-5 nopadding">
+                                                    <div class="listing-image">
+                                                        <img style="height: 150px;" src="@(!string.IsNullOrEmpty(item.Image) ? ViewBag.PrePath + item.Image : "/Content/DefaultContent/Imgs/No_Image.png")" class="img-responsive" alt="image" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 col-sm-12 col-xs-7">
+                                                    <div class="listing-desc">
+                                                        <h3 class="listing-desc-title" style="max-width: 340px;overflow: hidden;height: 25px;font-size: 18px !important;">
+                                                            <a href="@Url.Action("ItemDetail","Item", new {profile=TempData["UserName"], ID = item.ID,lang=TempData["lang"],Type=ViewBag.Type })">@item.Name</a>
+                                                        </h3>
+                                                        @*<div class="listing-desc-category">
+                                                            <ul>
+                                                                <li><a>تقاضاها</a></li>
+                                                                <li><a>@item.Name</a></li>
+                                                            </ul>
+                                                        </div>*@
+                                                        <span class="listing-price" style="font-size:16px;">تعداد بازدید کننده : <span>@item.NumberOfVisitors</span></span>
+                                                        <span class="listing-desc-date"  style="float:right;">
+                                                            <i class="fa fa-calendar"></i>@ClientWeb.Models.BLL.Tools.SpecialJalaliFormat(item.CreatedDateOnUTC ?? default(DateTime))
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                            <div class="tab-pane active animated fadeInDown" id="tab2">
+                                <div class="row">
+                                    @foreach (var item in ViewBag.PopularItems)
+                                    {
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <div class="listing-post">
+                                                <div class="col-md-4 col-sm-12 col-xs-5 nopadding">
+                                                    <div class="listing-image">
+                                                        <img style="height: 150px;" src="@(!string.IsNullOrEmpty(item.Image) ? ViewBag.PrePath + item.Image : "/Content/DefaultContent/Imgs/No_Image.png")" class="img-responsive" alt="image" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 col-sm-12 col-xs-7">
+                                                    <div class="listing-desc">
+                                                        <h3 class="listing-desc-title" style="max-width: 340px;overflow: hidden;height: 25px;font-size: 18px !important;">
+                                                            <a href="@Url.Action("ItemDetail","Item", new {profile=TempData["UserName"], ID = item.ID,lang=TempData["lang"],Type=ViewBag.Type })">@item.Name</a>
+                                                        </h3>
+                                                        @*<div class="listing-desc-category">
+                                                            <ul>
+                                                                <li><a>تقاضاها</a></li>
+                                                                <li><a>@item.Name</a></li>
+                                                            </ul>
+                                                        </div>*@
+                                                        <span class="listing-price" style="font-size:16px;">تعداد بازدید کننده : <span>@item.NumberOfVisitors</span></span>
+                                                        <span class="listing-desc-date" style="float:right;">
+                                                            <i class="fa fa-calendar"></i>@ClientWeb.Models.BLL.Tools.SpecialJalaliFormat(item.CreatedDateOnUTC ?? default(DateTime))
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                            <div class="tab-pane  animated fadeInLeft" id="tab3">
+                                <div class="row">
+                                    @foreach (var item in ViewBag.LatestDemands)
+                                    {
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <div class="listing-post">
+                                                <div class="col-md-4 col-sm-12 col-xs-5 nopadding">
+                                                    <div class="listing-image">
+                                                        <img style="height: 150px;" src="@(!string.IsNullOrEmpty(item.Image) ? ViewBag.PrePath + item.Image : "/Content/DefaultContent/Imgs/No_Image.png")" class="img-responsive" alt="image" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 col-sm-12 col-xs-7">
+                                                    <div class="listing-desc">
+                                                        <h3 class="listing-desc-title" style="max-width: 340px;overflow: hidden;height: 25px;font-size: 18px !important;">
+                                                            <a href="@Url.Action("ItemDetail","Item", new {profile=TempData["UserName"], ID = item.ID,lang=TempData["lang"],Type=ViewBag.Type })">@item.Name</a>
+                                                        </h3>
+                                                        @*<div class="listing-desc-category">
+                                                            <ul>
+                                                                <li><a>تقاضاها</a></li>
+                                                                <li><a>@item.Name</a></li>
+                                                            </ul>
+                                                        </div>*@
+                                                        <span class="listing-price" style="font-size:16px;">تعداد بازدید کننده : <span>@item.NumberOfVisitors</span></span>
+                                                        <span class="listing-desc-date"  style="float:right;">
+                                                            <i class="fa fa-calendar"></i>@ClientWeb.Models.BLL.Tools.SpecialJalaliFormat(item.CreatedDateOnUTC ?? default(DateTime))
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,50 @@
+﻿
+@using ClientWeb.CustomHelper
+@using ClientWeb.Models.BLL
+@{
+    ViewBag.ImgPath = Tools.ReturnPathPhysicalMode("SliderPath", TempData["UserName"].ToString(), "AdminAddress", "Slider()");
+    SliderManagement SM = new SliderManagement(TempData["UserName"].ToString());
+    var Slides = SM.LoadSlider().Where(u => u.Display == true).OrderBy(u => u.Priority);
+    foreach (var item in Slides)
+    {
+        if (!string.IsNullOrEmpty(item.Title) && item.Title.Count() > 60)
+        {
+            item.Title = item.Title.Substring(0, 60);
+            item.Title = item.Title.Remove(item.Title.LastIndexOf(item.Title.Split(' ').Last())) + " ...";
+        }
+        if (!string.IsNullOrEmpty(item.Description) && item.Description.Count() > 140)
+        {
+            item.Description = item.Description.Substring(0, 140);
+            item.Description = item.Description.Remove(item.Description.LastIndexOf(item.Description.Split(' ').Last())) + " ...";
+        }
+    }
+}
+@{
+    string lang = TempData["lang"].ToString();
+}
+<div class="list-group">
+    <span href="#" class="list-group-item active">
+        @(lang == "FA" ? "اطلاعیه ها" : lang == "EN" ? "Latest events" : lang == "TR" ? "Son olaylar" : "آخر الأحداث")
+        <span class="pull-right" id="slide-submenu">
+        </span>
+    </span>
+    <div style="margin-top:10px;">
+        <!-- BANNER ROTATOR -->
+        <div class="owl-carousel buttons-autohide controlls-over margin-bottom-60 text-center" data-plugin-options='{"singleItem": true, "autoPlay": 4000, "navigation": true, "pagination": false, "transitionStyle":"goDown"}'>
+            @foreach (var item in Slides)
+            {
+                <a href="@item.Link">
+                    @if (string.IsNullOrEmpty(item.Img))
+                    {
+                        <img src="@TempData["WebsiteThemePath"]DefaultContent/Slider/NoImage.jpg" width="270" height="350" alt="" />
+                    }
+                    else
+                    {
+                        <img class="img-responsive" src="@Html.ReturnPathPhysicalMode("SliderPath",TempData["UserName"] as string , "AdminAddress","Slider")@item.Img" width="270" height="350" alt="">
+                    }
+                </a>
+            }
+        </div>
+        <!-- /BANNER ROTATOR -->
+    </div>
+</div>

@@ -1,0 +1,85 @@
+﻿@model PagedList.IPagedList<ClientWeb.Models.DataModels.GalleryModelAdmin>
+@using PagedList.Mvc;
+@using ClientWeb.Models.BLL;
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryajax")
+
+
+@Html.Action("PageTitle", "Utility", new { F_MenuID = 411 })
+
+<section id="projects">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-12 col-sm-12">
+                <div class="row">
+                    <ul class="portfolio-filter text-center" style="direction: rtl;">
+                        @foreach (var item in ViewBag.Folders as List<string>)
+                        {
+                            <li @(item == ViewBag.FolderName ? "class=active" : "")>
+
+                                <a class="btn btn-default @(item == ViewBag.FolderName ? "active" : "")" href="@Url.Action("GalleryItems", "Gallery", new {lang=ViewBag.lang, FolderName = item, profile = TempData["UserName"] })" data-filter="*">
+                                    @item
+                                </a>
+                            </li>
+                        }
+                    </ul><!--/#portfolio-filter-->
+
+                    <div class="portfolio-items isotope" style="position: relative; overflow: hidden;">
+
+                        <div class="portfolio-items isotope" style="position: relative; overflow: hidden; height: 1500px;">
+                            @foreach (var item in Model)
+                            {
+                                <div class="col-xs-6 col-sm-3 col-md-3 portfolio-item branded logos isotope-item" style="float: right;">
+
+                                    <div class="portfolio-wrapper">
+                                        <div class="portfolio-single">
+                                            <div class="portfolio-thumb">
+                                                <img src="@ViewBag.PrePath@item.Path" style="width:261px;height:269px;" class="img-responsive" alt="">
+                                            </div>
+                                            <div class="portfolio-view" style="border-radius: 6px;">
+                                                <ul class="nav nav-pills">
+                                                    <li><a href="@ViewBag.PrePath@item.Path" data-lightbox="example-set"><i class="fa fa-eye"></i></a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="portfolio-info" style="">
+                                            @if (!string.IsNullOrEmpty(item.Text))
+                                            {
+                                                <h2 style="padding: 3px;text-align:center;background:lightgrey;border-radius: 3px;height:65px;">@item.Text</h2>
+                                            }
+                                        </div>
+                                    </div>
+
+                                </div>
+                            }
+                        </div>
+
+                    </div>
+                    <div class="portfolio-pagination">
+                        <ul class="pagination">
+                            @Html.PagedListPager(Model, page => Url.Action("GalleryItems", "Gallery", new { page, FolderName = ViewBag.FolderName, profile = ViewBag.Profile, }))
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            @*<div class="col-md-3 col-sm-4 padding-top">
+                    <div class="sidebar portfolio-sidebar">
+                        <div class="sidebar-item categories">
+                            <div class="sidebar-item categories">
+                                <h3>آرشیو</h3>
+                                <ul class="nav navbar-stacked"></ul>
+                            </div>
+                            <ul class="nav navbar-stacked">
+                                @Html.Action("PollQuestion", "Poll", new { profile = ViewBag.profile })
+                            </ul>
+                        </div>
+                        <div class="sidebar-item  recent">
+                            @Html.Action("RecentPosts", "Post", new { F_MenuID = -1, profile = ViewBag.profile })
+                        </div>
+
+                    </div>
+                </div>*@
+        </div>
+    </div>
+</section>

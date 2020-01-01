@@ -1,0 +1,147 @@
+﻿@model ClientWeb.Models.DataModels.ItemNew
+@using ClientWeb.Models.BLL
+<link rel="stylesheet" href="@TempData["WebsiteThemePath"]rtl/css/slick.css">
+<section class="ad-breadcrumb parallex">
+    <div class="container page-banner">
+        <div class="row">
+            <div class="col-sm-6 col-md-6">
+                <h1>جزئیات @ViewBag.Category</h1>
+            </div>
+            <div class="col-sm-6 col-md-6">
+            </div>
+        </div>
+    </div>
+</section>
+<section class="featured-ads">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="dashboard-main-disc">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <div class="slick-gallery-slideshow" dir="rtl">
+                                <div class="slider gallery-slideshow gallery-slideshow-not-tab">
+                                    <div>
+                                        <div class="image"><img style="max-height:400px;" src="@(!string.IsNullOrEmpty(Model.Image) ? ViewBag.PrePath + Model.Image : @TempData["WebsiteThemePath"]+"DefaultContent/Imgs/No_Image.png")" alt="image" /></div>
+                                    </div>
+                                </div>
+                                @*<div class="slider gallery-nav gallery-nav-not-tab">
+                                    <div>
+                                        <div class="image"><img src="@(!string.IsNullOrEmpty(Model.Image) ? ViewBag.PrePath + Model.Image : @TempData["WebsiteThemePath"]+"DefaultContent/Imgs/No_Image.png")" alt="image" /></div>
+                                    </div>
+                                </div>*@
+                            </div>
+                        </div>
+                    </div>
+                    <div style="padding:10px;margin:20px 0;border-bottom: 2px solid #6bc242;border-top: 2px solid #6bc242;" class="col-md-12 col-sm-12">
+                        <div class="form-group">
+                            <label>دسته بندی : </label>
+                            @Html.DisplayFor(model => model.Menu.Name)
+                        </div>
+                        <div class="form-group">
+                            <label>نام محصول : </label>
+                            @Html.DisplayFor(model => model.Name)
+                        </div>
+                        <div class="form-group">
+                            <label>توضیحات محصول : </label>
+                            @Html.Raw(Model.Description)
+                        </div>
+                    </div>
+                    <div id="AjaxResult">
+                        @if (Model.Menu != null)
+                        {
+                            @FormGenerator(Model.Menu.AttributeGroup.Where(u => u.F_AttributeGroupID == null), 0)
+                        }
+                        @helper FormGenerator(IEnumerable<ClientWeb.Models.DataModels.AttributeGroupNew> AttributeGroups, int count)
+                        {
+foreach (var item in AttributeGroups)
+{
+    var temp = item.AttributeGroup1;
+        <div style="margin-right:@(count*50)px;">
+            <div class="col-md-12 col-sm-12" style="margin-bottom: -40px;margin-top:-30px;">
+                <div class="ad-detail-heading">
+                    <h4>@item.Name</h4>
+                </div>
+            </div>
+            @foreach (var attribute in item.Attribute)
+        {
+                @Attr_AttrItem(attribute, 0, false)
+            }
+        </div>
+    if (temp.Count() > 0)
+    {
+            @FormGenerator(temp, count + 1)
+    }
+}
+}
+                        @helper Attr_AttrItem(ClientWeb.Models.DataModels.AttributeNew attribute, int count2, bool flag, string IDName = "", string ClassName = "")
+                        {
+var PipoValue = attribute.AttributeValue.Count > 0 ? attribute.AttributeValue[0].Value : null;
+    <div class="col-md-12 col-sm-12" style="margin-bottom:10px;">
+        <div style="margin-right:@(50 * count2)px" class="form-group">
+            <label class="col-sm-4 col-form-label">@attribute.Name</label>
+            <div class="col-sm-8">
+                <span>@PipoValue</span>
+            </div>
+        </div>
+        @foreach (var item in attribute.AttributeItem1)
+        {
+            foreach (var attr in item.Attribute)
+            {
+                @Attr_AttrItem(attr, count2 + 1, true, "Attr_" + item.ID, "ParentAttr_" + attribute.ID)
+            }
+        }
+    </div>
+}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script type="text/javascript" src="@TempData["WebsiteThemePath"]rtl/js/slick.min.js"></script>
+<script>
+    $('.gallery-slideshow-not-tab').slick({
+        slidesToShow: 1,
+        slidesToScroll: -1,
+        speed: 500,
+        arrows: true,
+        fade: true,
+        rtl: true,
+        asNavFor: '.gallery-nav-not-tab',
+        adaptiveHeight: true,
+    });
+    $('.gallery-nav-not-tab').slick({
+        slidesToShow: 5,
+        slidesToScroll: 1,
+        speed: 500,
+        asNavFor: '.gallery-slideshow-not-tab',
+        dots: false,
+        centerMode: true,
+        rtl: true,
+        focusOnSelect: true,
+        infinite: true,
+        responsive: [{
+            breakpoint: 1199,
+            settings: {
+                slidesToShow: 5,
+            }
+        }, {
+            breakpoint: 991,
+            settings: {
+                slidesToShow: 4,
+            }
+        }, {
+            breakpoint: 767,
+            settings: {
+                slidesToShow: 3,
+            }
+        }, {
+            breakpoint: 480,
+            settings: {
+                slidesToShow: 2,
+            }
+        }]
+    });
+</script>

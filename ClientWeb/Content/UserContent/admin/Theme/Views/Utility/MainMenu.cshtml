@@ -1,0 +1,109 @@
+﻿ @model IEnumerable<ClientWeb.Models.DataModels.MenuDataModel>
+
+<div class="navbar-collapse pull-right nav-main-collapse collapse submenu-dark" style="padding-right: 40px; float:right !important;">
+    <nav class="nav-main">
+
+        <!--
+            NOTE
+
+            For a regular link, remove "dropdown" class from LI tag and "dropdown-toggle" class from the href.
+            Direct Link Example:
+
+            <li>
+                <a href="#">HOME</a>
+            </li>
+        -->
+        <ul id="topMain" class="nav nav-pills nav-main" style="font-size:12px;">
+            @{
+                var Parrentsmenu = Model.Where(u => u.F_MenuID == null);
+                foreach (var menu in Parrentsmenu)
+                {
+                    <li class="dropdown active">
+                        @{var submenu = Model.Where(u => u.F_MenuID == menu.ID);}
+                        <!-- HOME -->
+                        @if (menu.Type == "DynamicPost")
+                        {
+                            <a style="text-align:right;" class="@(submenu.Count() > 0?"dropdown-toggle":"")"  href="@Url.Action("ListPost", "Post",new { profile = TempData["UserName"], lang = menu.Language, id = menu.ID})">
+                                @menu.Name
+                            </a>
+                        }
+                        else if (menu.Type == "StaticPost")
+                        {
+                            <a style="text-align:right;" class="@(submenu.Count() > 0?"dropdown-toggle":"")" href="@Url.Action("PageDetail", "Page",new { profile = TempData["UserName"], lang = menu.Language, id = menu.ID})">
+                                @menu.Name
+                            </a>
+                        }
+                        else if (menu.Type == "NoneStaticDynamic")
+                        {
+                            <a style="text-align:right;" class="dropdown-toggle" href="#">
+                                @menu.Name
+                            </a>
+                        }
+
+                        @if (submenu.Count() > 0)
+                        {         <ul class="dropdown-menu">
+                            @foreach (var sub in submenu)
+                            {
+                        <li class="dropdown">
+
+                            @if (sub.Type == "DynamicPost")
+                                    {
+                                    <a style="text-align:right;" href="@Url.Action("ListPost", "Post",new { profile = TempData["UserName"], lang = sub.Language, id = sub.ID})">
+                                        @sub.Name
+                                    </a>
+                                    }
+                                    else if (sub.Type == "StaticPost")
+                                    {
+                                    <a style="text-align:right;" href="@Url.Action("PageDetail", "Page",new { profile = TempData["UserName"], lang =sub.Language, id = sub.ID})">
+                                        @sub.Name
+                                    </a>
+                                    }
+                                    else if (sub.Type == "NoneStaticDynamic")
+                                    {
+                                    <a style="text-align:right;" class="dropdown-toggle" href="#">
+                                        @sub.Name
+                                    </a>
+                                    }
+                            @{ var subsubmenu = Model.Where(u => u.F_MenuID == sub.ID);}
+                            @if (subsubmenu.Count() > 0)
+                                    {
+                                    <ul class="dropdown-menu">
+                                        @foreach (var subsub in subsubmenu)
+                                            {
+                                            <li>
+                                                @if (subsub.Type == "DynamicPost")
+                                                    {
+                                                    <a style="text-align:right;" href="@Url.Action("ListPost", "Post",new { profile = TempData["UserName"], lang =subsub.Language, id = subsub.ID})">
+                                                        @subsub.Name
+                                                    </a>
+                                                    }
+                                                    else if (subsub.Type == "StaticPost")
+                                                    {
+                                                    <a style="text-align:right;" href="@Url.Action("PageDetail", "Page",new { profile = TempData["UserName"], lang = subsub.Language, id = subsub.ID})">
+                                                        @subsub.Name
+                                                    </a>
+                                                    }
+                                                    else if (subsub.Type == "NoneStaticDynamic")
+                                                    {
+                                                    <a class="dropdown-toggle" href="#" style="text-align:right;">
+                                                        @subsub.Name
+                                                    </a>
+                                                    }
+                                            </li>
+                                            }
+                                    </ul>
+                                    }
+
+                        </li>
+
+                                        }
+                        </ul>
+                                }
+
+                    </li>
+                                }
+            }
+        </ul>
+
+    </nav>
+</div>

@@ -1,0 +1,128 @@
+﻿@model ClientWeb.Models.DataModels.ItemDataModel
+@using PagedList.Mvc;
+@using ClientWeb.Models.BLL;
+
+
+<section id="page-breadcrumb">
+    <div class="vertical-center sun">
+        <div class="container">
+            <div class="row">
+                <div class="action">
+                    <div class="col-sm-12">
+                        <h1 class="title">Portfolio</h1>
+                        <p>Be Creative</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--/#action-->
+<section id="portfolio-information" class="padding-top">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                <img src="images/portfolio-details/1.jpg" class="img-responsive" alt="">
+            </div>
+            <div class="col-sm-5">
+                <div class="project-name overflow">
+                    <h2 class="bold">Sailing Vivamus </h2>
+                    <ul class="nav navbar-nav navbar-default">
+                        <li><a href="#"><i class="fa fa-clock-o"></i>February11,2014</a></li>
+                        <li><a href="#"><i class="fa fa-tag"></i>Branding</a></li>
+                    </ul>
+                </div>
+                <div class="project-info overflow">
+                    <h3>Project Info</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tempus nibh sed elimttis adipiscing. Fusce in hendrerit purus. Suspendisse potenti. Proin quis eros odio, dapibus dictum mauris. Donec nisi libero, adipiscing id pretium eget, consectetur sit amet leo. Nam at eros quis mi egestas fringilla non nec purus.</p>
+                    <ul class="elements">
+                        <li><i class="fa fa-angle-right"></i> Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
+                        <li><i class="fa fa-angle-right"></i> Donec tincidunt felis quis ipsum porttitor, non rutrum lorem rhoncus.</li>
+                        <li><i class="fa fa-angle-right"></i> Nam in quam consectetur nulla placerat dapibus ut ut nunc.</li>
+                    </ul>
+                </div>
+                <div class="skills overflow">
+                    <h3>Skills:</h3>
+                    <ul class="nav navbar-nav navbar-default">
+                        <li><a href="#"><i class="fa fa-check-square"></i>Design</a></li>
+                        <li><a href="#"><i class="fa fa-check-square"></i>HTML/CSS</a></li>
+                        <li><a href="#"><i class="fa fa-check-square"></i>Javascript</a></li>
+                        <li><a href="#"><i class="fa fa-check-square"></i>Backend</a></li>
+                    </ul>
+                </div>
+                <div class="client overflow">
+                    <h3>Client:</h3>
+                    <ul class="nav navbar-nav navbar-default">
+                        <li><a href="#"><i class="fa fa-bolt"></i>Okler Themes</a></li>
+                    </ul>
+                </div>
+                <div class="live-preview">
+                    <a href="#" class="btn btn-common uppercase">Live preview</a>
+                </div>
+            </div>
+            <div class="col-sm-3 padding-top">
+                <div class="sidebar portfolio-sidebar">
+
+                    <div class="sidebar-item categories">
+                        <h3>Project Categories</h3>
+                        <ul class="nav navbar-stacked">
+
+                            <li><a href="#">Branded<span class="pull-right">(1)</span></a></li>
+                            <li class="active"><a href="#">Design<span class="pull-right">(8)</span></a></li>
+                            <li><a href="#">Folio<span class="pull-right">(4)</span></a></li>
+                            <li><a href="#">Logos<span class="pull-right">(9)</span></a></li>
+                            <li><a href="#">Mobile<span class="pull-right">(3)</span></a></li>
+                            <li><a href="#">Mockup<span class="pull-right">(4)</span></a></li>
+                            <li><a href="#">Php<span class="pull-right">(2)</span></a></li>
+                            <li><a href="#">Wordpress<span class="pull-right">(8)</span></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-item  recent">
+                        <h3>Recent Projects</h3>
+                        <div class="media">
+                            <div class="pull-left">
+                                <a href="#"><img src="http://localhost:5717/Content/UserContent/aprin/Theme/AprinContent/assets/images/portfolio/project1.jpg" alt=""></a>
+                            </div>
+                            <div class="media-body">
+                                <h4><a href="#">Lorem ipsum dolor sit amet consectetur adipisicing elit,</a></h4>
+                                <p>posted on  07 March 2014</p>
+                            </div>
+                        </div>
+                        <div class="media">
+                            <div class="pull-left">
+                                <a href="#"><img src="http://localhost:5717/Content/UserContent/aprin/Theme/AprinContent/assets/images/portfolio/project2.jpg" alt=""></a>
+                            </div>
+                            <div class="media-body">
+                                <h4><a href="#">Lorem ipsum dolor sit amet consectetur adipisicing elit,</a></h4>
+                                <p>posted on  07 March 2014</p>
+                            </div>
+                        </div>
+                        <div class="media">
+                            <div class="pull-left">
+                                <a href="#"><img src="http://localhost:5717/Content/UserContent/aprin/Theme/AprinContent/assets/images/portfolio/project3.jpg" alt=""></a>
+                            </div>
+                            <div class="media-body">
+                                <h4><a href="#">Lorem ipsum dolor sit amet consectetur adipisicing elit,</a></h4>
+                                <p>posted on  07 March 2014</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sidebar-item popular">
+                        <h3>Popular Projects</h3>
+                        <ul class="gallery">
+                            <li><a href="#"><img src="http://localhost:5717/Content/UserContent/aprin/Theme/AprinContent/assets/images/portfolio/popular1.jpg" alt=""></a></li>
+                            <li><a href="#"><img src="http://localhost:5717/Content/UserContent/aprin/Theme/AprinContent/assets/images/portfolio/popular2.jpg" alt=""></a></li>
+                            <li><a href="#"><img src="http://localhost:5717/Content/UserContent/aprin/Theme/AprinContent/assets/images/portfolio/popular3.jpg" alt=""></a></li>
+                            <li><a href="#"><img src="http://localhost:5717/Content/UserContent/aprin/Theme/AprinContent/assets/images/portfolio/popular4.jpg" alt=""></a></li>
+                            <li><a href="#"><img src="http://localhost:5717/Content/UserContent/aprin/Theme/AprinContent/assets/images/portfolio/popular5.jpg" alt=""></a></li>
+                            <li><a href="#"><img src="http://localhost:5717/Content/UserContent/aprin/Theme/AprinContent/assets/images/portfolio/popular1.jpg" alt=""></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--/#portfolio-information-->
+<!--/#related-work-->

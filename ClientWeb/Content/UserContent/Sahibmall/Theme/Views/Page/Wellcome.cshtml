@@ -1,0 +1,93 @@
+﻿@{
+    Layout = null;
+}
+@using ClientWeb.Models.DataModels;
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="@TempData["WebsiteThemePath"]assets/lib/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="@TempData["WebsiteThemePath"]assets/lib/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="@TempData["WebsiteThemePath"]assets/lib/select2/css/select2.min.css" />
+    <link rel="stylesheet" type="text/css" href="@TempData["WebsiteThemePath"]assets/lib/jquery.bxslider/jquery.bxslider.css" />
+    <link rel="stylesheet" type="text/css" href="@TempData["WebsiteThemePath"]assets/lib/owl.carousel/owl.carousel.css" />
+    <link rel="stylesheet" type="text/css" href="@TempData["WebsiteThemePath"]assets/lib/jquery-ui/jquery-ui.css" />
+    <link rel="stylesheet" type="text/css" href="@TempData["WebsiteThemePath"]assets/css/animate.css" />
+    <link rel="stylesheet" type="text/css" href="@TempData["WebsiteThemePath"]assets/css/reset.css" />
+    <link rel="stylesheet" type="text/css" href="@TempData["WebsiteThemePath"]assets/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="@TempData["WebsiteThemePath"]assets/css/responsive.css" />
+    <title>صاحب مال</title>
+</head>
+<body class="category-page" style="background-image:url(@TempData["WebsiteThemePath"]assets/images/SahibMall.jpg);background-repeat: no-repeat;background-size: cover;">
+    <!-- page wapper-->
+    <div class="columns-container" style="padding: 100px 275px;">
+        <div class="container" style="padding:20px 50px;background-color:white;" id="columns">
+            <!-- page heading-->
+            <h2 style="text-align:center" class="page-heading">
+                <span class="page-heading-title2">صاحب مال</span>
+            </h2>
+            <!-- ../page heading-->
+            <div id="contact" class="page-content page-contact">
+                <div id="message-box-conact"></div>
+                <div class="row">
+                    <div class="col-md-3 col-sm-12">
+                        <img src="@TempData["WebsiteThemePath"]assets/images/logo.png" style="margin-top: -30px;height: 170px;" />
+                    </div>
+                    <div class="col-md-9 col-xs-12 col-sm-6" id="contact_form_map">
+                        <p style="text-align:justify">صاحب مال مرجع تخصصی نقد و بررسی و فروش اینترنتی کالا در ایران است. گروه‏‏‌های مختلف کالا مانند کالای دیجیتال، لوازم خانگی، لوازم شخصی، فرهنگ و هنر و ورزش و سرگرمی با تنوعی بی‌نظیر در صاحب مال عرضه می‏‏‏‌شوند. صاحب مال با در اختیار داشتن سهم عمده‏‌ای از بازار عرضه اینترنتی کالا در ایران با تنوعی بسیار بالا از برندهای مختلف، در همراهی مشتریان در فرآیند خرید و حفظ جایگاه بی‏‏‏‌طرفانه در میان آنها، نهایت تلاش خود را می‌‏‏کند. کاربران و مشتریان صاحب مال می‏‏‌توانند با حق انتخابی بسیار بالا و با دریافت اطلاعاتی کامل برای انتخاب درست کالای مورد نظر خود، وب سایت صاحب مال را بررسی کنند و با حداکثر اطمینان کالای خود را انتخاب و خرید کنند. همواره بهترین انتخاب و بهترین خدمات، شایسته مشتری صاحب مال است.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="row">
+                            @foreach (var p in ViewBag.LangList as List<LanguageDataModel>)
+                            {
+                                <div class="col-sm-3">
+                                    <a style="width:100%;" href="@Url.Action("Index","Home",new { profile="SahibMall",lang=p.Language})" class="btn btn-success btn-md">
+                                        <span>@p.LanguageName</span>
+                                        <i style="margin-right: 20px;margin-top: 5px;float: right;"><img class="flag-lang" src="~/Content/Smarty_assets/images/flags/@p.Image" width="16" height="11" alt="lang" /></i>
+                                    </a>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <footer id="footer" style="padding: 20px;margin-top: 20px;">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12" style="text-align:center;">
+                                <div id="contact-box">
+                                    <div class="introduce-title">شبکه های اجتماعی</div>
+                                    <div class="social-link">
+                                        <a href="#"><i class="fa fa-facebook"></i></a>
+                                        <a href="#"><i class="fa fa-pinterest-p"></i></a>
+                                        <a href="#"><i class="fa fa-vk"></i></a>
+                                        <a href="#"><i class="fa fa-twitter"></i></a>
+                                        <a href="#"><i class="fa fa-google-plus"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="footer-menu-box">
+                            <p class="text-center">آذربایجان غربی - ارومیه - کیلومتر 11 بلوار دانشگاه، روبروی پردیس نازلوی دانشگاه ارومیه  </p>
+                            <p class="text-center">تلفن تماس : +00 123 456 789   پست الکترونیک : SahibMall@business.com</p>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </div>
+    <!-- ./page wapper-->
+    <!-- Script-->
+    <script type="text/javascript" src="@TempData["WebsiteThemePath"]assets/lib/jquery/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="@TempData["WebsiteThemePath"]assets/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="@TempData["WebsiteThemePath"]assets/lib/select2/js/select2.min.js"></script>
+    <script type="text/javascript" src="@TempData["WebsiteThemePath"]assets/lib/jquery.bxslider/jquery.bxslider.min.js"></script>
+    <script type="text/javascript" src="@TempData["WebsiteThemePath"]assets/lib/owl.carousel/owl.carousel.min.js"></script>
+    <script type="text/javascript" src="@TempData["WebsiteThemePath"]assets/lib/jquery.countdown/jquery.countdown.min.js"></script>
+    <script type="text/javascript" src="@TempData["WebsiteThemePath"]assets/lib/jquery-ui/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="@TempData["WebsiteThemePath"]assets/js/jquery.actual.min.js"></script>
+    <script type="text/javascript" src="@TempData["WebsiteThemePath"]assets/js/theme-script.js"></script>
+</body>
+</html>

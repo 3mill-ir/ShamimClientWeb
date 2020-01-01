@@ -1,0 +1,228 @@
+﻿
+@model PagedList.IPagedList<ClientWeb.Models.DataModels.PostDataModel>
+@using PagedList.Mvc;
+@using ClientWeb.Models.BLL;
+@using ClientWeb.Models.DataModels;
+@{
+    string lang = TempData["lang"].ToString();
+}
+@section jsForThisPage{
+    @{
+        if (this.ViewContext.HttpContext.Items["piporesult"] != null)
+        {
+            string ChartType = this.ViewContext.HttpContext.Items["piporesultType"].ToString();
+            <script>
+                loadScript(plugin_path + 'chart.chartjs/Chart.min.js', function () {
+                    var ScoreResult = [];
+                    var LableResult = [];
+                    @if (ChartType != "BarChart") {
+                    foreach (var p in this.ViewContext.HttpContext.Items["piporesult"] as List<string[]>)
+         {
+
+                     <text>
+                    ScoreResult.push({
+                        value: "@p[0]",
+                        color: "@p[1]",
+                        highlight: "@p[2]",
+                        label: "@p[3]"
+                    });
+                    </text>
+                            }
+                        if (ChartType == "PieChart")
+                        {
+                        <text>
+                    var ctx = document.getElementById("PipoChartCanvas").getContext("2d");
+
+                    new Chart(ctx).Doughnut(ScoreResult);    </text>
+                        }
+                        else
+                        {
+          <text>
+                    var ctx = document.getElementById("PipoChartCanvas").getContext("2d");
+
+                    new Chart(ctx).Doughnut(ScoreResult);    </text>
+                        }
+                        }
+                        else {
+                            foreach (var p in this.ViewContext.HttpContext.Items["piporesult"] as List<string[]>)
+                            {
+
+                     <text>
+                    ScoreResult.push("@p[0]");
+                    LableResult.push("@p[1]");
+                    </text>
+                        }
+                        <text>
+                    var barChartCanvas = {
+                        labels: LableResult,
+                        datasets: [
+                            {
+                                fillColor: "rgba(220,220,220,0.5)",
+                                strokeColor: "rgba(220,220,220,0.8)",
+                                highlightFill: "rgba(220,220,220,0.75)",
+                                highlightStroke: "rgba(220,220,220,1)",
+                                data: ScoreResult
+                            }
+                        ]
+                    };
+                    var ctx = document.getElementById("PipoChartCanvas").getContext("2d");
+                    new Chart(ctx).Bar(barChartCanvas);
+                    </text>
+
+                    }
+                });
+            </script>
+        }
+
+    }
+    <script>
+        jQuery(document).ready(function () {
+            $("#lang").change(function () {
+
+                //lang: $("#lang").val();
+                //alert(lang.val());
+                $("#id").empty();
+                $("#select2-chosen-2").empty();
+                $("#select2-chosen-2").append('@(lang == "FA" ? "همه دسته بندی ها" : lang == "EN" ? "All Categories" : lang == "TR" ? "Tüm Kategoriler" : "كل الفئات")');
+                $.ajax({
+                    type: 'get',
+                    url: '@System.Configuration.ConfigurationManager.AppSettings["WebAddress"]/Utility/MenuList?profile='+'@TempData["UserName"]'+'&lang='+ $("#lang").val(), // we are calling json method
+                    dataType: 'json',
+                    //data: { type:"DynamicPost" },
+                    success: function (states) {
+                        // states contains the JSON formatted list
+                        // of states passed from the controller
+                        $.each(states, function (i, state) {
+                            $("#id").append('<option value="' + state.Value + '">' + state.Text + '</option>');
+                        }); // here we are adding option for States
+
+                    },
+                    error: function (ex) {
+                        alert('Failed to retrieve states.' + ex);
+                    }
+                });
+                return false;
+            });
+        });
+    </script>
+}
+
+<!--
+        PAGE HEADER
+
+        CLASSES:
+            .page-header-xs	= 20px margins
+            .page-header-md	= 50px margins
+            .page-header-lg	= 80px margins
+            .page-header-xlg= 130px margins
+            .dark			= dark page header
+
+            .shadow-before-1 	= shadow 1 header top
+            .shadow-after-1 	= shadow 1 header bottom
+            .shadow-before-2 	= shadow 2 header top
+            .shadow-after-2 	= shadow 2 header bottom
+            .shadow-before-3 	= shadow 3 header top
+            .shadow-after-3 	= shadow 3 header bottom
+    -->
+<section class="page-header dark page-header-xs">
+    <div class="container">
+        <h1>@(lang == "FA" ? "نتایج جستجو" : lang == "EN" ? "search results" : lang == "TR" ? "Arama sonuçları" : "نتائج البحث")</h1>
+        <ol class="breadcrumb" id="PipoOL" style="direction: ltr;">
+            @*<li><a href="#">خانه</a></li>*@
+        </ol>
+    </div>
+</section>
+<!-- /PAGE HEADER -->
+<!-- -->
+<section>
+    <div class="container">
+        <div class="row">
+
+            <!-- LEFT COLUMNS -->
+            <div class="col-md-9 col-sm-9 col-md-push-3 col-sm-push-3">
+
+                @if (Model.Count < 1)
+                {
+                    <div class="clearfix search-result">
+                        <h4 class="margin-bottom-0 text-center">@(lang == "FA" ? "هیچ مطلبی در رابطه با کلمات کلیدی مورد نظر یافت نشد !" : lang == "EN" ? "No content related to the keywords found!" : lang == "TR" ? "Anahtar kelimelerle ilgili içerik bulunamadı!" : "لم يتم العثور على محتوى متعلق بالكلمات الرئيسية!")</h4>
+                    </div>
+                }
+                <!-- SEARCH RESULTS -->
+
+                @foreach (var item in Model)
+                {
+                    <div class="clearfix search-result">
+                        <!-- item -->
+                        <h4 class="margin-bottom-0"><a href="@Url.Action("PostDetail", "Post", new { profile = TempData["UserName"], lang = item.Language, id = item.ID })">@item.Tittle</a></h4>
+                        <small class="text-muted">@Tools.SpecialJalaliFormat(item.CreatedOnUTC ?? default(DateTime))</small>
+                        <img src="@(!string.IsNullOrEmpty(item.ImagePath) ? ViewBag.PrePath + item.ImagePath : @TempData["WebsiteThemePath"]+"DefaultContent/Imgs/Park.png")" alt="@item.ImageAlt" height="60" />
+                        <p>@item.Description</p>
+                        <a href="@Url.Action("PostDetail", "Post", new { profile = TempData["UserName"], lang = item.Language, id = item.ID })" class="text-warning fsize12">بیشتر</a>
+                    </div><!-- /item -->
+                }
+                <!-- /SEARCH RESULTS -->
+                <!-- PAGINATION -->
+                <div class="text-center margin-top-60">
+                    <ul class="pagination">
+                        @Html.PagedListPager(Model, page => Url.Action("Search", "Post", new
+                       {
+                           page,
+                           PageSize = ViewBag.PageSize,
+                           Type = ViewBag.Type,
+                           FromDate = ViewBag.FromDate,
+                           ToDate = ViewBag.ToDate,
+
+                           SearchText = ViewBag.SearchText,
+                           profile = ViewBag.profile,
+                           lang = ViewBag.lang,
+                           id = ViewBag.id,
+
+                       }))
+                    </ul>
+                </div>
+                <!-- /PAGINATION -->
+
+            </div>
+            <!-- /LEFT COLUMNS -->
+            <!-- RIGHT COLUMNS -->
+            <div class="col-md-3 col-sm-3 col-md-pull-9 col-sm-pull-9">
+                <h4>@(lang == "FA" ? "جستجو" : lang == "EN" ? "Search" : lang == "TR" ? "arama" : "بحث")</h4>
+                @using (Html.BeginForm("Search", "Post", new
+                {
+                    Type = 2,
+                    profile = ViewBag.profile,
+
+
+                }, FormMethod.Get))
+                {
+                    <input type="text" value="" class="form-control" placeholder="@(lang == "FA" ? "جستجو ..." : lang == "EN" ? "Search ..." : lang == "TR" ? "arama ..." : "... بحث")" id="SearchText" name="SearchText" />
+                        <label class="size-12 margin-top-10">@(lang == "FA" ? "زبان" : lang == "EN" ? "Language" : lang == "TR" ? "dil" : "لهجة")</label>
+                        @Html.DropDownList("lang", ViewBag.langlist as SelectList, new { @class = "form-control" })
+                        <label class="size-12 margin-top-10">@(lang == "FA" ? "دسته بندی" : lang == "EN" ? "Category" : lang == "TR" ? "kategori" : "فئة")</label>
+                        @Html.DropDownList("id", ViewBag.menulist as SelectList, new { @class = "form-control" })
+
+                        <button type="submit" class="btn btn-3d btn-xlg btn-reveal btn-red fullwidth">
+                            <span>@(lang == "FA" ? "جستجو" : lang == "EN" ? "Search" : lang == "TR" ? "arama" : "بحث")</span>
+                            <i class="et-search"></i>
+                        </button>
+
+                }
+
+                <hr />
+                @Html.Partial("SideSlider")
+                @Html.Action("PollQuestion", "Poll", new { profile = TempData["UserName"] })
+                <div class="divider"><!-- divider --></div>
+                @Html.Action("SideLinks", "Utility", new { profile = TempData["UserName"] })
+                <div class="divider"><!-- divider --></div>
+                @Html.Action("RuzPic", "Utility")
+                <div class="divider"><!-- divider --></div>
+                @Html.Action("RuzWord", "Utility")
+
+
+            </div>
+            <!-- /RIGHT COLUMNS -->
+
+        </div>
+    </div>
+</section>
+<!-- / -->

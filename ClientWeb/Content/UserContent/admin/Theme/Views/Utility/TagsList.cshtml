@@ -1,0 +1,22 @@
+﻿@model IEnumerable<ClientWeb.Models.DataModels.TagDataModel>
+@{
+    string lang = TempData["lang"].ToString();
+}
+<div class="margin-bottom-60">
+    <div class="list-group">
+        <span href="#" class="list-group-item active">
+            @(lang == "FA" ? "برچسب ها" : lang == "EN" ? "Tags" : lang == "TR" ? "Etiketler" : "الكلمات")
+            <span class="pull-right" id="slide-submenu">
+            </span>
+        </span>
+        <div class="hidden-xs margin-bottom-60 margin-top-20">
+            @foreach (var item in Model)
+            {
+            <a class="tag" href="@Url.Action("TagsPost","Post",new {TagId=item.ID,profile=TempData["UserName"],lang=TempData["lang"],TagsText=item.Text })">
+                <span class="txt">@item.Text</span>
+                <span class="num">#</span>
+            </a>
+            }
+        </div>
+    </div>
+</div>

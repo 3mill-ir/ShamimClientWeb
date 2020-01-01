@@ -1,0 +1,21 @@
+﻿@{
+    Layout = null;
+}
+@if (ViewBag.TicketSuccess != null)
+{
+    <div class="alert alert-success" style="background-color: #4e9931;border-color: #295900;">
+        <p style="font-size: 15px;">@ViewBag.TicketSuccess</p>
+    </div>
+}
+@if (ViewBag.TicketError != null)
+{
+    <div class="alert alert-danger" style="background-color: #f14b4b;border-color: #de0528;">
+        <p style="font-size: 15px;">@ViewBag.TicketError</p>
+    </div>
+}
+@if (ViewBag.TicketWarning != null)
+{
+    <div class="alert alert-warning">
+        <p style="font-size: 15px;">@ViewBag.TicketWarning</p>
+    </div>
+}

@@ -1,0 +1,11 @@
+﻿@model ClientWeb.Models.DataModels.PageDataModel
+@Html.Action("PageTitle", "Utility", new { F_MenuID = ViewBag.F_MenuId })
+<section class="light-blue ad-listing">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                @Html.Raw(Model.ActionContent)
+            </div>
+        </div>
+    </div>
+</section>

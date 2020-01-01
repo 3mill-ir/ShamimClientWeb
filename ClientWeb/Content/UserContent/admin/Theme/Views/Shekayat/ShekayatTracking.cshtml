@@ -1,0 +1,57 @@
+﻿@model ClientWeb.Models.DataModels.PostDataModel
+@using ClientWeb.Models.BLL;
+
+@section jsForThisPage{
+    <script type="text/javascript" src="@TempData["WebsiteThemePath"]js/contact.js"></script>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryajax")
+}
+
+<section class="page-header dark page-header-xs">
+    @Html.Action("PageTitle", "Utility", new { F_MenuID = 448 })
+</section>
+<!-- -->
+<section class="parallax parallax-2" style="background-image: url('@TempData["WebsiteThemePath"]/DefaultContent/Imgs/welcomepage.jpg');background-position: 50% 50px;">
+    <div class="overlay dark-2"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-push-1">
+                @using (Ajax.BeginForm("ShekayatTrackingPost", null, null, new AjaxOptions
+                {
+                    UpdateTargetId = "AjaxShekayatTrackingBox",
+                    InsertionMode = InsertionMode.Replace,
+                    LoadingElementId = "AjaxShekayatTrackingBox_Loading",
+                    HttpMethod = "Post"
+                }, null))
+                {
+                    <fieldset>
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-md-5 col-md-push-3">
+                                    <label for="contact:subject">کد پیگیری</label>
+                                    <input type="text" value="" class="form-control" name="ShekayatId" id="ShekayatId">
+                                </div>
+                                <div class="col-md-3 col-md-push-3" style="margin-top: 26px;">
+                                    <button style="float:right;" type="submit" class="btn btn-primary"><i class="fa fa-check"></i>پیگیری</button>
+                                    <div class="margin-bottom-10" id="AjaxShekayatTrackingBox_Loading" style="display:none;float: right;margin-right: 10px;">
+                                        <img src="@TempData["WebsiteThemePath"]DefaultContent/Imgs/ajax-load.gif" class="img-responsive" style="width:35px;" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <div id="AjaxShekayatTrackingBox" style="margin-right: 20px;margin-top: 40px;text-align:center !important;">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+<!-- / -->

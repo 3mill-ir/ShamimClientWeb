@@ -1,0 +1,55 @@
+﻿@model IEnumerable<ClientWeb.Models.DataModels.TicketInboxModel>
+@{
+    Layout = null;
+}
+@using ClientWeb.Models.BLL
+@foreach (var inbox in Model)
+{
+    <div class="row">
+        <div class="col-md-2 col-sm-2 hidden-xs">
+            <figure class="thumbnail">
+                <img class="img-responsive" src="@TempData["WebsiteThemePath"]images/avatar2.jpg">
+            </figure>
+        </div>
+        <div class="col-md-10 col-sm-10">
+            <div class="panel panel-default arrow left">
+                <div class="panel-body">
+                    <header class="text-right">
+                        <div class="comment-user" style="color:black;margin-bottom: 10px;"><i class="fa fa-user" style="margin-left: 10px;"></i>پیام شما</div>
+                        <span class="comment-date" style="color:black;"><i class="fa fa-clock-o" style="margin-left: 10px;"></i>@Tools.GetDateTimeReturnJalaliDate(inbox.CreatedOnUTC)</span>
+                    </header>
+                    <div class="comment-post">
+                        <p style="color:black;text-align: right;margin-top: 10px;">
+                            @inbox.TicketContent
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    foreach (var outbox in inbox.TicketOutbox)
+    {
+        <div class="row">
+            <div class="col-md-10 col-sm-10">
+                <div class="panel panel-default arrow right">
+                    <div class="panel-body">
+                        <header class="text-right">
+                            <div class="comment-user" style="color:black;margin-bottom: 10px;"><i class="fa fa-user" style="margin-left: 10px;"></i>پیام پارک</div>
+                            <span class="comment-date" style="color:black;"><i class="fa fa-clock-o" style="margin-left: 10px;"></i>@Tools.GetDateTimeReturnJalaliDate(outbox.CreatedOnUTC)</span>
+                        </header>
+                        <div class="comment-post">
+                            <p style="color:black;text-align: right;margin-top: 10px;">
+                                @outbox.Content_One
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-2 hidden-xs">
+                <figure class="thumbnail">
+                    <img class="img-responsive" src="@TempData["WebsiteThemePath"]DefaultContent/Imgs/parklogo.png">
+                </figure>
+            </div>
+        </div>
+    }
+}

@@ -1,0 +1,26 @@
+﻿
+@model IEnumerable<ClientWeb.Models.DataModels.PostDataModel>
+@using ClientWeb.Models.BLL;
+@{
+    string lang = TempData["lang"].ToString();
+}
+<div class="alert alert-mini alert-primary" style="margin-top: -60px;margin-bottom: -20px;">
+    <!-- DANGER -->
+    <strong>@(lang == "FA" ? "اطلاعیه ها" : lang == "EN" ? "Announcements" : lang == "TR" ? "Duyurular" : "إعلانات")</strong>
+    <div class="owl-carousel controlls-over nomargin" data-plugin-options='{"autoPlay":3000, "stopOnHover":true, "items": 1, "singleItem": true, "navigation": false, "pagination": false, "transitionStyle":"fadeUp"}'>
+        @{ int i = 1;}
+        @foreach (var item in Model)
+        {
+            <div class="text-center size-14">
+                <a href="@Url.Action("PostDetail","Post", new {profile=TempData["UserName"], lang = item.Language, id = item.ID })">@i / @Model.Count() @item.Tittle</a>
+            </div>
+            { i = i + 1; }
+        }
+
+    </div>
+</div>
+
+
+
+
+

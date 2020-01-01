@@ -1,0 +1,57 @@
+﻿@using ClientWeb.Models.DataModels
+ 
+<footer id="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 text-center bottom-separator">
+
+                <img src="@TempData["WebsiteThemePath"]assets/images/home/under.png" class="img-responsive inline" alt="">
+            </div>
+            <div class="col-md-4 col-sm-12">
+                <div class="contact-form bottom">
+                    <h2>ارسال پیام</h2>
+                    <form id="main-contact-form" name="contact-form" method="post" action="sendemail.php">
+                        <div class="form-group">
+                            <input type="text" name="name" class="form-control" required="required" placeholder="...نام و نام خانوادگی شما">
+                        </div>
+                        <div class="form-group">
+                            <input type="email" name="email" class="form-control" required="required" placeholder="آدرس ایمیل">
+                        </div>
+                        <div class="form-group">
+                            <textarea name="message" id="message" required="required" class="form-control" rows="8" placeholder="متن پیام شما"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" name="submit" class="btn btn-submit" value="ارسال">
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <div class="testimonial bottom">
+                    <h2>گواهی نامه</h2>
+                    <div class="media">
+
+                        <div class="media-body">
+                            <blockquote>آپرین سالیان سال است که با استفاده از تجربه و پشتکار در این صنعت اشتغال دارد</blockquote>
+                        </div>
+                    </div>
+                    <div class="media">
+
+                        <div class="media-body">
+                            <blockquote>آپرین سالیان سال است که با استفاده از تجربه و پشتکار در این صنعت اشتغال دارد</blockquote>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+          @Html.Action("Footer_ContactUs","Utility",new { profile=TempData["UserName"] })
+
+            <div class="col-sm-12">
+                <div class="copyright-text text-center">
+                    <p>&copy;کلیه حقوق این سایت متعلق به آژانس مارکتینگ مارکت تیک می باشد | طراحی و توسعه توسط مارکت تیک   </p>
+                    <p><a target="_blank" href="http://markettik.ir">توسعه تجارت الکترونیک هزاره سوم</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>

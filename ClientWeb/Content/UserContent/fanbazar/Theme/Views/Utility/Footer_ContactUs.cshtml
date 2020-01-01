@@ -1,0 +1,26 @@
+﻿@model ClientWeb.Models.DataModels.ContactManagementModel
+<div class="footer_block">
+    <h4>درباره ما</h4>
+    <ul class="personal-info">
+        <li><i class="fa fa-map-marker"></i> @Model.AddressInput</li>
+        <li><i class="fa fa-envelope"></i>@Model.EmailInput</li>
+        <li><i class="fa fa-phone"></i>@Model.PhoneInput</li>
+        <li><i class="fa fa-clock-o"></i>24 ساعته</li>
+    </ul>
+    <div class="social-bar">
+        <ul>
+            <li>
+                <a class="fa fa-twitter" href="@Model.Twitter"></a>
+            </li>
+            <li>
+                <a class="fa fa-facebook" href="@Model.Facebook"></a>
+            </li>
+            <li>
+                <a class="fa fa-instagram" href="@Model.Instagram"></a>
+            </li>
+            <li>
+                <a class="fa fa-send" href="@Model.Telegram"></a>
+            </li>
+        </ul>
+    </div>
+</div>

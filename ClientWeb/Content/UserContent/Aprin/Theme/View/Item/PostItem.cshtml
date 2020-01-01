@@ -1,0 +1,71 @@
+﻿@model ClientWeb.Models.DataModels.ItemNew
+@{
+    ViewBag.CurrentState = "AddOffer";
+}
+@section js_Requested{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            CallAjax();
+            $("#Categories").change(function () {
+                CallAjax();
+            });
+        });
+        function CallAjax() {
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetForm", "Item")',
+                dataType: 'html',
+                data: { ID: $("#Categories").val(), profile: '@TempData["UserName"]', Type: '@ViewBag.Type' },
+                beforesend: document.getElementById('Form_Loading').style.display = 'block',
+                success: function (Result) {
+                    $("#AjaxResult").empty();
+                    $("#AjaxResult").append(Result);
+                    document.getElementById('Form_Loading').style.display = 'none';
+                },
+                error: function (ex) {
+                    alert('خطا در بارگذاری اطلاعات');
+                    document.getElementById('Form_Loading').style.display = 'none';
+                }
+            });
+            return false;
+        }
+    </script>
+    <script>
+        function PipoFunc(TargetIDName, ClassName) {
+            var els = document.getElementsByClassName("ParentAttr_" + ClassName);
+            Array.prototype.forEach.call(els, function (el) { el.classList.add('PipoHidden'); el.classList.remove('PipoShow'); });
+            var item = document.getElementById('Attr_' + TargetIDName);
+            if (item.classList.contains('PipoShow')) {
+                item.classList.remove('PipoShow');
+                item.classList.add('PipoHidden');
+            }
+            else {
+                item.classList.remove('PipoHidden');
+                item.classList.add('PipoShow');
+            }
+            console.log = console.warn = console.error = () => { };
+            console.error('Something bad happened.');
+        }
+        function PipoRemove(ClassName) {
+            var els = document.getElementsByClassName("ParentAttr_" + ClassName);
+            Array.prototype.forEach.call(els, function (el) { el.classList.add('PipoHidden'); el.classList.remove('PipoShow'); });
+        }
+        function CheckBoxFixer(Status, IDName, Value1, Value2) {
+            var temp = document.getElementById(IDName);
+            if (Status == false)
+                temp.setAttribute("value", Value1);
+            else
+                temp.setAttribute("value", Value2);
+        }
+    </script>
+    @*<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>*@
+}
+<style>
+    .PipoHidden {
+        display: none !important;
+    }
+
+    .PipoShow {
+        display: block !important;
+    }
+</style> 

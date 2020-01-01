@@ -1,0 +1,302 @@
+﻿@model ClientWeb.Models.DataModels.PostDataModel
+@using PagedList.Mvc;
+@using ClientWeb.Models.BLL;
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryajax")
+
+@section jsForThisPage{
+    <script>
+        function SetCommentID(ID) {
+            document.getElementById("CommentForm").action = "/Aprin/Comment/AddPostComment?PostID=" +@Model.ID +"&F_CommentID=" + ID;
+            document.getElementById("RelatedComment").innerHTML = "<i onclick=\"Clean()\" class=\"fa fa-close\" style=\"color:red;cursor:pointer;float: left;\"></i>" + document.getElementById("comment_" + ID).innerText;
+            document.getElementById("CommentHelper").style.display = "block";
+        }
+        function Clean() {
+            document.getElementById("CommentForm").action = "/Aprin/Comment/AddPostComment?PostID=" +@Model.ID +"&F_CommentID=-1";
+            document.getElementById("RelatedComment").innerText = "";
+            document.getElementById("RelatedComment").innerHTML = "<i onclick=\"Clean()\" class=\"fa fa-close\" style=\"color:red;cursor:pointer\"></i>";
+            document.getElementById("CommentHelper").style.display = "none";
+        }
+    </script>
+    @{
+        if (this.ViewContext.HttpContext.Items["piporesult"] != null)
+        {
+            string ChartType = this.ViewContext.HttpContext.Items["piporesultType"].ToString();
+            <script>
+                loadScript(plugin_path + 'chart.chartjs/Chart.min.js', function () {
+                    var ScoreResult = [];
+                    var LableResult = [];
+                    @if (ChartType != "BarChart") {
+                    foreach (var p in this.ViewContext.HttpContext.Items["piporesult"] as List<string[]>)
+         {
+
+                     <text>
+                    ScoreResult.push({
+                        value: "@p[0]",
+                        color: "@p[1]",
+                        highlight: "@p[2]",
+                        label: "@p[3]"
+                    });
+                    </text>
+                            }
+                        if (ChartType == "PieChart")
+                        {
+                        <text>
+                    var ctx = document.getElementById("PipoChartCanvas").getContext("2d");
+
+                    new Chart(ctx).Doughnut(ScoreResult);    </text>
+                        }
+                        else
+                        {
+          <text>
+                    var ctx = document.getElementById("PipoChartCanvas").getContext("2d");
+
+                    new Chart(ctx).Doughnut(ScoreResult);    </text>
+                        }
+                        }
+                        else {
+                            foreach (var p in this.ViewContext.HttpContext.Items["piporesult"] as List<string[]>)
+                            {
+
+                     <text>
+                    ScoreResult.push("@p[0]");
+                    LableResult.push("@p[1]");
+                    </text>
+                        }
+                        <text>
+                    var barChartCanvas = {
+                        labels: LableResult,
+                        datasets: [
+                            {
+                                fillColor: "rgba(220,220,220,0.5)",
+                                strokeColor: "rgba(220,220,220,0.8)",
+                                highlightFill: "rgba(220,220,220,0.75)",
+                                highlightStroke: "rgba(220,220,220,1)",
+                                data: ScoreResult
+                            }
+                        ]
+                    };
+                    var ctx = document.getElementById("PipoChartCanvas").getContext("2d");
+                    new Chart(ctx).Bar(barChartCanvas);
+                    </text>
+
+                    }
+                });
+            </script>
+        }
+
+    }
+}
+ 
+<!--/#page-breadcrumb-->
+<section id="blog-details" class="padding-top">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9 col-sm-9">
+                <h1 class="blog-post-title">@Model.Tittle</h1>     
+                <!-- IMAGE -->
+                <figure class="margin-bottom-20"style="margin-bottom:14px;margin-left:29px;">
+                    <img class="img-responsive" src="@(!string.IsNullOrEmpty(Model.ImagePath) ? ViewBag.PrePath + Model.ImagePath :@TempData["WebsiteThemePath"]+ "DefaultContent/Imgs/Park.png")" alt="@Model.ImageAlt" />
+                </figure>
+             
+                @if (!string.IsNullOrEmpty(Model.Description))
+                {
+                    <p class="text-center padding-15" style="background-color: lightgray;background-color: lightgray;padding: 7px;border-radius: 4px;">@Model.Description</p>
+                }
+                @Html.Raw(Tools.GetHtmldetail("DetailHTMLFilePath", Model.Detail, TempData["UserName"] as string))
+                <ul class="blog-post-info list-inline margin-top-10 text-center" style="height:60px;">
+                    <li>
+                        @using (Ajax.BeginForm("LikePost", "Post", new { PostId = Model.ID, NumberOfLikes = Model.NumberOfLikes ?? default(int) }, new AjaxOptions
+                        {
+                            UpdateTargetId = "PostlikeBox",
+                            InsertionMode = InsertionMode.Replace,
+                            LoadingElementId = "TicketReader_Loading",
+                            HttpMethod = "Post"
+                        }, null))
+                        {
+                            <div id="PostlikeBox"><button class="btn-submit btn-3d btn-white" style=""><i class="fa fa-thumbs-up">@Model.NumberOfLikes</i>پسندیدم</button></div>
+                        }
+                    </li>
+
+                    <li>
+                        @using (Ajax.BeginForm("DisLikePost", "Post", new { PostId = Model.ID, NumberOfDislikes = Model.NumberOfDislikes ?? default(int) }, new AjaxOptions
+                        {
+                            UpdateTargetId = "PostDislikeBox",
+                            InsertionMode = InsertionMode.Replace,
+                            LoadingElementId = "TicketReader_Loading",
+                            HttpMethod = "Post"
+                        }, null))
+                        {
+                            <div id="PostDislikeBox"><button class="btn-submit btn-3d btn-white" style=""><i class="fa fa-thumbs-down">@Model.NumberOfDislikes</i>نپسندیدم</button></div>
+                        }
+                    </li>
+
+                    @*<li>
+                        @using (Ajax.BeginForm("DisLikePost", "Post", new { PostId = Model.ID, NumberOfDisLikes = Model.NumberOfDislikes ?? default(int) }, new AjaxOptions
+                        {
+                            UpdateTargetId = "PostDislikeBox",
+                            InsertionMode = InsertionMode.Replace,
+                            LoadingElementId = "TicketReader_Loading",
+                            HttpMethod = "Post"
+                        }, null))
+                        {
+                            <div id="PostDislikeBox"><button class="btn-submit btn-3d btn-white" style=""><i class="fa fa-thumbs-down">@Model.NumberOfDislikes </i>نپسندیدم</button></div>
+                        }
+                    </li>*@
+                </ul>
+                <!-- /IMAGE -->
+                <!-- VIDEO -->
+                <!--
+        <div class="margin-bottom-20 embed-responsive embed-responsive-16by9">
+            <iframe class="embed-responsive-item" src="http://player.vimeo.com/video/8408210" width="800" height="450"></iframe>
+        </div>
+        -->
+                <!-- /VIDEO -->
+                <!-- article content -->
+               
+                <ul class="blog-post-info list-inline margin-top-20">
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-clock-o"></i>
+                            <span class="font-lato">@Tools.SpecialJalaliFormat(Model.CreatedOnUTC ?? default(DateTime))</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-comment-o"></i>
+                            <span class="font-lato">@Model.NumberOfComments</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-thumbs-up"></i>
+                            <span class="font-lato">@Model.NumberOfLikes</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-thumbs-down"></i>
+                            <span class="font-lato">@Model.NumberOfDislikes</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-eye"></i>
+                            <span class="font-lato">@Model.NumberOfVisitors</span>
+                        </a>
+                    </li>
+                </ul>
+                <!-- /article content -->
+
+
+                <div class="divider divider-dotted"><!-- divider --></div>
+
+                <!-- COMMENTS -->
+                <div id="comments" class="comments">
+                    <h4 class="page-header margin-bottom-60 size-20">
+                        <span>@Model.NumberOfComments</span> دیدگاه
+                    </h4>
+                    <!-- comment item -->
+                    @foreach (var cm in Model.Comments1)
+                    {
+                        <div class="comment-item">
+                            <span class="user-avatar">
+                                <img class="pull-left media-object" src="@TempData["WebsiteThemePath"]images/avatar.png" width="64" height="64" alt="">
+                            </span>
+                            <div class="media-body"style="margin-right: 50px;">
+                                <div style="float: right;width: 100%;">
+                                    <a href="#commentForm" onclick="SetCommentID(@cm.ID)" class="scrollTo comment-reply">پاسخ به کامنت</a>
+                                    <h4 class="media-heading bold">مهمان</h4>
+                                    <small class="block">@Tools.SpecialJalaliFormat(cm.CreatedDateOnUTC ?? default(DateTime))</small>
+                                    <p id="comment_@cm.ID">@cm.Text</p>
+                                </div>
+                                <div style="width:100px;float:left;">
+                                    @using (Ajax.BeginForm("LikePostComment", "Comment", new { CommentId = cm.ID }, new AjaxOptions
+                                    {
+                                        UpdateTargetId = "CommentlikeBox",
+                                        InsertionMode = InsertionMode.Replace,
+                                        LoadingElementId = "TicketReader_Loading",
+                                        HttpMethod = "Post"
+                                    }, new { style = "width:50px;float:left;" }))
+                                    {
+                                        <div id="CommentlikeBox"><button class="btn btn-3d btn-white"><i class="fa fa-thumbs-up"></i>@cm.NumberOfLikes</button></div>
+                                    }
+                                    @using (Ajax.BeginForm("DisLikePostComment", "Comment", new { CommentId = cm.ID }, new AjaxOptions
+                                    {
+                                        UpdateTargetId = "CommentDislikeBox",
+                                        InsertionMode = InsertionMode.Replace,
+                                        HttpMethod = "Post"
+                                    }, new { style = "width:50px;float:left;" }))
+                                    {
+                                        <div id="CommentDislikeBox"><button class="btn btn-3d btn-white"><i class="fa fa-thumbs-down"></i>@cm.NumberOfDislikes</button></div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <h4 class="page-header size-20 margin-bottom-60 margin-top-100">
+                        ارسال <span>دیدگاه</span>
+                    </h4>
+                    <div id="CommentHelper" style="display:none">
+                        <p class="alert alert-info" id="RelatedComment"><i onclick="Clean()" class="fa fa-close" style="color:red;cursor:pointer"></i></p>
+                    </div>
+                    @using (Ajax.BeginForm("AddPostComment", "Comment", new { postid = Model.ID, CommentID = -1 }, new AjaxOptions
+                    {
+                        UpdateTargetId = "AjaxCommentNotification",
+                        InsertionMode = InsertionMode.InsertAfter,
+                        LoadingElementId = "AjaxCommentNotification_Loading",
+                        HttpMethod = "Post"
+                    }, new { id = "CommentForm" }))
+                    {
+
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <label>دیدگاه</label>
+                                    <textarea required="required" maxlength="5000" rows="5" class="form-control" name="Commenttext" id="Commenttext"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <input hidden name="postid" id="postid" value="@Model.ID" />
+
+                        <div class="row">
+                            <div class="col-md-12"style="margin: 8px;">
+
+                                <button class="btn-submit btn-3d btn-lg btn-reveal btn-black">
+                                    <i class="fa fa-check"></i>
+                                    <span>ارسال دیدگاه</span>
+                                </button>
+                                <div id="AjaxCommentNotification_Loading" class="margin-left-10" style="display:none;width: 50px;float:right;">
+                                    <img src="@TempData["WebsiteThemePath"]DefaultContent/Imgs/ajax-load.gif" class="img-responsive" width="30" />
+                                </div>
+                            </div>
+                        </div>
+                        <div id="AjaxCommentNotification">
+                        </div>
+                    }
+                </div>
+                <!-- /COMMENTS -->
+            </div>
+
+              <div class="col-md-3 col-sm-5">
+                <div class="sidebar blog-sidebar">
+                    @Html.Action("MenuPostCounter", "Utility", new { F_MenuID = Model.F_MenuID })
+                    @Html.Action("PopularPosts", "Post", new { F_MenuID = Model.F_MenuID, profile = ViewBag.profile })
+
+                    @Html.Action("PollQuestion", "Poll", new { profile = ViewBag.profile })
+
+                    <div class="sidebar-item tag-cloud">
+                     @Html.Action("TagsList", "Utility", new { PostID = Model.ID, profile = ViewBag.profile })
+
+                    </div>
+                    <div class="sidebar-item popular">
+                      @Html.Action("RecentPosts", "Post", new { F_MenuID = Model.F_MenuID, profile = ViewBag.profile })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--/#blog-->
+
+ 

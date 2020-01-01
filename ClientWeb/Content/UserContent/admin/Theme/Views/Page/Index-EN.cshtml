@@ -1,0 +1,396 @@
+﻿@using ClientWeb.Models.BLL
+@section SliderCSS{
+    <link href="@TempData["WebsiteThemePath"]plugins/slider.swiper/dist/css/swiper.min.css" rel="stylesheet" type="text/css" />
+}
+
+@section jsForThisPage{
+    <!-- SWIPER SLIDER -->
+    <script type="text/javascript" src="@TempData["WebsiteThemePath"]plugins/slider.swiper/dist/js/swiper.min.js"></script>
+    <script type="text/javascript" src="@TempData["WebsiteThemePath"]js/view/demo.swiper_slider.js"></script>
+
+
+}
+<!-- REVOLUTION SLIDER -->
+@Html.Partial("IntroSlider", TempData["WebsiteThemePath"])
+<!-- /REVOLUTION SLIDER -->
+<!-- -->
+<!-- PopUp -->
+@Html.Action("PopUp", "Utility", new { profile = TempData["UserName"] })
+<!-- /PopUp -->
+
+<section style="border-bottom:none;margin-bottom:-105px">
+    <div class="row" style="text-align:center;">
+        <a href="@Url.Action("PageDetail", "Page", new { profile = TempData["UserName"], lang = TempData["lang"], id = 436 })">
+
+            <img src="@TempData["WebsiteThemePath"]images/MizeKhedmat_@(TempData["lang"].ToString()).jpg" style="margin-top: -60px;width:100%;" />
+        </a>
+    </div>
+
+</section>
+
+<section style="border-bottom:none;">
+    <div class="container">
+        <div class="row">
+            <!-- LEFT -->
+            <div class="col-sm-12">
+                <!-- breaking news -->
+                @*@Html.Action("Breakingnews", "Post", new { profile = TempData["UserName"], F_MenuID = 61 })*@
+                @Html.Action("Slider", "Utility", new { profile = TempData["UserName"] })
+                <!-- /breaking news -->
+                <!-- TWO COLUMNS -->
+                <div class="row">
+                    <!-- first column -->
+                    <div class="col-md-8">
+                        @Html.Action("RecentPostsHome", "Post", new { profile = TempData["UserName"], F_MenuID = 484, count = 3 })
+                    </div>
+                    <!-- second column -->
+                    <div class="col-md-4">
+                        @Html.Action("RecentPostsHomeThird", "Post", new { profile = TempData["UserName"], F_MenuID = 506, count = 3 })
+                    </div>
+                </div>
+                <!-- /TWO COLUMNS -->
+            </div>
+            <!-- /LEFT -->
+        </div>
+    </div>
+</section>
+<!-- / -->
+<!-- Parallax -->
+<!--
+    Note: remove class="rounded" from the img for squared image!
+-->
+@{
+    PostManagement pm = new PostManagement();
+    var Newses = pm.RecentPosts(65, 8, TempData["UserName"].ToString());
+}
+<section style="margin-top: -90px;margin-bottom:-70px;">
+    <div class="container">
+        <div class="heading-title heading-dotted text-center" style="margin-top: 15px;">
+            <h4><span style="margin-right: 15px;color: black;">@(TempData["lang"].ToString() == "FA" ? "رویداد ها" : "Events")</span></h4>
+        </div>
+        <div style="margin-top:50px;" class="owl-carousel owl-padding-10 buttons-autohide controlls-over" data-plugin-options='{"singleItem": false, "items":"4", "autoPlay": 4000, "navigation": true, "pagination": false}'>
+            @foreach (var item in Newses)
+            {
+                <div class="img-hover" style="background-color: #ededed;height: 350px;padding:5px;">
+                    <a href="@Url.Action("PostDetail", "Post", new { profile = TempData["UserName"], lang = item.Language, id = item.ID })">
+                        <img class="img-responsive" src="@(!string.IsNullOrEmpty(item.ImagePath) ? Tools.ReturnPathPhysicalMode("DynamicPageImages", TempData["UserName"].ToString(), "AdminAddress", "") + item.ImagePath : @TempData["WebsiteThemePath"]+"DefaultContent/Imgs/Park.png")" alt="">
+                    </a>
+                    <h5 class="text-left margin-top-20" style="text-align:right;line-height:25px;padding:10px;"><a style="direction:rtl;text-align:right" href="@Url.Action("PostDetail", "Post", new { profile = TempData["UserName"], lang = item.Language, id = item.ID })"><span style="float:right;    text-align: center;margin-top: -20px;">@item.Tittle</span></a></h5>
+                    <ul class="text-left size-12 list-inline list-separator" style="padding:10px;">
+                        <li style="float:right;line-height:25px;">
+                            <i class="fa fa-calendar"></i>
+                            @Tools.SpecialJalaliFormat(item.CreatedOnUTC ?? default(DateTime))
+                        </li>
+                    </ul>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+<!-- / -->
+<!-- /Parallax -->
+@*<!-- Courses -->
+    <section>
+        <div class="container">
+
+            <!-- H2 -->
+            <div class="heading-title">
+                <h2>Courses</h2>
+                <p class="font-lato size-18">Lorem ipsum dolor sit amet.</p>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-4">
+                    <img class="img-responsive" src="@TempData["WebsiteThemePath"]images/demo/thematics/education/edu1-min.jpg" alt="img" />
+                    <h3 class="margin-top-10">Chemical Engineering</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas metus nulla, commodo a sodales sed, dignissim pretium nunc. Nam et lacus neque.</p>
+                    <a href="#" class="btn btn-default">VIEW COURSE</a>
+                </div>
+
+                <div class="col-sm-4">
+                    <img class="img-responsive" src="@TempData["WebsiteThemePath"]images/demo/thematics/education/edu2-min.jpg" alt="img" />
+                    <h3 class="margin-top-10">Bachelor of Nursing</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas metus nulla, commodo a sodales sed, dignissim pretium nunc. Nam et lacus neque.</p>
+                    <a href="#" class="btn btn-default">VIEW COURSE</a>
+                </div>
+
+                <div class="col-sm-4">
+                    <img class="img-responsive" src="@TempData["WebsiteThemePath"]images/demo/thematics/education/edu3-min.jpg" alt="img" />
+                    <h3 class="margin-top-10">Mental Health</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas metus nulla, commodo a sodales sed, dignissim pretium nunc. Nam et lacus neque.</p>
+                    <a href="#" class="btn btn-default">VIEW COURSE</a>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+    <!-- /Courses -->
+    <!-- Testimonials -->
+    <section class="padding-xxs dark">
+        <div class="container">
+
+            <div class="owl-carousel text-center owl-testimonial nomargin" data-plugin-options='{"singleItem": true, "autoPlay": 3500, "navigation": false, "pagination": true, "transitionStyle":"fade"}'>
+                <div class="testimonial">
+                    <figure>
+                        <img class="rounded" src="@TempData["WebsiteThemePath"]images/demo/people/300x300/11-min.jpg" alt="" />
+                    </figure>
+                    <div class="testimonial-content nopadding">
+                        <p class="lead">Incidunt deleniti blanditiis quas aperiam recusandae consequatur ullam quibusdam cum libero.</p>
+                        <cite>
+                            Joana Doe
+                            <span>Company Ltd.</span>
+                        </cite>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <figure>
+                        <img class="rounded" src="@TempData["WebsiteThemePath"]images/demo/people/300x300/12-min.jpg" alt="" />
+                    </figure>
+                    <div class="testimonial-content nopadding">
+                        <p class="lead">Quod necessitatibus quis expedita harum provident eos obcaecati id culpa.</p>
+                        <cite>
+                            Melissa Doe
+                            <span>Company Ltd.</span>
+                        </cite>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <!-- /Testimonials -->
+    <!-- Overview -->
+    <section>
+        <div class="container text-center">
+
+            <div class="row text-left">
+
+                <div class="col-sm-8">
+                    <img src="@TempData["WebsiteThemePath"]images/demo/laptop.png" alt="product image" />
+                </div>
+
+                <div class="col-sm-4">
+                    <h3 class="weight-300">Quick <span>Overview</span></h3>
+
+                    <p>Lorem ipsum dolor sit amet, hinc dolores noluisse at vel, ex quod aperiri scaevola has, cum te sanctus denique. Eu liber docendi petentium has, labore.</p>
+                    <p>Etiam falli mentitum id mel, ut mel sumo postulant referrentur. At has minim imperdiet, soluta offendit ocurreret sea an. </p>
+
+                    <hr />
+
+                    <ul class="list-unstyled list-icons">
+                        <li><i class="fa fa-check"></i> Nobis nemore epicuri pro ea</li>
+                        <li><i class="fa fa-check"></i> Qui dicunt singulis dissentias an</li>
+                        <li><i class="fa fa-check"></i> Ea vis diceret constituam</li>
+                        <li><i class="fa fa-check"></i> Mei no autem idque integre, sumo facilis</li>
+                        <li><i class="fa fa-check"></i> Est quodsi labitur moderatius an</li>
+                    </ul>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <!-- /Overview -->*@
+
+
+<section style="margin-bottom:-90px;">
+    <div class="container">
+        @if (TempData["lang"].ToString() == "FA")
+        {
+        <div class="row">
+
+            <div class="col-md-3">
+
+                <div class="box-icon box-icon-center box-icon-round box-icon-transparent box-icon-large box-icon-content" style="background-color:#36ac8b;">
+                    <div class="box-icon-title">
+                        <i class="fa fa-users" style="margin-right:-33px"></i>
+                        <h2>پذیرش و ارزیابی</h2>
+                    </div>
+                    <hr />
+                    <p>
+                        <a href="@Url.Action("PageDetail", "Page", new { profile = TempData["UserName"], lang = TempData["lang"], id = 52 })" class="btn btn-translucid btn-lg btn-block size-16">مزایا و شرایط عضویت</a>
+                        <a href="@Url.Action("PageDetail", "Page", new { profile = TempData["UserName"], lang = TempData["lang"], id = 418 })" class="btn btn-translucid btn-lg btn-block size-16">انواع پذیرش و استقرار</a>
+                        <a href="@Url.Action("PageDetail", "Page", new { profile = TempData["UserName"], lang = TempData["lang"], id = 419 })" class="btn btn-translucid btn-lg btn-block size-16">ارزیابی واحد های مستقر</a>
+                        <a href="@Url.Action("PageDetail", "Page", new { profile = TempData["UserName"], lang = TempData["lang"], id = 420 })" class="btn btn-translucid btn-lg btn-block size-16">شرکت های خدمات پشتیبان</a>
+                        <hr />
+                        <a href="@Url.Action("PageDetail", "Page", new { profile = TempData["UserName"], lang = TempData["lang"], id = 101 })" class="btn btn-translucid btn-lg btn-block btn-reveal">
+                            <i class="fa fa-file-text-o"></i>
+                            <span class="size-16">فرم ها و آئین نامه ها </span>
+                        </a>
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <div class="box-icon box-icon-center box-icon-round box-icon-transparent box-icon-large box-icon-content" style="background-color:#a0ce4e;">
+                    <div class="box-icon-title">
+                        <i class="fa fa-cubes" style="margin-right:-33px"></i>
+                        <h2>مالکیت فکری</h2>
+                    </div>
+                    <hr />
+                    <p>
+                        <a href="@Url.Action("PageDetail", "Page", new { profile = TempData["UserName"], lang = TempData["lang"], id = 103 })" class="btn btn-translucid btn-lg btn-block size-16">ثبت اختراع</a>
+                        <a href="@Url.Action("PageDetail", "Page", new { profile = TempData["UserName"], lang = TempData["lang"], id = 421 })" class="btn btn-translucid btn-lg btn-block size-16">ثبت علامت تجاری</a>
+                        <a href="@Url.Action("PageDetail", "Page", new { profile = TempData["UserName"], lang = TempData["lang"], id = 422 })" class="btn btn-translucid btn-lg btn-block size-16">فرآیند ارزیابی ادعاهای اختراع</a>
+                        <a href="@Url.Action("PageDetail", "Page", new { profile = TempData["UserName"], lang = TempData["lang"], id = 423 })" class="btn btn-translucid btn-lg btn-block size-16">لینک های جستجوی اختراع</a>
+                        <hr />
+                        <a href="@Url.Action("PageDetail", "Page", new { profile = TempData["UserName"], lang = TempData["lang"], id = 424 })" class="btn btn-translucid btn-lg btn-block btn-reveal">
+                            <i class="fa fa-file-text-o"></i>
+                            <span class="size-16">فرم ها و دستورالعمل ها</span>
+                        </a>
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <div class="box-icon box-icon-center box-icon-round box-icon-transparent box-icon-large box-icon-content" style="background-color:#cb9536;">
+                    <div class="box-icon-title">
+                        <i class="fa fa-building" style="margin-right:-33px"></i>
+                        <h2>تجاری سازی</h2>
+                    </div>
+                    <hr />
+                    <p>
+                        <a href="@Url.Action("PageDetail", "Page", new { profile = TempData["UserName"], lang = TempData["lang"], id = 106 })" class="btn btn-translucid btn-lg btn-block size-16">آموزش و مشاوره</a>
+                        <a href="@Url.Action("TagsPost", "Post", new { TagId = 103, profile = TempData["UserName"], TagsText = "رونمایی" })" class="btn btn-translucid btn-lg btn-block size-16">رونمایی محصول</a>
+                        <a href="@Url.Action("PageDetail", "Page", new { profile = TempData["UserName"], lang = TempData["lang"], id = 105 })" class="btn btn-translucid btn-lg btn-block size-16">نمایشگاه ها و رویدادهای تجاری</a>
+                        <a href="@Url.Action("TagsPost", "Post", new { TagId = 108, profile = TempData["UserName"], TagsText = "بازاریابی" })" class="btn btn-translucid btn-lg btn-block size-16">بازاریابی و ارتباط با صنعت</a>
+                        <hr />
+                        <a href="@Url.Action("PageDetail", "Page", new { profile = TempData["UserName"], lang = TempData["lang"], id = 104 })" class="btn btn-translucid btn-lg btn-block btn-reveal">
+                            <i class="fa fa-file-text-o"></i>
+                            <span class="size-16">واحدهای فناور</span>
+                        </a>
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <div class="box-icon box-icon-center box-icon-round box-icon-transparent box-icon-large box-icon-content" style="background-color:#73b9dc;">
+                    <div class="box-icon-title">
+                        <i class="fa fa-desktop " style="margin-right:-33px"></i>
+                        <h2>سامانه ها</h2>
+                    </div>
+                    <hr />
+                    <p>
+                        <a href="#" class="btn btn-translucid btn-lg btn-block size-16"> ثبت نام آنلاین مشاورین علمی</a>
+                        <a href="http://didgah.wastp.ir/Pages/UserLogin.aspx?rqt=2" class="btn btn-translucid btn-lg btn-block size-16"> اتوماسیون مکاتبات اداری</a>
+                        <a href="http://mis.wastp.ir/Account/Login.aspx?ReturnUrl=%2f" class="btn btn-translucid btn-lg btn-block size-16"> سامانه پذیرش آنلاین</a>
+                        <a href="http://webmail.wastp.ir/Login.aspx" class="btn btn-translucid btn-lg btn-block size-16"> سامانه پست الکترونیکی </a>
+                        <hr />
+                        <a href="#" class="btn btn-translucid btn-lg btn-block btn-reveal">
+                            <i class="fa fa-map-signs"></i>
+                            <span class="size-16">نقشه سایت</span>
+                        </a>
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+        }
+        else
+        {
+            <div class="row">
+
+                <div class="col-md-3">
+
+                    <div class="box-icon box-icon-center box-icon-round box-icon-transparent box-icon-large box-icon-content" style="background-color:#36ac8b;">
+                        <div class="box-icon-title">
+                            <i class="fa fa-users" style="margin-right:-33px"></i>
+                            <h2>Acceptance and evaluation</h2>
+                        </div>
+                        <hr />
+                        <p>
+                            <a href="@Url.Action("PageDetail", "Page", new { profile = TempData["UserName"], lang = TempData["lang"], id = 52 })" class="btn btn-translucid btn-lg btn-block size-16">Benefits and membership</a>
+                            <a href="@Url.Action("PageDetail", "Page", new { profile = TempData["UserName"], lang = TempData["lang"], id = 418 })" class="btn btn-translucid btn-lg btn-block size-16">reception and deployment</a>
+                            <a href="@Url.Action("PageDetail", "Page", new { profile = TempData["UserName"], lang = TempData["lang"], id = 419 })" class="btn btn-translucid btn-lg btn-block size-16">Assessment of deployed units</a>
+                            <a href="@Url.Action("PageDetail", "Page", new { profile = TempData["UserName"], lang = TempData["lang"], id = 420 })" class="btn btn-translucid btn-lg btn-block size-16">Backup service companies</a>
+                            <hr />
+                            <a href="@Url.Action("PageDetail", "Page", new { profile = TempData["UserName"], lang = TempData["lang"], id = 101 })" class="btn btn-translucid btn-lg btn-block btn-reveal">
+                                <i class="fa fa-file-text-o"></i>
+                                <span class="size-16">Forms and regulations</span>
+                            </a>
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <div class="box-icon box-icon-center box-icon-round box-icon-transparent box-icon-large box-icon-content" style="background-color:#a0ce4e;">
+                        <div class="box-icon-title">
+                            <i class="fa fa-cubes" style="margin-right:-33px"></i>
+                            <h2>Intellectual Property</h2>
+                        </div>
+                        <hr />
+                        <p>
+                            <a href="@Url.Action("PageDetail", "Page", new { profile = TempData["UserName"], lang = TempData["lang"], id = 103 })" class="btn btn-translucid btn-lg btn-block size-16">Patent</a>
+                            <a href="@Url.Action("PageDetail", "Page", new { profile = TempData["UserName"], lang = TempData["lang"], id = 421 })" class="btn btn-translucid btn-lg btn-block size-16">Trademark registration</a>
+                            <a href="@Url.Action("PageDetail", "Page", new { profile = TempData["UserName"], lang = TempData["lang"], id = 422 })" class="btn btn-translucid btn-lg btn-block size-16">Evaluating patent claims</a>
+                            <a href="@Url.Action("PageDetail", "Page", new { profile = TempData["UserName"], lang = TempData["lang"], id = 423 })" class="btn btn-translucid btn-lg btn-block size-16">Inventory search links</a>
+                            <hr />
+                            <a href="@Url.Action("PageDetail", "Page", new { profile = TempData["UserName"], lang = TempData["lang"], id = 424 })" class="btn btn-translucid btn-lg btn-block btn-reveal">
+                                <i class="fa fa-file-text-o"></i>
+                                <span class="size-16">Forms and instructions</span>
+                            </a>
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <div class="box-icon box-icon-center box-icon-round box-icon-transparent box-icon-large box-icon-content" style="background-color:#cb9536;">
+                        <div class="box-icon-title">
+                            <i class="fa fa-building" style="margin-right:-33px"></i>
+                            <h2>Commercialization</h2>
+                        </div>
+                        <hr />
+                        <p>
+                            <a href="@Url.Action("PageDetail", "Page", new { profile = TempData["UserName"], lang = TempData["lang"], id = 106 })" class="btn btn-translucid btn-lg btn-block size-16">Education and counseling</a>
+                            <a href="@Url.Action("TagsPost", "Post", new { TagId = 103, profile = TempData["UserName"], TagsText = "رونمایی" })" class="btn btn-translucid btn-lg btn-block size-16">Product launch</a>
+                            <a href="@Url.Action("PageDetail", "Page", new { profile = TempData["UserName"], lang = TempData["lang"], id = 105 })" class="btn btn-translucid btn-lg btn-block size-16">Exhibitions and business event</a>
+                            <a href="@Url.Action("TagsPost", "Post", new { TagId = 108, profile = TempData["UserName"], TagsText = "بازاریابی" })" class="btn btn-translucid btn-lg btn-block size-16">communication with industry</a>
+                            <hr />
+                            <a href="@Url.Action("PageDetail", "Page", new { profile = TempData["UserName"], lang = TempData["lang"], id = 104 })" class="btn btn-translucid btn-lg btn-block btn-reveal">
+                                <i class="fa fa-file-text-o"></i>
+                                <span class="size-16">Technology units</span>
+                            </a>
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <div class="box-icon box-icon-center box-icon-round box-icon-transparent box-icon-large box-icon-content" style="background-color:#73b9dc;">
+                        <div class="box-icon-title">
+                            <i class="fa fa-desktop " style="margin-right:-33px"></i>
+                            <h2>Systems</h2>
+                        </div>
+                        <hr />
+                        <p>
+                            <a href="#" class="btn btn-translucid btn-lg btn-block size-16">Consultant Registration</a>
+                            <a href="http://didgah.wastp.ir/Pages/UserLogin.aspx?rqt=2" class="btn btn-translucid btn-lg btn-block size-16">Automation Correspondence</a>
+                            <a href="http://mis.wastp.ir/Account/Login.aspx?ReturnUrl=%2f" class="btn btn-translucid btn-lg btn-block size-16">Online admission system</a>
+                            <a href="http://webmail.wastp.ir/Login.aspx" class="btn btn-translucid btn-lg btn-block size-16">Email system</a>
+                            <hr />
+                            <a href="#" class="btn btn-translucid btn-lg btn-block btn-reveal">
+                                <i class="fa fa-map-signs"></i>
+                                <span class="size-16">Sitemap</span>
+                            </a>
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+        }
+    </div>
+</section>

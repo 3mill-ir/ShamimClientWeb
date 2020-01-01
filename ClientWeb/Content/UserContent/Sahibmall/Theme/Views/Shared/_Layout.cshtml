@@ -1,0 +1,201 @@
+﻿@using ClientWeb.Models.BLL
+@using ClientWeb.Models
+<!DOCTYPE html>
+@if (string.IsNullOrEmpty((TempData["FanBazar_User"] as AccountAuthorizeModel).UserName))
+{
+
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="@TempData["WebsiteThemePath"]assets/lib/bootstrap/css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="@TempData["WebsiteThemePath"]assets/lib/font-awesome/css/font-awesome.min.css" />
+        <link rel="stylesheet" type="text/css" href="@TempData["WebsiteThemePath"]assets/lib/select2/css/select2.min.css" />
+        <link rel="stylesheet" type="text/css" href="@TempData["WebsiteThemePath"]assets/lib/jquery.bxslider/jquery.bxslider.css" />
+        <link rel="stylesheet" type="text/css" href="@TempData["WebsiteThemePath"]assets/lib/owl.carousel/owl.carousel.css" />
+        <link rel="stylesheet" type="text/css" href="@TempData["WebsiteThemePath"]assets/lib/jquery-ui/jquery-ui.css" />
+        <link rel="stylesheet" type="text/css" href="@TempData["WebsiteThemePath"]assets/css/animate.css" />
+        <link rel="stylesheet" type="text/css" href="@TempData["WebsiteThemePath"]assets/css/reset.css" />
+        <link rel="stylesheet" type="text/css" href="@TempData["WebsiteThemePath"]assets/css/style.css" />
+        <link rel="stylesheet" type="text/css" href="@TempData["WebsiteThemePath"]assets/css/responsive.css" />
+        @RenderSection("CSS_Requested", required: false)
+        <link rel="icon" href="@TempData["WebsiteThemePath"]assets/images/logo.png" type="image/x-icon">
+        <title>صاحیب مال</title>
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/jqueryajax")
+    </head>
+    <body class="home">
+        <!-- HEADER -->
+        <div id="header" class="header" style="font-family: 'Vazir FD',Arial,sans-serif;">
+            @Html.Action("MainMenu", "Utility", new { profile = TempData["UserName"], lang = TempData["lang"] })
+        </div>
+        <!-- end header -->
+        <!-- Main Section -->
+        @RenderBody()
+        <!-- End Main Section -->
+        <!-- Footer -->
+        @Html.Action("Footer", "Utility", new { profile = TempData["UserName"] })
+        <a href="#" class="scroll_top" title="Scroll to Top" style="display: inline;">Scroll</a>
+        <!-- Script-->
+        <script type="text/javascript" src="@TempData["WebsiteThemePath"]assets/lib/jquery/jquery-1.11.2.min.js"></script>
+        <script type="text/javascript" src="@TempData["WebsiteThemePath"]assets/lib/bootstrap/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="@TempData["WebsiteThemePath"]assets/lib/select2/js/select2.min.js"></script>
+        <script type="text/javascript" src="@TempData["WebsiteThemePath"]assets/lib/jquery.bxslider/jquery.bxslider.min.js"></script>
+        <script type="text/javascript" src="@TempData["WebsiteThemePath"]assets/lib/owl.carousel/owl.carousel.min.js"></script>
+        <script type="text/javascript" src="@TempData["WebsiteThemePath"]assets/lib/jquery.countdown/jquery.countdown.min.js"></script>
+        <script type="text/javascript" src="@TempData["WebsiteThemePath"]assets/js/jquery.actual.min.js"></script>
+        <script type="text/javascript" src="@TempData["WebsiteThemePath"]assets/js/theme-script.js"></script>
+        @RenderSection("js_Requested", required: false)
+    </body>
+</html>
+}
+else
+{
+
+
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="@TempData["WebsiteThemePath"]assets/lib/bootstrap/css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="@TempData["WebsiteThemePath"]assets/lib/font-awesome/css/font-awesome.min.css" />
+        <link rel="stylesheet" type="text/css" href="@TempData["WebsiteThemePath"]assets/lib/select2/css/select2.min.css" />
+        <link rel="stylesheet" type="text/css" href="@TempData["WebsiteThemePath"]assets/lib/jquery.bxslider/jquery.bxslider.css" />
+        <link rel="stylesheet" type="text/css" href="@TempData["WebsiteThemePath"]assets/lib/owl.carousel/owl.carousel.css" />
+        <link rel="stylesheet" type="text/css" href="@TempData["WebsiteThemePath"]assets/lib/jquery-ui/jquery-ui.css" />
+        <link rel="stylesheet" type="text/css" href="@TempData["WebsiteThemePath"]assets/css/animate.css" />
+        <link rel="stylesheet" type="text/css" href="@TempData["WebsiteThemePath"]assets/css/reset.css" />
+        <link rel="stylesheet" type="text/css" href="@TempData["WebsiteThemePath"]assets/css/style.css" />
+        <link rel="stylesheet" type="text/css" href="@TempData["WebsiteThemePath"]assets/css/responsive.css" />
+        @RenderSection("CSS_Requested", required: false)
+        <link rel="icon" href="@TempData["WebsiteThemePath"]assets/images/logo.png" type="image/x-icon">
+        <style>
+            @@media only screen and (max-width: 600px) {
+                #SearchPannel {
+                    padding-right: 20px !important;
+                    padding-left: 16px !important;
+                    margin-top: -65px;
+                }
+
+                #LogoPannel {
+                    margin-top: 50px !important;
+                }
+
+                    #LogoPannel > a > img {
+                        height: 65px !important;
+                    }
+
+                #AccountPannel {
+                    margin-top: 50px;
+                    margin-right: 60px;
+                }
+
+                    #AccountPannel > div > img {
+                        display: none !important;
+                    }
+
+                .container {
+                    padding-right: 40px;
+                }
+
+                #SliderPannel {
+                    padding-right: 10px;
+                }
+            }
+        </style>
+        <title>صاحیب مال</title>
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/jqueryajax")
+    </head>
+    <body class="home">
+        <!-- HEADER -->
+        <div id="header" class="header">
+            <div class="container main-header" style="font-family: 'Vazir FD',Arial,sans-serif;">
+                <div class="row">
+                    <div class="col-sm-3 col-lg-3" id="AccountPannel">
+                        <div style="margin-top:16px;">
+                            <a href="@Url.Action("RegisterUser", "Account",new { profile=TempData["UserName"],lang="FA"})" style="width: 34%; border-radius: 2px;color: #fff; font-weight: bold;padding: 12px;float: right; margin-left: 2px;text-align: center;background-color: #b2d233;"><span>ثبت نام</span></a>
+                            @if (string.IsNullOrEmpty((TempData["FanBazar_User"] as AccountAuthorizeModel).UserName))
+                {
+                                <a href="@Url.Action("Login", "Account",new { profile=TempData["UserName"],lang="FA"})" style="width: 62%;border-radius: 2px;color: #fff;font-weight: bold;background-color: #2a3259;padding: 12px;float: right;margin-right: 2px;text-align: center;"> <i style="margin-top: 3px;" class="fa fa-sign-in"></i> ورود</a>
+                            }
+                            else
+                            {
+                                <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 62%; border-radius: 2px;font-weight: bold;padding: 12px;float: right; margin-right:5px;text-align: center;">
+                                    سلام @((TempData["FanBazar_User"] as AccountAuthorizeModel).UserName)
+                                    <span class="caret" style="color:white;"></span>
+                                </a>
+                                <ul class="dropdown-menu mega_dropdown" style="z-index:5000">
+                                    <li> <a href="@Url.Action("PageDetail", "Page", new { profile =TempData["UserName"], lang = TempData["lang"], id = 0 })"><i class="fa fa-user" style="margin-left: 10px;margin-top: 2px;"></i>پنل من</a></li>
+                                    <li> <a href="@Url.Action("OrderedList", "ShoppingCart", new { profile = TempData["UserName"], lang = TempData["lang"] })"><i class="fa fa-shopping-cart" style="margin-left: 10px;margin-top: 2px;"></i>سفارش های من</a></li>
+                                    <li> <a href="@Url.Action("EditProfile","Account",new { profile = TempData["UserName"], lang = TempData["lang"]})"><i class="fa fa-edit" style="margin-left: 10px;margin-top: 2px;"></i>ویرایش حساب کاربری</a></li>
+                                    <li><a href="@Url.Action("ChangePassword","Account",new { profile = TempData["UserName"], lang = TempData["lang"] })"><i class="fa fa-lock" style="margin-left: 10px;margin-top: 2px;"></i>ویرایش کلمه عبور</a></li>
+                                    <li><a href="javascript:document.getElementById('logoutForm').submit()"><i class="fa fa-power-off" style="margin-left: 10px;margin-top: 2px;"></i>خروج از ناحیه کاربری</a></li>
+                                </ul>
+                            }
+                            @*@if (!string.IsNullOrEmpty(TempData["LoginResult"] as string))
+                                {
+                                            <a style="color:@(TempData["LoginResult"].ToString().Split(',')[1]);">@TempData["LoginResult"].ToString().Split(',')[0]</a>
+                                        }*@
+                            @using (Html.BeginForm("LogOff", "Account", new { profile = "sahibmall" }, FormMethod.Post, new { id = "logoutForm", style = "display:none;" }))
+                            {
+                                @Html.AntiForgeryToken()
+                            }
+                        </div>
+                    </div>
+
+
+                    <div class="col-sm-5 header-search-box" style="padding-right: 4px;padding-left: 0px;" id="SearchPannel">
+                        @using (Html.BeginForm("SearchItem", "Item", null, FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-inline" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="form-group form-category">
+                                <select class="select-category select2-hidden-accessible" id="CatID" name="CatID" style="width: 30%;" tabindex="-1" aria-hidden="true">
+                                    <option value="شرکت ها">شرکت ها</option>
+                                    <option value="محصولات">محصولات</option>
+                                </select>
+                            </div>
+                            <div class="form-group input-serach" style="width: 60%;">
+                                <input type="text" placeholder="کلمات کلیدی را وارد کنید ...">
+                            </div>
+                            <button type="submit" class="pull-left btn-search"></button>
+                        }
+                    </div>
+
+                    @Html.Action("ShoppingCart", "Utility")
+
+                    <div class="col-sm-2 col-lg-2 logo" style="margin-top:15px;" id="LogoPannel">
+                        <a href="@Url.Action("PageDetail", "Page", new { profile = TempData["UserName"], lang = "FA", id = 187 })"><img style="margin: -35px 0;height: 105px;margin-right: 24px;" alt="" src="@TempData["WebsiteThemePath"]assets/images/logo.png" /></a>
+                    </div>
+
+                </div>
+            </div>
+            <!--/.top-header -->
+            @Html.Action("SpecialMenu", "Utility", new { CurrentState = ViewBag.CurrentState, lang = ViewBag.lang })
+        </div>
+        <!-- end header -->
+        <!-- Main Section -->
+        @RenderBody()
+        <!-- End Main Section -->
+        <!-- Footer -->
+        @{
+            MenuManagement mn = new MenuManagement();
+            TempData["Menu"] = mn.LoadMenu(ViewBag.profile, "StaticPost,DynamicPost,NoneStaticDynamic", ViewBag.lang);
+        }
+        @Html.Action("Footer", "Utility", new { profile = TempData["UserName"] })
+        <a href="#" class="scroll_top" title="Scroll to Top" style="display: inline;">Scroll</a>
+        <!-- Script-->
+        <script type="text/javascript" src="@TempData["WebsiteThemePath"]assets/lib/jquery/jquery-1.11.2.min.js"></script>
+        <script type="text/javascript" src="@TempData["WebsiteThemePath"]assets/lib/bootstrap/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="@TempData["WebsiteThemePath"]assets/lib/select2/js/select2.min.js"></script>
+        <script type="text/javascript" src="@TempData["WebsiteThemePath"]assets/lib/jquery.bxslider/jquery.bxslider.min.js"></script>
+        <script type="text/javascript" src="@TempData["WebsiteThemePath"]assets/lib/owl.carousel/owl.carousel.min.js"></script>
+        <script type="text/javascript" src="@TempData["WebsiteThemePath"]assets/lib/jquery.countdown/jquery.countdown.min.js"></script>
+        <script type="text/javascript" src="@TempData["WebsiteThemePath"]assets/js/jquery.actual.min.js"></script>
+        <script type="text/javascript" src="@TempData["WebsiteThemePath"]assets/js/theme-script.js"></script>
+        @RenderSection("js_Requested", required: false)
+    </body>
+</html>
+
+
+            }

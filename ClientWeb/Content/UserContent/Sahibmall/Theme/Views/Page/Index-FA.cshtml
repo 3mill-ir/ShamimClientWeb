@@ -1,0 +1,138 @@
+﻿
+@using ClientWeb.Models.BLL;
+@using ClientWeb.Models;
+@if (string.IsNullOrEmpty((TempData["FanBazar_User"] as AccountAuthorizeModel).UserName))
+{
+    <!-- Home slideder-->
+    <div id="home-slider">
+        <div class="container" id="SliderPannel">
+            <div class="row" style="margin-right:15px;">
+                @Html.Action("Slider", "Utility")
+            </div>
+        </div>
+    </div>
+    <!-- END Home slideder-->
+    <!-- servives -->
+    <div class="container">
+        <div class="service " style="line-height:35px;">
+            <div class="col-xs-6 col-sm-3 service-item">
+                <div class="icon">
+                    <img alt="services" src="@TempData["WebsiteThemePath"]assets/data/s1.png" />
+                </div>
+                <div class="info">
+                    <a href="@Url.Action("FormDetail","Item",new {ID=388, FormName="فرم درخواست قیمت حمل و نقل" })"><h3>درخواست نرخ حمل و نقل</h3></a>
+                    <span>محاسبه هزینه حمل و نقل</span>
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-3 service-item">
+                <div class="icon">
+                    <img alt="services" src="@TempData["WebsiteThemePath"]assets/data/s2.png" />
+                </div>
+                <div class="info">
+                    <a href="@Url.Action("PageDetail", "Page", new { profile = TempData["UserName"], lang = "FA", id = 0 })"><h3>جستجوی پیشرفته</h3></a>
+                    <span>جستجوی محصول مورد نظر</span>
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-3 service-item">
+                <div class="icon">
+                    <img alt="services" src="@TempData["WebsiteThemePath"]assets/data/s3.png" />
+                </div>
+
+                <div class="info">
+                    <a href="@Url.Action("PageDetail", "Page", new { profile = TempData["UserName"], lang = "FA", id = 203 })"><h3>24/7 پشتیبانی</h3></a>
+                    <span>کارشناسان آنلاین</span>
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-3 service-item">
+                <div class="icon">
+                    <img alt="services" src="@TempData["WebsiteThemePath"]assets/data/s4.png" />
+                </div>
+                <div class="info">
+                    <a href="@Url.Action("FormDetail","Item",new {ID=389, FormName="فرم درخواست قیمت" })"><h3>درخواست قیمت</h3></a>
+                    <span>آخرین قیمت ها را از ما بخواهید</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end services -->
+
+    <div class="content-page">
+        <div class="container">
+            <div class="category-featured" id="ItemBox_1">@Html.Action("ItemBox", "Utility", new { Color = "gray", CategoryName = "کشاورزی و محصولات غذایی", count = 15, profile = @TempData["UserName"], ID = 192,Adad=1 })</div>
+            <div class="category-featured" id="ItemBox_2">@Html.Action("ItemBox", "Utility", new { Color = "gray", CategoryName = "پوشاک", count = 15, profile = @TempData["UserName"], ID = 190, Adad = 2 })</div>
+            <div class="category-featured" id="ItemBox_3">@Html.Action("ItemBox", "Utility", new { Color = "gray", CategoryName = "لوازم خانگی", count = 15, profile = @TempData["UserName"], ID = 193, Adad = 3 })</div>
+            <div class="category-featured" id="ItemBox_3">@Html.Action("ItemBox", "Utility", new { Color = "gray", CategoryName = "صنایع دستی و زیور آلات", count = 15, profile = @TempData["UserName"], ID = 191, Adad = 4 })</div>
+            <div class="category-featured" id="ItemBox_3">@Html.Action("ItemBox", "Utility", new { Color = "gray", CategoryName = "ماشین آلات، تاسیسات صنعتی", count = 15, profile = @TempData["UserName"], ID = 195, Adad = 5 })</div>
+            <div class="category-featured" id="ItemBox_3">@Html.Action("ItemBox", "Utility", new { Color = "gray", CategoryName = "خدمات کسب و کار", count = 15, profile = @TempData["UserName"], ID = 337, Adad = 6 })</div>
+        </div>
+    </div>
+
+    @Html.Action("RecentPostsHome", "Post", new { profile = TempData["UserName"], F_MenuID = -1, count = 8 })
+    <script>
+    document.getElementById('CatMenuBtn').click();
+    </script>
+}
+else
+{
+    ViewBag.CurrentState = "News";
+    <div class="columns-container">
+        <div class="container" id="columns">
+            <!-- row -->
+            <div class="row">
+                <!-- Center colunm-->
+                <div class="center_column col-xs-12 col-sm-9" id="center_column">
+                    <h2 class="page-heading" style="margin-bottom: 20px;margin-top: 7px;border-bottom:none;">
+                        آخرین خبر ها
+                    </h2>
+                    <ul class="blog-posts">
+                        @{ 
+                            PostManagement pm = new PostManagement();
+                            var mod = pm.RecentPosts(-1, 10, TempData["UserName"] as string);
+                            ViewBag.PrePath = Tools.ReturnPathPhysicalMode("DynamicPageImages", TempData["UserName"].ToString(), "AdminAddress", "PostListView");
+                        }
+                        @foreach (var item in mod as List<ClientWeb.Models.DataModels.PostDataModel>)
+                        {
+                        <li class="post-item">
+                            <article class="entry">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="entry-ci">
+                                            <h3 class="entry-title"><a target="_blank" href="@Url.Action("PostDetail","Post", new {profile=TempData["UserName"], lang = item.Language, id = item.ID })">@item.Tittle</a></h3>
+                                            <div class="entry-meta-data">
+                                                <span class="author">
+                                                    <i class="fa fa-user"></i>
+                                                    نوشته شده توسط: <a href="#">ادمین</a>
+                                                </span>
+                                                <span class="comment-count">
+                                                    <i class="fa fa-comment-o"></i> @item.NumberOfComments
+                                                </span>
+                                                <span class="comment-count">
+                                                    <i class="fa fa-thumbs-o-up"></i> @item.NumberOfLikes
+                                                </span>
+                                                <span class="comment-count">
+                                                    <i class="fa fa-thumbs-o-down"></i> @item.NumberOfDislikes
+                                                </span>
+                                                <span class="date"><i class="fa fa-calendar"></i>@ClientWeb.Models.BLL.Tools.GetDateTimeReturnJalaliDate(item.CreatedOnUTC ?? default(DateTime))</span>
+                                            </div>
+                                            <div class="entry-more">
+                                                <a target="_blank" href="@Url.Action("PostDetail","Post", new {profile=TempData["UserName"], lang = item.Language, id = item.ID })">اطلاعات بیشتر</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        </li>
+                        }
+                    </ul>
+                </div>
+                <!-- ./ Center colunm -->
+                <!-- Left colunm -->
+                <div class="column col-xs-12 col-sm-3" id="left_column">
+                    @Html.Action("UserIntroduction", "Utility", new { profile = TempData["UserName"] })
+                </div>
+                <!-- ./left colunm -->
+            </div>
+            <!-- ./row-->
+        </div>
+    </div>
+}

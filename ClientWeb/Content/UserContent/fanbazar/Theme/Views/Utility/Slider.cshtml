@@ -1,0 +1,22 @@
+﻿@model IEnumerable<ClientWeb.Models.DataModels.SliderModel>
+    @using ClientWeb.CustomHelper;
+<div class="master-slider ms-skin-default" id="masterslider">
+    @foreach (var item in Model)
+    {
+        string path = string.IsNullOrEmpty(item.Img) ? @TempData["WebsiteThemePath"] + "Slider/NoImage.jpg" : Html.ReturnPathPhysicalMode("SliderPath",TempData["UserName"] as string, "AdminAddress","SliderView") +item.Img;
+        <div class="ms-slide slide-1" data-delay="9">
+            <img src="@path" data-src="@path" alt=""/>
+            <a href="@item.Link">
+                <h4 class="ms-layer text1" style="top: 460px;margin-right:60px;text-align:right;" data-type="text" data-delay="2500" data-ease="easeOutExpo" data-duration="1230" data-effect="right(250)">
+                    @item.Title
+                </h4>
+            </a>
+            <a href="@item.Link">
+                <h5 class="ms-layer text1" style="top: 510px;margin-right:60px;text-align:right;font-size:22px;" data-type="text" data-delay="2500" data-ease="easeOutExpo" data-duration="1230" data-effect="right(250)">
+                    @item.Description
+                </h5>
+            </a>
+        </div>
+    }
+</div>
+<div class="clearfix"></div>

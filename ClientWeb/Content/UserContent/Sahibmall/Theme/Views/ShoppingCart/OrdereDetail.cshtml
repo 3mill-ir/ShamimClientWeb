@@ -1,0 +1,140 @@
+﻿@model ClientWeb.Models.DataModels.Shop
+@using ClientWeb.Models.BLL
+@using ClientWeb.Models.DataModels
+@{
+    ViewBag.CurrentState = "OrderedList";
+    int count = 0;
+}
+<div class="columns-container">
+    <div class="container" id="columns">
+        <!-- row -->
+        <div class="row">
+            <!-- Center colunm-->
+            <div class="center_column col-xs-12 col-sm-6" id="center_column">
+                <h2 class="page-heading" style="margin-bottom: 20px;margin-top: 7px;border-bottom:none;">
+                    جزئیات سفارش
+                </h2>
+                <div class="block left-module" style="font-family: 'Vazir FD',Arial,sans-serif;margin-top:25px;">
+                    <div class="block_content">
+                        <!-- layered -->
+                        @{
+                            var Account = TempData["Account"] as UserInformationDataModel;
+                            string PayState = Model.Payed == true ? "پرداخت موفق" : "پرداخت نشده";
+                            string OrderState = Model.State == "Ordered" ? "سفارش در صف بررسی" : Model.State == "Delivered" ? "سفارش برای شما ارسال شده" : Model.State == "Recieved" ? "سفارش تحویل داده شده" : Model.State=="Processing"?"آماده سازی سفارش": "نامعلوم";
+                        }
+                        <div class="layered">
+                            <div class="layered-content">
+                                <ul class="blog-list-sidebar clearfix">
+                                    <li>
+                                        <div class="post-info" style="float: right;width: 100%;margin: 0;">
+                                            <div class="post-meta" style="line-height: 30px;font-size: 15px;">
+                                                <span class="date" style="float: right;width: 100%;">تحویل گیرنده : @Account.FirstName @Account.LastName</span>
+                                                <span class="date" style="float: right;width: 100%;">آدرس تحویل گیرنده : @Account.Address</span>
+                                                <span class="date" style="float: right;width: 100%;">شیوه پرداخت : @Model.PayType</span>
+                                                <span class="date" style="float: right;width: 100%;">تاریخ ثبت سفارش : @Tools.SpecialJalaliFormat(Model.OrderedDate ?? default(DateTime))</span>
+                                                <span class="date" style="float: right;width: 100%;">مبلغ فاکتور : @Tools.PriceString(Model.TotalPrice)</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- ./layered -->
+                    </div>
+                </div>
+            </div>
+            <div class="center_column col-xs-12 col-sm-6" id="center_column">
+                <div class="block left-module" style="font-family: 'Vazir FD',Arial,sans-serif;margin-top:70px;">
+                    <div class="block_content">
+                        <!-- layered -->
+                        <div class="layered">
+                            <div class="layered-content">
+                                <ul class="blog-list-sidebar clearfix">
+                                    <li>
+                                        <div class="post-info" style="float: right;width: 100%;margin: 0;">
+                                            <div class="post-meta" style="line-height: 30px;font-size: 15px;">
+                                                <span class="date" style="width: 100%;float: right;">شماره تماس تحویل گیرنده : @Account.Tell</span>
+                                                <span class="date" style="width: 100%;float: right;">تعداد مرسوله : @Model.ShopItem.Count</span>
+                                                <span class="date" style="float: right;width: 100%;">وضعیت پرداخت : @PayState</span>
+                                                <span class="date" style="float: right;width: 100%;">کد سفارش : @TempData["UserName"]_@Model.ID</span>
+                                                <span class="date" style="float: right;width: 100%;">هزینه ارسال : @Tools.PriceString(Model.DeliveryCost)</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- ./layered -->
+                    </div>
+                </div>
+            </div>
+            <div class="center_column col-xs-12 col-sm-12" id="center_column">
+                <div class="block left-module" style="font-family: 'Vazir FD',Arial,sans-serif;">
+                    <div class="block_content" style="margin-bottom: 20px;border-bottom: 2px solid;border-top: 2px solid;border-color: lightgray;">
+                        <!-- layered -->
+                        <div class="layered">
+                            <div class="layered-content">
+                                <ul class="blog-list-sidebar clearfix">
+                                    <li>
+                                        <div class="post-info" style="float: right;width: 100%;margin: 0;">
+                                            <div class="post-meta" style="font-size:15px;line-height: 30px;">
+                                                وضعیت سفارش : @OrderState
+                                            </div>
+                                            <div class="post-meta" style="font-size:15px;line-height: 50px;">
+                                                امکان تاخیر در تحویل سفارش : حداکثر دو روز کاری
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- ./layered -->
+                    </div>
+                </div>
+            </div>
+            <!-- ./ Center colunm -->
+            <!-- Left colunm -->
+            <div class="column col-xs-12 col-sm-12" id="left_column"  style="font-family: 'Vazir FD',Arial,sans-serif;">
+                @if (Model.ShopItem.Count > 0)
+                {
+                <table class="table table-bordered table-responsive cart_summary" style="width:100%;margin:0 auto;">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th style="text-align:center;">نام محصول</th>
+                            <th style="text-align:center;">تعداد</th>
+                            <th style="text-align:center;">قیمت واحد</th>
+                            <th style="text-align:center;">قیمت کل</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model.ShopItem)
+                            {
+                            <tr>
+                                <td class="cart_description" style="width: 10%;text-align:center;">
+                                    <img src="@(!string.IsNullOrEmpty(item.Item.Image) ? ViewBag.PrePath + item.Item.Image : "/Content/DefaultContent/Imgs/No_Image.png")" alt="Product">
+                                </td>
+                                <td class="cart_description" style="width: 40%;text-align:center;">
+                                    <span>@item.Item.Name</span>
+                                </td>
+                                <td class="qty" style="text-align:center;width: 10%;">
+                                    <span class="form-control input-sm">@item.Count</span>
+                                </td>
+                                <td class="price" style="text-align:center;width: 20%;"><span>@Tools.PriceString(item.Item.Price) تومان</span></td>
+                                <td class="price" style="text-align:center;width: 20%;"><span>@Tools.PriceString((item.Count * double.Parse(item.Item.Price)).ToString()) تومان</span></td>
+                            </tr>
+                            }
+                    </tbody>
+                </table>
+                }
+                else
+                {
+                <span>اطلاعات مورد نظر یافت نشد !</span>
+                }
+            </div>
+            <!-- ./left colunm -->
+        </div>
+        <!-- ./row-->
+    </div>
+</div>

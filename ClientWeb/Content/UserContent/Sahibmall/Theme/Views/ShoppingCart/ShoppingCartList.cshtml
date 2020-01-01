@@ -1,0 +1,228 @@
+﻿@model ClientWeb.Models.DataModels.ShopPagedList
+@using ClientWeb.Models.BLL
+@{
+    ViewBag.CurrentState = "ShoppingCart";
+    int count = 0;
+}
+<style>
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    /* Modal Content/Box */
+    .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto; /* 15% from the top and centered */
+        padding: 20px;
+        border: 1px solid #888;
+        width: 600px; /* Could be more or less, depending on screen size */
+        height: 200px;
+    }
+
+    /* The Close Button */
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        margin-top: -20px !important;
+    }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+    .modal-btn {
+        background-color: #ca0303;
+        padding: 8px;
+        width: 100px;
+        border-radius: 5px;
+        color: white;
+    }
+</style>
+<div class="columns-container">
+    <div class="container" id="columns">
+        <!-- row -->
+        <div class="row">
+            <!-- Center colunm-->
+            <div class="center_column col-xs-12 col-sm-9" id="center_column">
+                <h2 class="page-heading" style="margin-bottom: 20px;margin-top: 7px;border-bottom:none;">
+                    سبد خرید
+                </h2>
+                @if (Model.ShopList.Count > 0 && Model.ShopList.FirstOrDefault().ShopItem.Count > 0)
+                {
+                    <table class="table table-bordered table-responsive cart_summary">
+                        @using (Html.BeginForm("EditCartItem", "ShoppingCart", null, FormMethod.Post, null))
+                        {
+                            <tbody>
+                                @Html.AntiForgeryToken()
+                                @foreach (var item in Model.ShopList.FirstOrDefault().ShopItem.OrderByDescending(u => u.CreatedDateOnUtc))
+                                {
+                                    @Html.Hidden("[" + count + "].ID", item.ID)
+                                    @Html.Hidden("[" + count + "].F_ItemID", item.F_ItemID)
+                                    <tr>
+                                        <td class="cart_product">
+                                            <a><img src="@(!string.IsNullOrEmpty(item.Item.Image) ? ViewBag.PrePath + item.Item.Image : "/Content/DefaultContent/Imgs/No_Image.png")" alt="Product"></a>
+                                        </td>
+                                        <td class="cart_description">
+                                            <p style="text-align:center;font-family: 'Vazir FD',Arial,sans-serif;" class="product-name"><a href="@Url.Action("ItemDetail","Item", new {profile=TempData["UserName"], ID = item.ID,lang=TempData["lang"],Type="FanbazarOffer,FanbazarOfferDemand" })" target="_blank">@item.Item.Name</a></p>
+                                            @*<small class="cart_ref">SKU : #123654999</small><br>
+                                                <small><a href="#">Color : Beige</a></small><br>
+                                                <small><a href="#">Size : S</a></small>*@
+                                        </td>
+                                        <td class="qty">
+                                            <input name="[@count].Count" id="Input_@item.ID" readonly style="font-family: 'Vazir FD',Arial,sans-serif;cursor:auto;" class="form-control input-sm" type="text" value="@item.Count">
+                                            <a id="Increase_@item.ID" onclick="Increase('@item.ID','@item.Item.Stock')"><i class="fa fa-caret-up"></i></a>
+                                            <a onclick="Decrease('@item.ID','@item.Item.Stock')"><i class="fa fa-caret-down"></i></a>
+                                            <div style="margin-top: 5px;font-size: 10px;">موجودی : @item.Item.Stock</div>
+                                        </td>
+                                        <td class="price" style="text-align:center;font-family: 'Vazir FD',Arial,sans-serif;">
+                                            @{
+                                                count++;
+                                                string cost = "";
+                                                if (string.IsNullOrEmpty(item.Item.Price))
+                                                { cost = "جهت استعلام قیمت تماس بگیرید"; }
+                                                else
+                                                {
+                                                    cost = (double.Parse(item.Item.Price) * item.Count).ToString();
+                                                }
+                                            }
+                                            <span>@Tools.PriceString(cost) تومان</span>
+                                        </td>
+                                        <td class="action">
+                                            <a onclick="SetModal('@item.ID','@item.Item.Name')" href="#"></a>
+                                        </td>
+                                    </tr>
+                                                }
+                            </tbody>
+                            <tfoot style="font-family: 'Vazir FD',Arial,sans-serif;">
+                                <tr>
+                                    <td colspan="5" style="text-align:center;"> <button type="submit" style="width: 100%;background-color: #b2da4f;padding: 5px;color: white;border-radius: 5px;">ثبت تغییرات</button></td>
+                                </tr>
+                            </tfoot>
+                                                }
+                    </table>
+                                                }
+                                                else
+                                                {
+                                                    <span>سبد خرید شما خالی می باشد !</span>
+                                                }
+
+            </div>
+            <!-- ./ Center colunm -->
+            <!-- Left colunm -->
+            <div class="column col-xs-12 col-sm-3" id="left_column">
+                <div class="block left-module" style="font-family: 'Vazir FD',Arial,sans-serif;margin-top:70px;">
+                    <div class="block_content">
+                        <!-- layered -->
+                        <div class="layered">
+                            <div class="layered-content">
+                                <ul class="blog-list-sidebar clearfix">
+                                    <li>
+                                        <div class="post-info" style="float: right;width: 100%;margin: 0;">
+                                            <div class="post-meta" style="line-height: 30px;">
+                                                <span class="date" style="float: right;width: 100%;"> @Model.ShopList.FirstOrDefault().ShopItem.Count نوع کالا</span>
+                                                <span class="date" style="float: right;width: 100%;">مبلغ کل فاکتور :  @Tools.PriceString(Model.ShopList.FirstOrDefault().TotalPrice)</span>
+                                                <span class="date" style="float: right;width: 100%;">هزینه ارسال : وابسته به آدرس</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="post-info" style="float: right;width: 100%;margin: 0;">
+                                            <div class="post-meta" style="font-size: 15px;line-height: 30px;text-align:center">
+                                                <span class="date" style="width: 100%;float: right;">مبلغ قابل پرداخت :</span>
+                                                <span class="date" style="width: 100%;float: right;color: red;font-size: 22px;">@Tools.PriceString(Model.ShopList.FirstOrDefault().TotalPrice)</span>
+                                                <a href="@Url.Action("AcceptShopping","ShoppingCart",new {profile=TempData["UserName"],lang=TempData["lang"] })" style="float: right;width: 100%;background-color: #4fc0da;padding: 10px;color: white;border-radius: 5px;margin-top: 10px;">ادامه ثبت سفارش</a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- ./layered -->
+                    </div>
+                </div>
+            </div>
+            <!-- ./left colunm -->
+        </div>
+        <!-- ./row-->
+    </div>
+</div>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="close">&times;</span>
+        </div>
+        <div class="modal-body" id="PipoModalBody">
+            <p>آیا از حذف آیتم مورد نظر از سبد خرید اطمینان دارید ؟</p>
+        </div>
+        <div class="modal-footer">
+            @using (Html.BeginForm("DeleteCartItem", "ShoppingCart", new { ShoppingItemID = 0 }, FormMethod.Post, new { Id = "PipoModalForm" }))
+            {
+                <input type="hidden" />
+                <button class="modal-btn" type="submit">بلی</button>
+            }
+        </div>
+    </div>
+</div>
+<script>
+    var modal = document.getElementById('myModal');
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    function SetModal(id, text) {
+        modal.style.display = "block";
+        $("#PipoModalBody").empty();
+        $("#PipoModalBody").append('<p> آیا از حذف آیتم (' + text + ') از سبد خرید اطمینان دارید ؟</p>');
+        var $self = $("#PipoModalForm");
+        $self.attr('action', '/sahibmall/FA/ShoppingCart/DeleteCartItem?ShoppingItemID=' + id);
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
+<script>
+
+    function Increase(id, ILimit) {
+        var counter = $('#Input_' + id).val();
+        if (counter < ILimit)
+            counter++;
+        if (counter == ILimit)
+            $('#Increase_' + id).disableSelection;
+        $('#Input_' + id).val(counter);
+    }
+    
+    function Decrease(id, ILimit) {
+        var counter = $('#Input_' + id).val();
+        if (counter > 0)
+            counter--;
+        if (counter < ILimit)
+            $('#Increase_' + id).enableSelection;
+        $('#Input_' + id).val(counter);
+    }
+</script>

@@ -1,0 +1,38 @@
+﻿@model ClientWeb.Models.DataModels.UserInformationDataModel
+<div class="main-box profile-box-contact">
+    <div class="col-md-12 col-sm-12 col-xs-12 nopadding">
+        <div class="profile-box-header blue-bg">
+            <div class="col-md-12 col-sm-7 col-xs-12">
+                <img src="@TempData["WebsiteThemePath"]DefaultContent/Imgs/User.png" alt="" class="profile-img img-responsive" />
+                <h2>@Model.FirstName @Model.LastName</h2>
+                <ul class="contact-details">
+                    <li>
+                        <i class="fa fa-map-marker"></i>@Model.Address
+                    </li>
+                    <li>
+                        <i class="fa fa-user-secret"></i> @Model.CodeMelli
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    @if (Model.FanbazarFacts != null)
+    {
+        <div class="col-md-12 col-sm-12 col-xs-12 nopadding">
+            <div class="profile-box-footer">
+                <a href="#">
+                    <span class="value">@Model.FanbazarFacts.DemandCount</span>
+                    <span class="label">تعداد تقاضاها</span>
+                </a>
+                <a href="#">
+                    <span class="value">@Model.FanbazarFacts.OfferCount</span>
+                    <span class="label">تعداد عرضه ها</span>
+                </a>
+                <a href="#">
+                    <span class="value">@Model.FanbazarFacts.CompanyCount</span>
+                    <span class="label">تعداد شرکت ها</span>
+                </a>
+            </div>
+        </div>
+    }
+</div>

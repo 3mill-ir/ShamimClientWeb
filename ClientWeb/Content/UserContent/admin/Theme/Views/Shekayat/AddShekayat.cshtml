@@ -1,0 +1,191 @@
+﻿@model ClientWeb.Models.DataModels.ShekayatModel
+@using ClientWeb.Models.BLL;
+@section SliderCSS{
+    <link rel="stylesheet" href="@TempData["WebsiteThemePath"]JDatePicker/datepicker.css">
+}
+@section jsForThisPage{
+    <script type="text/javascript" src="@TempData["WebsiteThemePath"]js/contact.js"></script>
+    <script src="//code.jquery.com/jquery.min.js"></script>
+    <script src="@TempData["WebsiteThemePath"]JDatePicker/datepicker.js"></script>
+    @{ 
+        var date = DateTime.Now;
+        string pipodate =date.Year.ToString()+"-"+date.Month.ToString()+"-"+date.Day.ToString();
+    }
+    <script>
+        $(".calender").datepicker({
+            altField: "#calenderSelector",
+            altSecondaryField: "#calenderSecondarySelector",
+            format: "long",
+            maxYear: 1420,
+            minYear: 1370,
+            navRight: "<",
+            navLeft: ">",
+            today: false,
+            view: "day",
+            date: '@pipodate',
+            gregorian: true
+        });
+    </script>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryajax")
+}
+
+<section class="page-header dark page-header-xs">
+    @Html.Action("PageTitle", "Utility", new { F_MenuID = 447 })
+</section>
+<!-- -->
+<section class="parallax parallax-2" style="background-image: url('@TempData["WebsiteThemePath"]/DefaultContent/Imgs/welcomepage.jpg');background-position: 50% 50px;">
+    <div class="overlay dark-2"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-push-1">
+                @using (Ajax.BeginForm("AddShekayatPost", null, new { profile = TempData["UserName"] }, new AjaxOptions
+                {
+                    UpdateTargetId = "AjaxShekayatBox",
+                    InsertionMode = InsertionMode.Replace,
+                    LoadingElementId = "AjaxShekayatBox_Loading",
+                    HttpMethod = "Post"
+                }, null))
+                {
+                    <fieldset>
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <h2 style="font-size: 30px;">فرم ثبت شکایات الکترونیکی پارک علم و فناوری آذربایجان غربی</h2>
+                                    <p>
+                                        با عنایت به سیاست¬های دولت و به منظور صیانت از حقوق مردم و پیشگیری از تضییع حقوق شهروندان گرامی، در صورت مواجهه با مواردی نظیر عدم پاسخگویی، کارشکنی و یا هر گونه سوء استفاده از مقام اداری توسط کارکنان پارک علم و فناوری آذربایجان¬غربی، موارد را از طریق زیر جهت رسیدگی مربوطه ارائه فرمائید:<br>
+                                        1-	ارسال پیامک به شماره: 09381683487<br>
+                                        2-	تماس تلفنی با شماره: 32751245-044<br>
+                                        3-	ارسال نامه به آدرس الکترونیکی پارک: Shekayat@wastp.ir<br>
+                                        4-	استفاده از صندوق انتقادات و پیشنهادات<br>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <label for="contact:subject">کد پیگیری (در صورتی که قبلا شکایتی ثبت نموده اید)</label>
+                                    <input type="text" value="" class="form-control" name="TrackingCode" id="">
+                                </div>
+                                <div class="col-md-6">
+                                    <fieldset>
+                                        <legend style="color: white;line-height: 50px;">
+                                            مشخصات شکایت کننده :
+                                        </legend>
+                                        <label for="contact:message">نام *</label>
+                                        <input required="" class="form-control" name="ShakiFirstName" id="ShakiFirstName">
+                                        <label for="contact:message" style="margin-top: 15px;">نام خانوادگی *</label>
+                                        <input required="" class="form-control" name="ShakiLastName" id="ShakiLastName">
+                                        <label for="contact:message" style="margin-top: 15px;">سمت</label>
+                                        <input class="form-control" name="ShakiSemat" id="ShakiSemat">
+                                        <label for="contact:message" style="margin-top: 15px;">کد ملی *</label>
+                                        <input required="" class="form-control" name="ShakiCodeMelli" id="ShakiCodeMelli">
+                                        <label for="contact:message" style="margin-top: 15px;">نوع ارتباط - در این قسمت نوع ارتباط خود را با پارک اعلام نمایید (واحدهای مستقر، اساتید، کارکنان، دانشجو یا سایر) *</label>
+                                        <input required="" class="form-control" name="NoeErtebat" id="NoeErtebat">
+                                    </fieldset>
+                                </div>
+                                <div class="col-md-6">
+                                    <fieldset>
+                                        <legend style="color: white;line-height: 50px;">
+                                            مشخصات فردي که از آن شکایت دارید (متشاکی) :
+                                        </legend>
+                                        <label for="contact:message">نام</label>
+                                        <input class="form-control" name="MotashakiFirstName" id="MotashakiFirstName">
+                                        <label for="contact:message" style="margin-top: 15px;">نام خانوادگی</label>
+                                        <input class="form-control" name="MotashakiLastName" id="MotashakiLastName">
+                                        <label for="contact:message" style="margin-top: 15px;">سمت</label>
+                                        <input class="form-control" name="MotashakiSemat" id="MotashakiSemat">
+                                        <label for="contact:message" style="margin-top: 15px;">استان</label>
+                                        <input class="form-control" name="MotashakiOstan" id="MotashakiOstan">
+                                        <label for="contact:message" style="margin-top: 15px;">نام حوزه اي خدمتی فردي که از آن شکایت دارید</label>
+                                        <input class="form-control" name="MotashakiHozeKhedmat" id="MotashakiHozeKhedmat">
+                                    </fieldset>
+                                </div>
+                                <div class="col-md-12">
+                                    <fieldset>
+                                        <legend style="color: white;line-height: 50px;">
+                                            شماره تماس و آدرس شاکی :
+                                        </legend>
+                                        <div class="col-md-6">
+                                            <label for="contact:message">شماره تلفن *</label>
+                                            <input required="" class="form-control" name="ShakiTell" id="ShakiTell">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="contact:message">شماره موبایل *</label>
+                                            <input required="" class="form-control" name="ShakiMobile" id="ShakiMobile">
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label for="contact:message" style="margin-top: 15px;">آدرس</label>
+                                            <textarea maxlength="10000" rows="3" class="form-control" name="ShakiAddress" id="ShakiAddress"></textarea>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div class="col-md-12">
+                                    <fieldset>
+                                        <legend style="color: white;line-height: 30px;">
+                                            در صورتیکه براي همین موضوع قبلا به پارک/ مراکز رشد وابسته به پارک مربوطه و یا مرجع قانونی دیگر شکایت کرده اید جدول ذیل را تکمیل کنید؟
+                                        </legend>
+                                        <div class="col-md-6">
+                                            <label for="contact:message">تاریخ نامه ارسال شده</label>
+                                            <div class="calender">
+                                                <input name="TarikheName" type="text" id="calenderSecondarySelector" style="width: 100%;color: black;display:none;">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="contact:message">شماره نامه ارسال شده</label>
+                                            <input class="form-control" name="ShomareNaame" id="ShomareNaame">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="contact:message" style="margin-top: 15px;">نام مرکز/ سازمان مراجعه شده</label>
+                                            <input class="form-control" name="NaameMahaleMorajee" id="NaameMahaleMorajee">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="contact:message" style="margin-top: 15px;">نتیجه اقدام قبلی</label>
+                                            <textarea maxlength="10000" rows="3" class="form-control" name="NatijeEghdameGhabli" id="NatijeEghdameGhabli"></textarea>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <label for="contact:message">موضوع شکایت</label>
+                                    <input class="form-control" name="Subject" id="Subject">
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="contact:message" style="margin-top: 15px;">شرح شکایت *</label>
+                                    <textarea required="" maxlength="10000" rows="8" class="form-control" name="Text" id="Text"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <button style="width:100%;" type="submit" class="btn btn-primary"><i class="fa fa-check"></i>ارسال</button>
+                                    <div class="margin-bottom-10" id="AjaxShekayatBox_Loading" style="display:none;text-align:center;margin-top: 20px;">
+                                        <img src="@TempData["WebsiteThemePath"]DefaultContent/Imgs/ajax-load.gif" class="img-responsive" style="width:35px;" />
+                                    </div>
+                                    <div id="AjaxShekayatBox" style="margin-top: 20px;text-align: center;">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+<!-- / -->
+<style>
+    .datepicker-navigator {
+        color: black !important;
+    }
+
+    .datepicker-days {
+        color: black !important;
+    }
+</style>

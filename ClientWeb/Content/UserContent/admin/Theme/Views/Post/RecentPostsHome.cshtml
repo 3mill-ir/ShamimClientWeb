@@ -1,0 +1,118 @@
+﻿@model IEnumerable<ClientWeb.Models.DataModels.PostDataModel>
+@using ClientWeb.Models.BLL;
+@section SliderCSS{
+    <link href="@TempData["WebsiteThemePath"]plugins/slider.swiper/dist/css/swiper.min.css" rel="stylesheet" type="text/css" />
+    <link href="@TempData["WebsiteThemePath"]plugins/slider.revolution/css/extralayers.css" rel="stylesheet" type="text/css" />
+    <link href="@TempData["WebsiteThemePath"]plugins/slider.revolution/css/settings.css" rel="stylesheet" type="text/css" />
+}
+
+@section jsForThisPage{
+    <!-- SWIPER SLIDER -->
+    <script type="text/javascript" src="@TempData["WebsiteThemePath"]plugins/slider.swiper/dist/js/swiper.min.js"></script>
+    <script type="text/javascript" src="@TempData["WebsiteThemePath"]js/view/demo.swiper_slider.js"></script>
+    <script type="text/javascript" src="@TempData["WebsiteThemePath"]plugins/slider.revolution/js/jquery.themepunch.tools.min.js"></script>
+    <script type="text/javascript" src="@TempData["WebsiteThemePath"]plugins/slider.revolution/js/jquery.themepunch.revolution.min.js"></script>
+    <script type="text/javascript" src="@TempData["WebsiteThemePath"]js/view/demo.revolution_slider.js"></script>
+}
+@{
+    PostManagement pm = new PostManagement();
+    var GozareshateTasviri = pm.RecentPosts(410, 10, TempData["UserName"].ToString());
+    var MediaFeedback = pm.RecentPosts(205, 10, TempData["UserName"].ToString());
+    string PrePath = Tools.ReturnPathPhysicalMode("DynamicPageImages", TempData["UserName"].ToString(), "AdminAddress", "");
+    string lang = TempData["lang"].ToString();
+
+    int newID1 = 60;
+   
+    if (lang == "EN")
+    {
+        newID1 = 484;
+ 
+    }
+}
+<ul class="nav nav-tabs" style="margin-top: 36px;font-size: 20px;">
+    <li><a id="AkharinAkhbarBtn" href="#AkharinAkhbar" data-toggle="tab">@(lang == "FA"? "آخرین اخبار" : lang == "EN" ? "Latest news": lang == "TR" ? "Son Haberler" : "آخر الأخبار")</a></li>
+@if (lang != "EN")
+{
+    <li><a id="MediaFeedbackBtn" href="#MediaFeedback" data-toggle="tab">@(lang == "FA" ? "آیینه رسانه" : lang == "EN" ? "Media Feedback" : lang == "TR" ? "medya Aynası" : "ميديا ميرور")</a></li>
+    <li class="active"><a id="GozareshTasviriBtn" href="#GozareshTasviri" data-toggle="tab">@(lang == "FA" ? "گزارش تصویری" : lang == "EN" ? "Pictorial report" : lang == "TR" ? "Gorunan Raporlar" : "تقرير الفيديو")</a></li>
+}
+
+</ul>
+<div class="tab-content">
+    <div class="tab-pane fade" id="AkharinAkhbar">
+        <div class="owl-carousel owl-padding-10 buttons-autohide controlls-over" data-plugin-options='{"singleItem": false, "items":"3", "autoPlay": false, "navigation": true, "pagination": false}'>
+            @foreach (var item in Model)
+            {
+                <div class="img-hover">
+                    <a href="@Url.Action("PostDetail", "Post", new { profile = TempData["UserName"], lang = item.Language, id = item.ID })">
+                        <img class="img-responsive" style="height:160px;" src="@(!string.IsNullOrEmpty(item.ImagePath) ? ViewBag.PrePath + item.ImagePath : @TempData["WebsiteThemePath"]+"DefaultContent/Imgs/Park.png")" alt="">
+                    </a>
+
+                    <h5 class="text-left margin-top-20" style="text-align:right;line-height:25px;padding:10px;"><a style="direction:rtl;text-align:right" href="@Url.Action("PostDetail", "Post", new { profile = TempData["UserName"], lang = item.Language, id = item.ID })"><span style="float:right;margin-top: -20px;">@item.Tittle</span></a></h5>
+                    <ul class="text-left size-12 list-inline list-separator">
+                        <li style="float:right;line-height:25px;">
+                            <i class="fa fa-calendar"></i>
+                            @Tools.SpecialJalaliFormat(item.CreatedOnUTC ?? default(DateTime))
+                        </li>
+                    </ul>
+                </div>
+            }
+        </div>
+    
+        <a style="float:left;width:100%;" href="@Url.Action("ListPost", "Post",new { profile = TempData["UserName"], lang = TempData["lang"], id =newID1 })" class="btn btn-3d btn-blue btn-xs">@(lang == "FA" ? "مشاهده بیشتر" : lang == "EN" ? "See More" : lang == "TR" ? "Daha görün" : "شاهد المزيد")</a>
+    </div>
+    @if(lang != "EN"){ 
+    <div class="tab-pane fade" id="MediaFeedback">
+        <div class="owl-carousel owl-padding-10 buttons-autohide controlls-over" data-plugin-options='{"singleItem": false, "items":"3", "autoPlay": false, "navigation": true, "pagination": false}'>
+            @foreach (var item in MediaFeedback)
+            {
+                <div class="img-hover">
+                    <a href="@Url.Action("PostDetail", "Post", new { profile = TempData["UserName"], lang = item.Language, id = item.ID })">
+                        <img class="img-responsive" style="height:160px;" src="@(!string.IsNullOrEmpty(item.ImagePath) ? ViewBag.PrePath + item.ImagePath : @TempData["WebsiteThemePath"]+"DefaultContent/Imgs/Park.png")" alt="">
+                    </a>
+
+                    <h5 class="text-left margin-top-20" style="text-align:right;line-height:25px;padding:10px;"><a style="direction:rtl;text-align:right" href="@Url.Action("PostDetail", "Post", new { profile = TempData["UserName"], lang = item.Language, id = item.ID })"><span style="float:right;margin-top: -20px;">@item.Tittle</span></a></h5>
+                    <ul class="text-left size-12 list-inline list-separator">
+                        <li style="float:right;line-height:25px;">
+                            <i class="fa fa-calendar"></i>
+                            @Tools.SpecialJalaliFormat(item.CreatedOnUTC ?? default(DateTime))
+                        </li>
+                    </ul>
+                </div>
+            }
+        </div>
+        <a style="float:left;width:100%;" href="@Url.Action("ListPost", "Post",new { profile = TempData["UserName"], lang = TempData["lang"], id =205 })" class="btn btn-3d btn-blue btn-xs">@(lang == "FA" ? "مشاهده بیشتر" : lang == "EN" ? "See More" : lang == "TR" ? "Daha görün" : "شاهد المزيد")</a>
+    </div>
+    <div class="tab-pane fade active in" id="GozareshTasviri">
+        <div class="row">
+            <!-- first column -->
+            <div class="col-md-12">
+                <div class="flexslider">
+                    <ul class="slides">
+                        @foreach (var item in GozareshateTasviri)
+                        {
+                            <li>
+                                <a href="@Url.Action("PostDetail", "Post", new { profile = TempData["UserName"], lang = item.Language, id = item.ID })" style="text-align:right;direction:rtl;min-width:1100px;">
+                                    <img style="height:400px;width:100%;" src="@(!string.IsNullOrEmpty(item.ImagePath) ? PrePath + item.ImagePath : TempData["WebsiteThemePath"] + "DefaultContent/Imgs/Park.png")" alt="">
+                                    <div class="flex-caption" style="direction:rtl;min-width:750px;margin-bottom:-45px;font-family: 'VazirLight';">
+                                        @item.Tittle<br />
+                                        <span style="font-size:14px;">@item.Description</span>
+                                    </div>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <a style="float:left;width:100%;" href="@Url.Action("ListPost", "Post",new { profile = TempData["UserName"], lang = TempData["lang"], id =410 })" class="btn btn-3d btn-blue btn-xs">@(lang == "FA" ? "مشاهده بیشتر" : lang == "EN" ? "See More" : lang == "TR" ? "Daha görün" : "شاهد المزيد")</a>
+    </div>
+    }
+</div>
+<script>
+
+
+    setTimeout(function () {
+        document.getElementById("AkharinAkhbarBtn").click();
+    }, 1000);
+</script>

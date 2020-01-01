@@ -1,0 +1,52 @@
+﻿@model ClientWeb.Models.RegisterViewModel
+
+<script src='https://www.google.com/recaptcha/api.js?hl=fa'></script>
+<div class="columns-container">
+    <div class="container" id="columns">
+        <!-- page heading-->
+        <h2 class="page-heading" style="text-align:center;">
+            <span class="page-heading-title2">ورود به وب سایت</span>
+        </h2>
+        <!-- ../page heading-->
+        <div class="page-content">
+            <div class="row">
+                <div class="col-sm-12 col-md-8 col-md-push-2">
+                    <div class="box-authentication">
+                        @using (Html.BeginForm("Login", "Account", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="login-box-inner">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                    <input name="UserName" class="form-control" type="text" placeholder="نام کاربری">
+                                </div>
+                                <div class="input-group" style="margin-top:20px;">
+                                    <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                                    <input type="password" name="Password" class="form-control" placeholder="کلمه عبور">
+                                </div>
+                                <div class="input-group" style="margin-top:20px;margin-right:200px;">
+                                    <div class="g-recaptcha" data-sitekey="6LdY8AcUAAAAAKLgpwjEui5GrN9DtJoIzEW8G0Ik"></div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="checkbox-nice">
+                                                @Html.CheckBox("RememberMe", new { @class = "remember-me", @checked = "checked",style= "margin-top: 14px;" })
+                                                <label>
+                                                    مرا به خاطر بسپار
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <button style="margin-top:20px;background-color: #2a3259;" type="submit" class="btn btn-info col-xs-12">ورود</button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

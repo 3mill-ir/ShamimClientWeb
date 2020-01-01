@@ -1,0 +1,69 @@
+﻿@model PagedList.IPagedList<ClientWeb.Models.DataModels.PostDataModel>
+@using PagedList.Mvc;
+<section class="ad-breadcrumb parallex">
+    <div class="container page-banner">
+        <div class="row">
+            <div class="col-sm-6 col-md-6">
+                <h1>@ViewBag.CategoryName</h1>
+            </div>
+            <div class="col-sm-6 col-md-6">
+            </div>
+        </div>
+    </div>
+</section>
+<section class="light-blue ad-listing">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-sm-12 col-xs-12">
+                <div class="all-ads-list-box2">
+                    @foreach (var item in Model)
+                    {
+                        <div class="ad-box ad-box-2">
+                            <div class="col-md-4 col-sm-3 col-xs-12 nopadding">
+                                <div class="comp-logo">
+                                    <a><img src="@(!string.IsNullOrEmpty(item.ImagePath) ? ViewBag.PrePath + item.ImagePath : "/Content/DefaultContent/Imgs/No_Image.png")" class="img-responsive" alt="@item.ImageAlt"> </a>
+                                </div>
+                            </div>
+                            <div class="col-md-8 col-sm-9 col-xs-12">
+                                <div class="ad-box-2-detail">
+                                    <div class="ad-title-box">
+                                        <span class="cat"><i class="flaticon-interface"></i></span>
+                                        <div class="ad-title"><a href="@Url.Action("PostDetail","Post",new { id = item.ID, lang = ViewBag.lang, profile = ViewBag.profile})">@item.Tittle</a></div>
+                                        <div class="ad-title-meta">
+                                            <span><i class="fa fa-comment" style="margin-right: 3px;"></i>@item.NumberOfComments</span>
+                                            <span><i class="fa fa-thumbs-up"></i>@item.NumberOfLikes</span>
+                                            <span><i class="fa fa-thumbs-down"></i>@item.NumberOfDislikes</span>
+                                            <span style="direction:ltr;"><i class="fa fa-calendar"></i>@ClientWeb.Models.BLL.Tools.GetDateTimeReturnJalaliDate(item.CreatedOnUTC ?? default(DateTime))</span>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="ad-desc">
+                                        <p>@item.Description</p>
+                                    </div>
+                                    <div class="ad-bottom-area">
+                                        <span>
+                                            <i class="fa fa-tags"></i>برچسب ها :
+                                            @*<a href="">#Camera</a><a href="">#Lense</a><a href="">#sale</a><a href="">#buy</a>*@
+                                        </span>
+                                        <a href="@Url.Action("PostDetail","Post",new { id = item.ID, lang = ViewBag.lang, profile = ViewBag.profile })" class="btn btn-default pull-right flip">ادامه مطلب ...<i class="fa fa-angle-double-right"></i> </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div style="text-align:center;direction:ltr!important;">
+                    صفحه @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) از @Model.PageCount
+                    @Html.PagedListPager(Model, page => Url.Action("ListTagPost", "Tag", new { TagID = ViewBag.TagID, page }))
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-12 col-xs-12">
+                <aside>
+                    @Html.Action("PopularPosts", "Post", new { profile = TempData["UserName"], F_MenuID = ViewBag.F_MenuId })
+                    @Html.Action("PollQuestion", "Poll")
+                    @Html.Action("RecentPosts", "Post", new { profile = TempData["UserName"], F_MenuID = ViewBag.F_MenuId })
+                </aside>
+            </div>
+        </div>
+    </div>
+</section>

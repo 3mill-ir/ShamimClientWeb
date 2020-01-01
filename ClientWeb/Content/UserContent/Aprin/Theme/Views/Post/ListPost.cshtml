@@ -1,0 +1,116 @@
+﻿@model PagedList.IPagedList<ClientWeb.Models.DataModels.PostDataModel>
+@using PagedList.Mvc;
+@using ClientWeb.Models.BLL;
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryajax")
+
+@Html.Action("PageTitle", "Utility", new { F_MenuID = ViewBag.F_MenuId })
+<!--/#page-breadcrumb-->
+<section id="blog" class="padding-top">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9 col-sm-7">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12">
+                        @foreach (var item in Model)
+                        {
+                            <div class="single-blog single-column">
+                                <div class="post-thumb">
+                                    <a href="@Url.Action("PostDetail","Post", new {profile=TempData["UserName"], lang = item.Language, id = item.ID })">
+                                        <img src="@(!string.IsNullOrEmpty(item.ImagePath) ? ViewBag.PrePath + item.ImagePath : "/Content/DefaultContent/Imgs/No_Image.png")" style="max-height:400px;width:100%;border-radius:7px;" alt="@item.ImageAlt">
+                                    </a>                                <div class="post-overlay">
+                                        <span class="uppercase"><a href="#">14 <br><small>Feb</small></a></span>
+                                    </div>
+                                </div>
+                                <div class="post-content overflow">
+                                    <h2 class="post-title bold"><a href="@Url.Action("PostDetail","Post", new {profile=TempData["UserName"], lang = item.Language, id = item.ID })">@item.Tittle</a></h2>
+                                    <span class="author">
+                                        <i class="fa fa-user"></i>
+                                        نوشته شده توسط: <a href="#">ادمین</a>
+                                    </span>
+                                    <div class="entry-excerpt">
+                                        @item.Description
+                                    </div>
+                                    <div class="post-bottom overflow">
+                                        <ul class="nav navbar-nav post-nav">
+                                            <li><a href="#"><i class="fa fa-thumbs-o-down"></i>@item.NumberOfDislikes</a></li>
+                                            <li><a href="#"><i class="fa fa-heart"></i>@item.NumberOfLikes</a></li>
+                                            <li><a href="#"><i class="fa fa-comments"></i> @item.NumberOfComments</a></li>
+                                            <li>
+                                                <a href="#">
+                                                    <span class="date"><i class="fa fa-calendar"></i>@ClientWeb.Models.BLL.Tools.GetDateTimeReturnJalaliDate(item.CreatedOnUTC ?? default(DateTime))</span>
+                                                </a>
+                                            </li>
+
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                </div>
+
+                <div class="sortPagiBar clearfix">
+                    <div class="bottom-pagination" style="text-align:center;direction:ltr!important;float: right;">
+                        صفحه @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) از @Model.PageCount
+                        @Html.PagedListPager(Model, page => Url.Action("Listpost", "Post", new
+                   {
+                       page,
+                       PageSize = ViewBag.PageSize,
+                       Type = ViewBag.Type,
+                       FromDate = ViewBag.FromDate,
+                       ToDate = ViewBag.ToDate,
+
+                       SearchText = ViewBag.SearchText,
+                       profile = ViewBag.profile,
+                       lang = ViewBag.lang,
+                       id = ViewBag.id,
+
+                   }))
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-5">
+                <div class="sidebar blog-sidebar">
+
+                    <div class="sidebar-item categories">
+                        <h3> </h3>
+                        <ul class="nav navbar-stacked">
+                            @Html.Action("MenuPostCounter", "Utility", new { F_MenuID = ViewBag.id })
+
+                            @Html.Action("PopularPosts", "Post", new { F_MenuID = ViewBag.id, profile = ViewBag.profile })
+                            <!-- ./Popular Posts -->
+                            <!-- Banner -->
+                            <!-- Poll -->
+                            @Html.Action("PollQuestion", "Poll", new { profile = ViewBag.profile })
+                            <!-- ./Poll -->
+                            <!-- Popular Posts -->
+                            @Html.Action("RecentPosts", "Post", new { F_MenuID = ViewBag.id, profile = ViewBag.profile })
+
+
+
+                        </ul>
+                         <div id="demo-rate-convert"></div>
+                        <script>
+    var apiTargetHtmlObj = document.getElementById("demo-rate-convert");
+    var tmScript = document.createElement("script");
+    tmScript.src = "https://www.transfermate.com/en/exchange_rates_api.asp";
+    document.getElementsByTagName("head")[0].appendChild(tmScript);
+                        </script>
+                        <noscript><br /><span style="color: red;">Please enable your JavaScript.</span></noscript>
+                    </div>
+
+
+                    <!--Begin Currency Converter Code-->
+                    <div id="FEXRdivResp" data-pym-src="//www.foreignexchangeresource.com/currency-converter.php?c=EUR&a=USD&amt=1&panel=1&button=2"></div>
+                    <script type="text/javascript" src="//www.foreignexchangeresource.com/js/pym.min.js"></script>
+                    <!--End Currency Converter Code-->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--/#blog-->

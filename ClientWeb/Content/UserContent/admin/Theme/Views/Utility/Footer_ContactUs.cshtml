@@ -1,0 +1,21 @@
+﻿@model ClientWeb.Models.DataModels.ContactManagementModel
+@{
+    string lang = TempData["lang"].ToString();
+}
+<address>
+    <ul class="list-unstyled">
+        <li class="margin-bottom-10 " style="@(lang == "FA" ? "" : "font-family: initial;")">
+            <i class="fa fa-map-marker size-15"> </i>
+            @(lang == "FA" ? Model.AddressInput : lang == "EN" ? "WASTP,P.O.BOX333,Urmia,Iran" : lang == "TR" ? "WASTP, P.O.BOX333, Urmiye, İran" : "WASTP، P.O.BOX333، أورميا، إيران")<br><br>
+            @(lang == "FA" ? "کد پستی: 5756115322 صندوق پستی: 333" : lang == "EN" ? "Postal code: 5756115322" : lang == "TR" ? "Posta kodu: 5756115322" : "الرمز البريدي: 5756115322")<br>
+        </li>
+        <li class="margin-bottom-10" style="@(lang == "FA" ? "" : "font-family: initial;")">
+            <i class="fa fa-phone size-15"> </i>
+         @Model.PhoneInput
+        </li>
+        <li>
+            <i class="fa fa-envelope size-15"> </i>
+            <a href="@Model.EmailInput">@Model.EmailInput</a>
+        </li>
+    </ul>
+</address>

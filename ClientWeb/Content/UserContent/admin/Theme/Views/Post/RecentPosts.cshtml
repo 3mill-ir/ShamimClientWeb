@@ -1,0 +1,24 @@
+﻿@model IEnumerable<ClientWeb.Models.DataModels.PostDataModel>
+@using ClientWeb.Models.BLL;
+
+
+
+
+<div id="tab_2" class="tab-pane">
+
+    @foreach (var item in Model)
+    {
+        <div class="row tab-post">
+            <!-- post -->
+            <div class="col-md-3 col-sm-3 col-xs-3">
+                <a href="blog-sidebar-left.html">
+                    <img src="@(!string.IsNullOrEmpty(item.ImagePath) ? ViewBag.PrePath + item.ImagePath :@TempData["WebsiteThemePath"]+ "DefaultContent/Imgs/Park.png")" width="50" alt="@item.ImageAlt" />
+                </a>
+            </div>
+            <div class="col-md-9 col-sm-9 col-xs-9 text-justify">
+                <a href="@Url.Action("PostDetail","Post", new {profile=TempData["UserName"], lang = item.Language, id = item.ID })" class="tab-post-link">@item.Tittle</a>
+                <small>@Tools.SpecialJalaliFormat(item.CreatedOnUTC ?? default(DateTime))</small>
+            </div>
+        </div><!-- /post -->
+    }
+</div>

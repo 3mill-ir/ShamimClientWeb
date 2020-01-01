@@ -1,0 +1,163 @@
+﻿@model ClientWeb.Models.DataModels.PostDataModel
+@using PagedList.Mvc;
+@using ClientWeb.Models.BLL;
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryajax")
+<script>
+    function SetCommentID(ID) {
+        document.getElementById("CommentForm").action = "/FanBazar/Comment/PostComment?PostID=" +@Model.ID +"&F_CommentID=" + ID;
+        document.getElementById("RelatedComment").innerHTML = "<i onclick=\"Clean()\" class=\"fa fa-close\" style=\"color:red;cursor:pointer\"></i>";
+        document.getElementById("RelatedComment").innerText = document.getElementById("comment_" + ID).innerText;
+    }
+    function Clean() {
+        document.getElementById("CommentForm").action = "/FanBazar/Comment/PostComment?PostID=" +@Model.ID +"&F_CommentID=-1";
+        document.getElementById("RelatedComment").innerText = "";
+        document.getElementById("RelatedComment").innerHTML = "<i onclick=\"Clean()\" class=\"fa fa-close\" style=\"color:red;cursor:pointer\"></i>";
+        document.getElementById("CommentHelper").style.display = "none";
+    }
+</script>
+<div class="columns-container">
+    <div class="container" id="columns">
+        <!-- row -->
+        <div class="row">
+            <!-- Left colunm -->
+            <div class="column col-xs-12 col-sm-3" id="left_column">
+                <!-- Blog category -->
+                @Html.Action("MenuPostCounter", "Utility", new { F_MenuID = Model.F_MenuID })
+                <!-- ./blog category  -->
+                <!-- Popular Posts -->
+                @Html.Action("PopularPosts", "Post", new { F_MenuID = Model.F_MenuID, profile = ViewBag.profile })
+                <!-- ./Popular Posts -->
+                <!-- Banner -->
+                <!-- Poll -->
+                @Html.Action("PollQuestion", "Poll", new { profile = ViewBag.profile })
+                <!-- ./Poll -->
+                <!-- tags -->
+                @Html.Action("TagsList", "Utility", new { PostID = Model.ID, profile = ViewBag.profile })
+                <!-- ./tags -->
+                <!-- Popular Posts -->
+                @Html.Action("RecentPosts", "Post", new { F_MenuID = Model.F_MenuID, profile = ViewBag.profile })
+                <!-- ./Popular Posts -->
+            </div>
+            <!-- ./left colunm -->
+            <!-- Center colunm-->
+            <div class="center_column col-xs-12 col-sm-9" id="center_column">
+                <h1 class="page-heading" style="height:90px;">
+                    <span class="page-heading-title2">@Model.Tittle</span>
+                </h1>
+                <article class="entry-detail">
+                    <div class="entry-photo">
+                        <img style="height: 400px;width: 100%;" src="@(!string.IsNullOrEmpty(Model.ImagePath) ? ViewBag.PrePath + Model.ImagePath : "/Content/DefaultContent/Imgs/No_Image.png")" alt="Blog">
+                    </div>
+                    <div class="entry-meta-data">
+                        <span class="comment-count">
+                            <i class="fa fa-comment-o"></i> @Model.NumberOfComments
+                        </span>
+                        <span class="comment-count" id="likeBox">
+                            <i class="fa fa-thumbs-o-up"></i> @Model.NumberOfLikes
+                        </span>
+                        <span class="comment-count" id="DislikeBox">
+                            <i class="fa fa-thumbs-o-down"></i> @Model.NumberOfDislikes
+                        </span>
+                        <span class="comment-count">
+                            <i class="fa fa-eye"></i> @Model.NumberOfVisitors
+                        </span>
+                        <span class="date"><i class="fa fa-calendar"></i>@ClientWeb.Models.BLL.Tools.SpecialJalaliFormat(Model.CreatedOnUTC ?? default(DateTime))</span>
+                        @Ajax.ActionLink("پسندیدم", "LikePost", "Post", new { PostId = Model.ID, NumberOfLikes = Model.NumberOfLikes }, new AjaxOptions
+                   {
+                       UpdateTargetId = "likeBox",
+                       InsertionMode = InsertionMode.Replace,
+                       LoadingElementId = "",
+                       HttpMethod = "Post"
+                   }, new { style = "border: 1px solid #eaeaea;padding: 10px 12px;background: #33ccef;color: #fff;" })
+                        @Ajax.ActionLink("نپسندیدم", "DisLikePost", "Post", new { PostId = Model.ID, NumberOfDisLikes = Model.NumberOfDislikes }, new AjaxOptions
+                   {
+                       UpdateTargetId = "DislikeBox",
+                       InsertionMode = InsertionMode.Replace,
+                       LoadingElementId = "",
+                       HttpMethod = "Post"
+                   }, new { style = "border: 1px solid #eaeaea;padding: 10px 12px;background: #ff3366;color: #fff;" })
+                    </div>
+                    <div class="content-text clearfix">
+                        <p style="background-color: #efefef;padding: 15px;">
+                            @Model.Description
+                        </p>
+                        <p>@Html.Raw(Tools.GetHtmldetail("DetailHTMLFilePath", Model.Detail, TempData["UserName"] as string))</p>
+                    </div>
+                </article>
+                <!-- Comment -->
+                <div class="single-box">
+                    <h2 class="">دیدگاه های مرتبط با این پست</h2>
+                    <div class="comment-list">
+                        <ul>
+                            @CommentGenerator(Model.Comments1.Where(u => u.F_CommentsID == null))
+                            @helper CommentGenerator(IEnumerable<ClientWeb.Models.DataModels.CommentDataModel> Comments)
+                            {
+foreach (var item in Comments)
+{
+    var temp = item.Comments1;
+        <li>
+            <div class="comment-body">
+                <div class="comment-meta">
+                    <span class="author"><a href="#">کاربر مهمان</a></span>
+                    <div class="comment-reply">
+                        <h6><a onclick="SetCommentID(temp.Count>0?item.ID:-1)" class="active-color">پاسخ</a></h6>
+                    </div>
+                    <span class="date">@ClientWeb.Models.BLL.Tools.GetDateTimeReturnJalaliDate(item.CreatedDateOnUTC ?? default(DateTime))</span>
+                </div>
+                <div class="comment" id="comment_@item.ID">
+                    @item.Text
+                </div>
+            </div>
+            @if (temp.Count > 0)
+            {
+                <div class="row">
+                    <ul>
+                        @CommentGenerator(temp)
+                    </ul>
+                </div>
+            }
+        </li>
+}
+}
+                        </ul>
+                    </div>
+                </div>
+                <div class="single-box">
+                    <h2>ثبت دیدگاه</h2>
+                    @using (Ajax.BeginForm("PostComment", "Comment", new { PostID = Model.ID, F_CommentID = -1 }, new AjaxOptions
+                    {
+                        UpdateTargetId = "AjaxCommentBox",
+                        InsertionMode = InsertionMode.Replace,
+                        LoadingElementId = "TicketReader_Loading",
+                        HttpMethod = "Post"
+                    }, new { id = "CommentForm" }))
+                    {
+                        <div class="coment-form">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div id="CommentHelper" style="display:none">
+                                        <p class="alert alert-info" id="RelatedComment"><i onclick="Clean()" class="fa fa-close" style="color:red;cursor:pointer"></i></p>
+                                    </div>
+                                    <textarea name="Text" id="message" placeholder="لطفا متن دیدگاه خود را وارد کنید" rows="8" class="form-control"></textarea>
+                                </div>
+                                <div class="col-md-12 col-sm-12">
+                                    <div id="TicketReader_Loading" style="float: right;display: none;margin-right: 46%;padding-bottom: 20px;">
+                                        <img src="~/Content/DefaultContent/Imgs/ajax-load.gif" class="img-responsive" width="60" />
+                                    </div>
+                                    <div id="AjaxCommentBox" style="margin-top:20px;">
+
+                                    </div>
+                                    <button type="submit" class="btn-submit">ثبت</button>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <!-- ./Comment -->
+            </div>
+            <!-- ./ Center colunm -->
+        </div>
+        <!-- ./row-->
+    </div>
+</div>

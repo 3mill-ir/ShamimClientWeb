@@ -1,0 +1,159 @@
+﻿@model ClientWeb.Models.DataModels.PostDataModel
+@using ClientWeb.Models.BLL
+<script>
+    function SetCommentID(ID) {
+        document.getElementById("CommentForm").action = "/FanBazar/Comment/PostComment?PostID=" +@Model.ID +"&F_CommentID=" + ID;
+        document.getElementById("RelatedComment").innerHTML = "<i onclick=\"Clean()\" class=\"fa fa-close\" style=\"color:red;cursor:pointer\"></i>";
+        document.getElementById("RelatedComment").innerText = document.getElementById("comment_" + ID).innerText;
+    }
+    function Clean() {
+        document.getElementById("CommentForm").action = "/FanBazar/Comment/PostComment?PostID=" +@Model.ID +"&F_CommentID=-1";
+        document.getElementById("RelatedComment").innerText = "";
+        document.getElementById("RelatedComment").innerHTML = "<i onclick=\"Clean()\" class=\"fa fa-close\" style=\"color:red;cursor:pointer\"></i>";
+        document.getElementById("CommentHelper").style.display = "none";
+    }
+</script>
+<section class="ad-breadcrumb parallex">
+    @Html.Action("PageTitle","Utility",new { F_MenuID = Model.F_MenuID, Type="Detail" })
+</section>
+<section class="featured-ads">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-sm-8 col-xs-12 nopadding">
+                <div class="blog-post">
+                    <div class="post-img">
+                        <img style="height: 400px;" src="@(!string.IsNullOrEmpty(Model.ImagePath) ? ViewBag.PrePath + Model.ImagePath : "/Content/DefaultContent/Imgs/No_Image.png")" alt="@Model.ImageAlt" class="img-responsive">
+                    </div>
+                    <div class="blog-single">
+                        <div class="post-info">
+                            <a style="direction:ltr;"><i class="fa fa-calendar-o"></i>@ClientWeb.Models.BLL.Tools.GetDateTimeReturnJalaliDate(Model.CreatedOnUTC ?? default(DateTime))</a>
+                            <a> <i class="fa fa-commenting"></i> @Model.NumberOfComments دیدگاه</a>
+                            <div id="likeBox"><a> <i class="fa fa-thumbs-up"></i> @Model.NumberOfLikes پسندیده</a></div>
+                            <div id="DislikeBox"><a> <i class="fa fa-thumbs-down"></i> @Model.NumberOfDislikes نپسندیده</a></div>
+                            <a> <i class="fa fa-eye "></i> @Model.NumberOfVisitors بازدید</a>
+                            <div class="share-links">
+                                @Ajax.ActionLink("پسندیدم", "LikePost", "Post", new { PostId = Model.ID, NumberOfLikes = Model.NumberOfLikes }, new AjaxOptions
+                           {
+                               UpdateTargetId = "likeBox",
+                               InsertionMode = InsertionMode.Replace,
+                               LoadingElementId = "",
+                               HttpMethod = "Post"
+                           }, new { @class = "twitter-share", style = "padding: 0 10px;" })
+                                @Ajax.ActionLink("نپسندیدم", "DisLikePost", "Post", new { PostId = Model.ID, NumberOfDisLikes = Model.NumberOfDislikes }, new AjaxOptions
+                           {
+                               UpdateTargetId = "DislikeBox",
+                               InsertionMode = InsertionMode.Replace,
+                               LoadingElementId = "",
+                               HttpMethod = "Post"
+                           }, new { @class = "pinterest-share", style = "padding: 0 10px;" })
+                            </div>
+                        </div>
+                        <h3 class="post-title">
+                            @Model.Tittle
+                        </h3>
+                        <blockquote>
+                            @Model.Description
+                        </blockquote>
+                        <p>
+                            @Html.Raw(Tools.GetHtmldetail("DetailHTMLFilePath", Model.Detail, TempData["UserName"] as string))
+                        </p>
+                        <div class="share-links">
+                            <a href="#" class="facebook-share"><span class="fa fa-facebook-f"></span> فیسبوک</a>
+                            <a href="#" class="twitter-share"><span class="fa fa-twitter"></span> توییتر</a>
+                            <a href="#" class="instagram-share"><span class="fa fa-instagram"></span> اینستاگرام</a>
+                            <a href="#" class="pinterest-share"><span class="fa fa-pinterest-p"></span> پینترست</a>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-xs-12 col-sm-12">
+                        <div class="col-md-12 col-xs-12 col-sm-12">
+                            <div class="heading-inner">
+                                <p class="title">دیدگاه ها</p>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-xs-12 col-sm-12">
+                            <div class="comments-container ">
+                                <ul>
+                                    @CommentGenerator(Model.Comments1.Where(u => u.F_CommentsID == null))
+                                    @helper CommentGenerator(IEnumerable<ClientWeb.Models.DataModels.CommentDataModel> Comments)
+                                    {
+foreach (var item in Comments)
+{
+    var temp = item.Comments1;
+        <li class="comment-box">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-2 col-sm-3 col-xs-3 comment-author-image hidden-xs">
+                        <img src="~/Content/DefaultContent/Imgs/User.png" class="img-circle img-responsive" alt="">
+                    </div>
+                    <div class="col-md-10 col-sm-9 col-xs-12">
+                        <h4>کاربر میهمان</h4>
+                        <div class="news-date" style="direction:ltr;">@ClientWeb.Models.BLL.Tools.GetDateTimeReturnJalaliDate(item.CreatedDateOnUTC ?? default(DateTime))</div>
+                        <p id="comment_@item.ID">@item.Text</p>
+                        <div class="comment-reply">
+                            <h6><a onclick="SetCommentID(temp.Count>0?item.ID:-1)" class="active-color">پاسخ</a></h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @if (temp.Count > 0)
+            {
+                <div class="row">
+                    <ul>
+                        @CommentGenerator(temp)
+                    </ul>
+                </div>
+            }
+        </li>
+}
+}
+                                </ul>
+                                <div class="commentform" id="write-comment">
+                                    <div class="heading-inner">
+                                        <p class="title">دیدگاه خود را ثبت کنید</p>
+                                    </div>
+                                    @using (Ajax.BeginForm("PostComment", "Comment", new { PostID = Model.ID, F_CommentID = -1 }, new AjaxOptions
+                                    {
+                                        UpdateTargetId = "AjaxCommentBox",
+                                        InsertionMode = InsertionMode.Replace,
+                                        LoadingElementId = "TicketReader_Loading",
+                                        HttpMethod = "Post"
+                                    }, new { id = "CommentForm" }))
+                                    {
+                                        <form class="row">
+                                            <div class="col-md-12 col-sm-12">
+                                                <div class="form-group">
+                                                    <label>متن دیدگاه<span class="required">*</span></label>
+                                                    <div id="CommentHelper" style="display:none">
+                                                        <p class="alert alert-info" id="RelatedComment"><i onclick="Clean()" class="fa fa-close" style="color:red;cursor:pointer"></i></p>
+                                                    </div>
+                                                    <textarea cols="6" rows="8" name="Text" placeholder="" class="form-control"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 col-sm-12">
+                                                <div id="TicketReader_Loading" style="float: right;display: none;margin-right: 46%;padding-bottom: 20px;">
+                                                    <img src="~/Content/DefaultContent/Imgs/ajax-load.gif" class="img-responsive" width="60" />
+                                                </div>
+                                                <div id="AjaxCommentBox" style="margin-top:20px;">
+
+                                                </div>
+                                                <button type="submit" class="btn btn-default pull-right flip" style="width: 95%;">ثبت دیدگاه<i class="fa fa-angle-double-right"></i></button>
+                                            </div>
+                                        </form>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-12 col-xs-12">
+                <aside>
+                    @Html.Action("TagsList", "Utility", new { PostID = Model.ID, profile = TempData["UserName"] })
+                    @Html.Action("PopularPosts", "Post", new { profile = TempData["UserName"], F_MenuID = Model.F_MenuID })
+                    @Html.Action("PollQuestion", "Poll")
+                    @Html.Action("RecentPosts", "Post", new { profile = TempData["UserName"], F_MenuID = Model.F_MenuID })
+                </aside>
+            </div>
+        </div>
+    </div>
+</section>

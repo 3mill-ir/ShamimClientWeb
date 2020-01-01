@@ -1,0 +1,33 @@
+﻿@model IEnumerable<ClientWeb.Models.DataModels.PostDataModel>
+<div id="content-wrap">
+    <div class="container">
+        <div id="hot-categories" class="row">
+            <div class="col-sm-12 group-title-box">
+                <h2 class="group-title ">
+                    <span>خبر های مهم</span>
+                </h2>
+            </div>
+            @foreach (var item in Model)
+            {
+                <div class="col-sm-6  col-lg-3 cate-box">
+                    <div class="cate-tit">
+                        <div class="div-1" style="width: 46%;">
+                            <a href="" class="cate-link link-active" data-ac="flipInX"><span>اطلاعات بیشتر</span></a>
+                        </div>
+                        <div class="div-2">
+                            <a href="#">
+                                <img src="@(!string.IsNullOrEmpty(item.ImagePath) ? ViewBag.PrePath + item.ImagePath : "/Content/DefaultContent/Imgs/No_Image.png")" alt="@item.ImageAlt" class="hot-cate-img" />
+                            </a>
+                        </div>
+
+                    </div>
+                    <div class="cate-content">
+                        <ul>
+                            <li><a href="#">@item.Tittle</a></li>
+                        </ul>
+                    </div>
+                </div>
+            }
+        </div>
+    </div> <!-- /.container -->
+</div>

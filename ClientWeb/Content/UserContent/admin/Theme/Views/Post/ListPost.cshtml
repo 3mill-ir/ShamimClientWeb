@@ -1,0 +1,529 @@
+﻿@model PagedList.IPagedList<ClientWeb.Models.DataModels.PostDataModel>
+@using PagedList.Mvc;
+@using ClientWeb.Models.BLL;
+@{
+    string lang = TempData["lang"].ToString();
+}
+
+@section jsForThisPage{
+    @{
+        @*<script type="text/javascript">
+                /**
+                    Chart.js
+                    http://www.chartjs.org/
+                **/
+                loadScript(plugin_path + 'chart.chartjs/Chart.min.js', function() {
+
+
+
+                    var barChartCanvas = {
+                        labels : ["January","February","March","April","May","June","July"],
+                        datasets : [
+                            {
+                                fillColor : "rgba(220,220,220,0.5)",
+                                strokeColor : "rgba(220,220,220,0.8)",
+                                highlightFill: "rgba(220,220,220,0.75)",
+                                highlightStroke: "rgba(220,220,220,1)",
+                                data : [65,59,90,81,56,55,50]
+                            }
+                        ]
+                    };
+
+
+
+                    var pieChartCanvas = [
+                        {
+                            value: 30,
+                            color:"#F38630"
+                        },
+                        {
+                            value : 50,
+                            color : "#E0E4CC"
+                        },
+                        {
+                            value : 100,
+                            color : "#69D2E7"
+                        },
+                        {
+                            value : 45,
+                            color : "#1E73BE"
+                        }
+                    ];
+
+
+
+                    var doughnutChartCanvas = [
+                        {
+                            value: 30,
+                            color:"#F7464A"
+                        },
+                        {
+                            value : 50,
+                            color : "#46BFBD"
+                        },
+                        {
+                            value : 100,
+                            color : "#FDB45C"
+                        },
+                        {
+                            value : 40,
+                            color : "#949FB1"
+                        },
+                        {
+                            value : 120,
+                            color : "#4D5360"
+                        }
+                    ];
+
+
+
+
+                    //// barChartCanvas
+                    //var ctx = document.getElementById("barChartCanvas").getContext("2d");
+                    //new Chart(ctx).Bar(barChartCanvas);
+
+                    // pieChartCanvas
+                    //var ctx = document.getElementById("pieChartCanvas").getContext("2d");
+                    //new Chart(ctx).Pie(pieChartCanvas);
+
+                    //// doughnutChartCanvas
+                    var ctx = document.getElementById("doughnutChartCanvas").getContext("2d");
+                    new Chart(ctx).Doughnut(doughnutChartCanvas);
+
+                });
+            </script>*@
+    if (this.ViewContext.HttpContext.Items["piporesult"] != null)
+    {
+        string ChartType = this.ViewContext.HttpContext.Items["piporesultType"]!=null? this.ViewContext.HttpContext.Items["piporesultType"].ToString(): "PieChart";
+        <script>
+            loadScript(plugin_path + 'chart.chartjs/Chart.min.js', function () {
+                var ScoreResult = [];
+                var LableResult = [];
+                @if (ChartType != "BarChart") {
+                    foreach (var p in this.ViewContext.HttpContext.Items["piporesult"] as List<string[]>)
+         {
+
+                     <text>
+                ScoreResult.push({
+                    value: "@p[0]",
+                    color: "@p[1]",
+                    highlight: "@p[2]",
+                    label: "@p[3]"
+                });
+                </text>
+                            }
+                        if (ChartType == "PieChart")
+                        {
+                        <text>
+                var ctx = document.getElementById("PipoChartCanvas").getContext("2d");
+
+                new Chart(ctx).Doughnut(ScoreResult);    </text>
+                        }
+                        else
+                        {
+          <text>
+                var ctx = document.getElementById("PipoChartCanvas").getContext("2d");
+
+                new Chart(ctx).Doughnut(ScoreResult);    </text>
+                        }
+                        }
+                        else {
+                            foreach (var p in this.ViewContext.HttpContext.Items["piporesult"] as List<string[]>)
+                            {
+
+                     <text>
+                ScoreResult.push("@p[0]");
+                LableResult.push("@p[1]");
+                </text>
+                        }
+                        <text>
+                var barChartCanvas = {
+                    labels: LableResult,
+                    datasets: [
+                        {
+                            fillColor: "rgba(220,220,220,0.5)",
+                            strokeColor: "rgba(220,220,220,0.8)",
+                            highlightFill: "rgba(220,220,220,0.75)",
+                            highlightStroke: "rgba(220,220,220,1)",
+                            data: ScoreResult
+                        }
+                    ]
+                };
+                var ctx = document.getElementById("PipoChartCanvas").getContext("2d");
+                new Chart(ctx).Bar(barChartCanvas);
+                </text>
+
+                    }
+            });
+        </script>
+    }
+
+    @*Random rnd = new Random();
+            <script>
+
+                var ScoreResult = [];
+                var LableResult = [];
+                var AllResult = [];
+                var AllSubResult = [];
+
+                loadScript(plugin_path + 'chart.chartjs/Chart.min.js', function () {
+
+                    @if(Model.ChartType== "PieChart")
+        {
+            for (int i=0; i < @Model.PollAnswer.Count; i++){
+        <text>
+                    ScoreResult.push({
+                        value: '@Model.PollAnswer[i].Score',
+                        color: '#@Model.PollAnswer[i].Color',
+                        highlight: '#6C7A89',
+                        label: '@Model.PollAnswer[i].Text'
+                    });
+                    </text>
+            }
+                  <text>
+                    var pieChartCanvas = [
+                        {
+                            value: 30,
+                            color: "#F38630"
+                        },
+                        {
+                            value: 50,
+                            color: "#E0E4CC"
+                        },
+                        {
+                            value: 100,
+                            color: "#69D2E7"
+                        },
+                        {
+                            value: 45,
+                            color: "#1E73BE"
+                        }
+                    ];
+                    var ctx = document.getElementById("pieChartCanvas").getContext("2d");
+                    new Chart(ctx).Pie(pieChartCanvas);
+                    </text>
+        }
+                    @if(Model.ChartType== "DoughnuChart")
+        {
+            for (int i=0; i < @Model.PollAnswer.Count; i++){
+        <text>
+                    ScoreResult.push({
+                        value: '@Model.PollAnswer[i].Score',
+                        color: '#@Model.PollAnswer[i].Color',
+                        highlight: '#6C7A89',
+                        label: '@Model.PollAnswer[i].Text'
+                    });
+                    </text>
+            }
+                  <text>
+                    var doughnutChartCanvas = ScoreResult;
+                    var ctx = document.getElementById("doughnutChartCanvas").getContext("2d");
+                    new Chart(ctx).Doughnut(doughnutChartCanvas);
+                    </text>
+        }
+
+                    @if(Model.ChartType=="BarChart")
+            {
+            for (int i=0; i < Model.PollAnswer.Count; i++){
+        <text>
+                    ScoreResult.push("@Model.PollAnswer[i].Score");
+                    LableResult.push("@Model.PollAnswer[i].Text");
+                    </text>
+                        }
+                            <text>
+                    var barChartCanvas = {
+                        labels: LableResult,
+                        datasets: [
+                            {
+                                fillColor: "rgba(220,220,220,0.5)",
+                                strokeColor: "rgba(220,220,220,0.8)",
+                                highlightFill: "rgba(220,220,220,0.75)",
+                                highlightStroke: "rgba(220,220,220,1)",
+                                data: ScoreResult
+                            }
+                        ]
+                    };
+                    var ctx = document.getElementById("barChartCanvas").getContext("2d");
+                    new Chart(ctx).Bar(barChartCanvas);
+                    </text>
+        }
+
+                });
+            </script>*@
+    }
+}
+
+<!--
+    PAGE HEADER
+
+    CLASSES:
+        .page-header-xs	= 20px margins
+        .page-header-md	= 50px margins
+        .page-header-lg	= 80px margins
+        .page-header-xlg= 130px margins
+        .dark			= dark page header
+
+        .shadow-before-1 	= shadow 1 header top
+        .shadow-after-1 	= shadow 1 header bottom
+        .shadow-before-2 	= shadow 2 header top
+        .shadow-after-2 	= shadow 2 header bottom
+        .shadow-before-3 	= shadow 3 header top
+        .shadow-after-3 	= shadow 3 header bottom
+-->
+<section class="page-header dark page-header-xs">
+    @Html.Action("PageTitle", "Utility", new { F_MenuID = ViewBag.F_MenuId })
+</section>
+<!-- /PAGE HEADER -->
+<section>
+    <div class="container">
+        <div class="row">
+            <!-- LEFT -->
+            <div class="col-md-3 col-sm-3">
+                <!-- INLINE SEARCH -->
+                <div class="inline-search clearfix margin-bottom-30">
+                    @using (Html.BeginForm("Search", "Post", new
+                    {
+                        Type = 2,
+                        profile = ViewBag.profile,
+                        lang = ViewBag.lang,
+                        id = ViewBag.id,
+
+                    }, FormMethod.Get, new { @class = "widget_search" }))
+                    {
+                        <input type="search" placeholder="@(lang == "FA" ? "جستجو ..." : lang == "EN" ? "Search ..." : lang == "TR" ? "arama ..." : "... بحث")" id="SearchText" name="SearchText" class="serch-input">
+                        <button type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    }
+                    @*<form action="" method="get" class="widget_search">
+                            <input type="search" placeholder="جستجو ..." id="s" name="s" class="serch-input">
+                            <button type="submit">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </form>*@
+                </div>
+                <!-- /INLINE SEARCH -->
+
+                <hr />
+                <!-- side navigation -->
+                @Html.Action("MenuPostCounter", "Utility", new { F_MenuID = ViewBag.F_MenuId })
+
+
+                <!-- JUSTIFIED TAB -->
+                <div class="tabs nomargin-top hidden-xs margin-bottom-60">
+
+                    <!-- tabs -->
+                    <ul class="nav nav-tabs nav-bottom-border nav-justified">
+                        <li class="active">
+                            <a href="#tab_1" data-toggle="tab">
+                                @(lang == "FA" ? "محبوب ترین ها" : lang == "EN" ? "favorites" : lang == "TR" ? "En popüler" : "الاكثر شعبية")
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#tab_2" data-toggle="tab">
+                             @(lang == "FA" ? "   جدیدترین ها" : lang == "EN" ? "Latest" : lang == "TR" ? "En son" : "الأحدث")
+                            </a>
+                        </li>
+                    </ul>
+
+                    <!-- tabs content -->
+                    <div class="tab-content margin-bottom-60 margin-top-30">
+                        <!-- POPULAR -->
+                        @Html.Action("PopularPosts", "Post", new { profile = TempData["UserName"], F_MenuID = ViewBag.F_MenuId })
+                        <!-- /POPULAR -->
+                        <!-- RECENT -->
+                        @Html.Action("RecentPosts", "Post", new { profile = TempData["UserName"], F_MenuID = ViewBag.F_MenuId })
+                        <!-- /RECENT -->
+                    </div>
+                </div>
+                <!-- JUSTIFIED TAB -->
+                <!-- TAGS -->
+                @*<h3 class="hidden-xs size-16 margin-bottom-20">TAGS</h3>
+                    <div class="hidden-xs margin-bottom-60">
+
+                        <a class="tag" href="#">
+                            <span class="txt">RESPONSIVE</span>
+                            <span class="num">12</span>
+                        </a>
+                        <a class="tag" href="#">
+                            <span class="txt">CSS</span>
+                            <span class="num">3</span>
+                        </a>
+                        <a class="tag" href="#">
+                            <span class="txt">HTML</span>
+                            <span class="num">1</span>
+                        </a>
+                        <a class="tag" href="#">
+                            <span class="txt">JAVASCRIPT</span>
+                            <span class="num">28</span>
+                        </a>
+                        <a class="tag" href="#">
+                            <span class="txt">DESIGN</span>
+                            <span class="num">6</span>
+                        </a>
+                        <a class="tag" href="#">
+                            <span class="txt">DEVELOPMENT</span>
+                            <span class="num">3</span>
+                        </a>
+                    </div>*@
+
+
+                <!-- FACEBOOK -->
+                @*<iframe class="hidden-xs" src="//www.facebook.com/plugins/likebox.php?href=https%3A%2F%2Fwww.facebook.com%2Fstepofweb&amp;width=263&amp;height=258&amp;colorscheme=light&amp;show_faces=true&amp;header=false&amp;stream=false&amp;show_border=false" style="border:none; overflow:hidden; width:263px; height:258px;"></iframe>
+
+
+                    <hr />*@
+
+
+                <!-- SOCIAL ICONS -->
+                @*<div class="hidden-xs margin-top-30 margin-bottom-60">
+                        <a href="#" class="social-icon social-icon-border social-facebook pull-left" data-toggle="tooltip" data-placement="top" title="Facebook">
+                            <i class="icon-facebook"></i>
+                            <i class="icon-facebook"></i>
+                        </a>
+
+                        <a href="#" class="social-icon social-icon-border social-twitter pull-left" data-toggle="tooltip" data-placement="top" title="Twitter">
+                            <i class="icon-twitter"></i>
+                            <i class="icon-twitter"></i>
+                        </a>
+
+                        <a href="#" class="social-icon social-icon-border social-gplus pull-left" data-toggle="tooltip" data-placement="top" title="Google plus">
+                            <i class="icon-gplus"></i>
+                            <i class="icon-gplus"></i>
+                        </a>
+
+                        <a href="#" class="social-icon social-icon-border social-linkedin pull-left" data-toggle="tooltip" data-placement="top" title="Linkedin">
+                            <i class="icon-linkedin"></i>
+                            <i class="icon-linkedin"></i>
+                        </a>
+
+                        <a href="#" class="social-icon social-icon-border social-rss pull-left" data-toggle="tooltip" data-placement="top" title="Rss">
+                            <i class="icon-rss"></i>
+                            <i class="icon-rss"></i>
+                        </a>
+                    </div>*@
+
+            </div>
+
+            <!-- CENTER -->
+            <div class="col-md-6 col-sm-6">
+
+
+
+                <!-- POST ITEM -->
+                @foreach (var item in Model)
+                {
+                    <div class="blog-post-item">
+
+                        <!-- IMAGE -->
+                        <figure class="margin-bottom-20">
+                            <img class="img-responsive" src="@(!string.IsNullOrEmpty(item.ImagePath) ? ViewBag.PrePath + item.ImagePath :@TempData["WebsiteThemePath"]+ "DefaultContent/Imgs/Park.png")" alt="@item.ImageAlt">
+                        </figure>
+
+                        <h2><a href="@Url.Action("PostDetail","Post", new {profile=TempData["UserName"], lang = item.Language, id = item.ID })">@item.Tittle</a></h2>
+
+                        <ul class="blog-post-info list-inline">
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-clock-o"></i>
+                                    <span class="font-lato">@Tools.SpecialJalaliFormat(item.CreatedOnUTC ?? default(DateTime))</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-comment-o"></i>
+                                    <span class="font-lato">@item.NumberOfComments</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-thumbs-up"></i>
+                                    <span class="font-lato">@item.NumberOfLikes</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-thumbs-down"></i>
+                                    <span class="font-lato">@item.NumberOfDislikes</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-eye"></i>
+                                    <span class="font-lato">@item.NumberOfVisitors</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <p>
+                            @item.Description
+                        </p>
+                        <a href="@Url.Action("PostDetail","Post", new {profile=TempData["UserName"], lang = item.Language, id = item.ID })" class="btn btn-reveal btn-default">
+                            <i class="fa fa-plus"></i>
+                            <span>بیشتر</span>
+                        </a>
+
+                    </div>
+                }
+                <!-- /POST ITEM -->
+                <!-- PAGINATION -->
+                <div class="text-center">
+                    <!-- Pagination Default -->
+                    <ul class="pagination nomargin">
+                        @Html.PagedListPager(Model, page => Url.Action("Listpost", "Post", new
+                   {
+                       page,
+                       PageSize = ViewBag.PageSize,
+                       Type = ViewBag.Type,
+                       FromDate = ViewBag.FromDate,
+                       ToDate = ViewBag.ToDate,
+
+                       SearchText = ViewBag.SearchText,
+                       profile = ViewBag.profile,
+                       lang = ViewBag.lang,
+                       id = ViewBag.id,
+
+                   }))
+                    </ul>
+                    <!-- /Pagination Default -->
+                </div>
+                <!-- /PAGINATION -->
+
+
+            </div>
+
+            <!-- RIGHT -->
+            <div class="col-md-3 col-sm-3 hiddex-xs">
+                @Html.Partial("SideSlider")
+                <!-- FEATURED VIDEO -->
+                @Html.Action("PollQuestion", "Poll", new { profile = TempData["UserName"] })
+                <div class="divider"><!-- divider --></div>
+                @Html.Action("SideLinks", "Utility", new { profile = TempData["UserName"] })
+                <div class="divider"><!-- divider --></div>
+                @Html.Action("RuzPic", "Utility")
+                <div class="divider"><!-- divider --></div>
+                @Html.Action("RuzWord", "Utility")
+                @*<h3 class="size-16 margin-bottom-10">FEATURED VIDEO</h3>
+                    <div class="embed-responsive embed-responsive-16by9 margin-bottom-60">
+                        <iframe class="embed-responsive-item" src="http://player.vimeo.com/video/8408210" width="800" height="450"></iframe>
+                    </div>*@
+
+                <!-- TWIITER WIDGET -->
+                @*<h3 class="size-16 margin-bottom-10">TWITTER FEED</h3>
+                    <ul class="widget-twitter margin-bottom-60" data-php="php/twitter/tweet.php" data-username="stepofweb" data-limit="3">
+                        <li></li>
+                    </ul>*@
+
+                <!-- FLICKR WIDGET -->
+                @*<h3 class="size-16 margin-bottom-10">FLICKR PHOTO</h3>
+                    <div class="widget-flickr clearfix lightbox margin-bottom-60" data-id="37304598@N02" data-limit="16" data-plugin-options='{"delegate": "a", "gallery": {"enabled": true}}'></div>*@
+
+            </div>
+
+        </div>
+
+
+
+
+
+    </div>
+</section>

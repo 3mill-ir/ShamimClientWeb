@@ -1,0 +1,182 @@
+﻿@model IEnumerable<ClientWeb.Models.DataModels.ItemDataModel>
+@using PagedList.Mvc;
+@using ClientWeb.Models.BLL;
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryajax")
+<style>
+    .categories .navbar-stacked li a {
+    margin-top:0;
+    }
+    .popular ul.gallery li a{
+        display:inline;
+    }
+</style>
+<section id="projects">
+    <div class="container">
+        <div class="row">
+            <h2 class="page-heading" style="border-bottom:none;">
+                لیست کالاها
+            </h2>
+
+            @*<section id="page-breadcrumb">
+                <div class="vertical-center sun">
+                    <div class="container">
+                        <div class="row">
+                            <div class="action">
+                                <div class="col-sm-12">
+                                    <h2 class="page-heading" style="border-bottom:none;">
+                                        @Html.Action("PageTitle", "Utility", new { F_MenuID = ViewBag.F_MenuId })
+                                    </h2>
+                                    <p>Blog with right sidebar</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>*@
+
+            <div class="col-md-9 col-sm-8">
+                <div class="row">
+               <ul class="portfolio-filter text-center">
+                            <li><a class="btn btn-default active" href="#" data-filter="*">All</a></li>
+                            <li><a class="btn btn-default" href="#" data-filter=".branded">Branded</a></li>
+                            <li><a class="btn btn-default" href="#" data-filter=".design">Design</a></li>
+                            <li><a class="btn btn-default" href="#" data-filter=".folio">Folio</a></li>
+                            <li><a class="btn btn-default" href="#" data-filter=".logos">Logos</a></li>
+                            <li><a class="btn btn-default" href="#" data-filter=".mobile">Mobile</a></li>
+                            <li><a class="btn btn-default" href="#" data-filter=".mockup">Mockup</a></li>
+
+                   @foreach (var item in ViewBag.Folders as List<string>)
+                   {
+                       <li @(item == ViewBag.FolderName ? "class=active" : "")>
+
+                           <a class="btn btn-default @(item == ViewBag.FolderName ? "active" : "")" href="@Url.Action("Item", "ListItem", new {lang=ViewBag.lang, FolderName = item, profile = TempData["UserName"] })" data-filter="*">
+                               @item
+                           </a>
+                       </li>
+                   }
+                        </ul><!--/#portfolio-filter-->
+                              
+                      @foreach (var item in Model)
+                                {
+                    <div class="portfolio-items isotope" style="position: relative; overflow: hidden; height: 1005px;">
+                        <div class="col-xs-6 col-sm-6 col-md-4 portfolio-item branded logos isotope-item" style="position: absolute; left: 0px; top: 0px; transform: translate3d(0px, 0px, 0px);">
+                            <div class="portfolio-wrapper">
+                                <div class="portfolio-single">
+                                    <div class="portfolio-thumb">
+                                        <img src="@(!string.IsNullOrEmpty(item.Image) ? ViewBag.PrePath + item.Image : "/Content/DefaultContent/Imgs/No_Image.png")" class="img-responsive" alt="">
+                                    </div>
+                                    <div class="portfolio-view">
+                                        <ul class="nav nav-pills">
+                                            <li><a href="">@item.Name<i class="fa fa-link"></i></a></li>
+                                            <li><a href="images/portfolio/1.jpg" data-lightbox="example-set">@item.NumberOfVisitors<i class="fa fa-eye"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="portfolio-info ">
+                                    <div class="entry-excerpt">
+                                        @item.Description
+                                    </div>
+                                    <span class="date"><i class="fa fa-calendar"></i>@ClientWeb.Models.BLL.Tools.GetDateTimeReturnJalaliDate(item.CreatedDateOnUTC ?? default(DateTime))</span>
+                                    <div class="entry-more">
+                                        <a href="@Url.Action("ItemDetail","Item", new {profile=TempData["UserName"], ID = item.ID,lang=ViewBag.lang,Type=ViewBag.Type })">اطلاعات بیشتر</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                                }
+                 
+
+                    <div class="portfolio-pagination">
+
+                        @*<ul class="pagination">
+                            @Html.PagedListPager(Model, page => Url.Action("GalleryItems", "Item", new { page, FolderName = ViewBag.FolderName, profile = ViewBag.Profile, }))
+                        </ul>*@ 
+
+                        <ul class="pagination">
+                            <li><a href="#">left</a></li>
+                            <li><a href="#">1</a></li>
+                            <li><a href="#">2</a></li>
+                            <li class="active"><a href="#">3</a></li>
+                            <li><a href="#">4</a></li>
+                            <li><a href="#">5</a></li>
+                            <li><a href="#">6</a></li>
+                            <li><a href="#">7</a></li>
+                            <li><a href="#">8</a></li>
+                            <li><a href="#">9</a></li>
+                            <li><a href="#">right</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-4 padding-top">
+                <div class="sidebar portfolio-sidebar">
+
+                    <div class="sidebar-item categories">
+                        <ul class="nav navbar-stacked">
+
+                            @*@Html.Action("MenuPostCounter", "Utility", new { F_MenuID = ViewBag.id })
+
+                            @Html.Action("PopularPosts", "Post", new { F_MenuID = ViewBag.id, profile = ViewBag.profile })
+                            <!-- ./Popular Posts -->
+                            <!-- Banner -->
+                            <!-- Poll -->
+                            @Html.Action("PollQuestion", "Poll", new { profile = ViewBag.profile })
+                            <!-- ./Poll -->
+                            <!-- Popular Posts -->
+                            @Html.Action("RecentPosts", "Post", new { F_MenuID = ViewBag.id, profile = ViewBag.profile })*@
+
+                            @Html.Action("PollQuestion", "Poll", new { profile = "aprin" })
+
+
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-item  recent">
+                        <h3>Recent Projects</h3>
+                        <div class="media">
+                            <div class="pull-left">
+                                <a href="#"><img src="@TempData["WebsiteThemePath"]assets/images/portfolio/project1.jpg" alt=""></a>
+                            </div>
+                            <div class="media-body">
+                                <h4><a href="#">Lorem ipsum dolor sit amet consectetur adipisicing elit,</a></h4>
+                                <p>posted on  07 March 2014</p>
+                            </div>
+                        </div>
+                        <div class="media">
+                            <div class="pull-left">
+                                <a href="#"><img src="@TempData["WebsiteThemePath"]assets/images/portfolio/project2.jpg" alt=""></a>
+                            </div>
+                            <div class="media-body">
+                                <h4><a href="#">Lorem ipsum dolor sit amet consectetur adipisicing elit,</a></h4>
+                                <p>posted on  07 March 2014</p>
+                            </div>
+                        </div>
+                        <div class="media">
+                            <div class="pull-left">
+                                <a href="#"><img src="@TempData["WebsiteThemePath"]assets/images/portfolio/project3.jpg" alt=""></a>
+                            </div>
+                            <div class="media-body">
+                                <h4><a href="#">Lorem ipsum dolor sit amet consectetur adipisicing elit,</a></h4>
+                                <p>posted on  07 March 2014</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sidebar-item popular">
+                        <h3>Popular Projects</h3>
+                        <ul class="gallery">
+                            <li><a href="#"><img src="@TempData["WebsiteThemePath"]assets/images/portfolio/popular1.jpg" alt=""></a></li>
+                            <li><a href="#"><img src="@TempData["WebsiteThemePath"]assets/images/portfolio/popular2.jpg" alt=""></a></li>
+                            <li><a href="#"><img src="@TempData["WebsiteThemePath"]assets/images/portfolio/popular3.jpg" alt=""></a></li>
+                            <li><a href="#"><img src="@TempData["WebsiteThemePath"]assets/images/portfolio/popular4.jpg" alt=""></a></li>
+                            <li><a href="#"><img src="@TempData["WebsiteThemePath"]assets/images/portfolio/popular5.jpg" alt=""></a></li>
+                            <li><a href="#"><img src="@TempData["WebsiteThemePath"]assets/images/portfolio/popular1.jpg" alt=""></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

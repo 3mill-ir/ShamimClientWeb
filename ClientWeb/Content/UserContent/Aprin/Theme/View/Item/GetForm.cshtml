@@ -1,0 +1,22 @@
+﻿@model ClientWeb.Models.DataModels.MenuNew
+@{TempData["FormCounter"] = 0; }
+<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+<style>
+    .toggle-handle {
+        background-color: #f3f3f3;
+    }
+
+        .toggle-handle:hover {
+            background-color: #f3f3f3;
+        }
+
+    .toggle-off {
+        text-shadow: none;
+        background-color: #f3f3f3;
+    }
+</style> 
+<script>
+    $(':checkbox').each(function () {
+        this.click(); this.click();
+    });
+</script>

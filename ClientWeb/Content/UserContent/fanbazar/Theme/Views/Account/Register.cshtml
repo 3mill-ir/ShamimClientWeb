@@ -1,0 +1,12 @@
+﻿@if (ViewBag.Alert == "Success")
+{
+    <div class="alert-box" style="padding: 5px 45px 0; margin-top: 10px;background-color:@(ViewBag.AlertMessage[1]=="success"?"#cef5be":"#ffeb8a") ;border-radius: 25px; color:white;">
+        <p>@ViewBag.AlertMessage[0]</p>
+    </div>
+}
+else
+{
+    <div class="alert-box error" style="padding:5px 45px 0;margin-top: 10px;background-color: #ff9595;border-radius: 25px;color:white;">
+        <p>خطا در ساخت حساب کاربری، لطفا مجددا تلاش کنید</p>
+    </div>
+}

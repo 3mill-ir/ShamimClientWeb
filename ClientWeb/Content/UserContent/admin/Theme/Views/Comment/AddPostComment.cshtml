@@ -1,0 +1,32 @@
+﻿@{
+    Layout = null;
+    string resultContent = "";
+    string resultAlert = "";
+    if (ViewBag.AddCommentSuccess != null)
+    {
+        resultContent = @ViewBag.AddCommentSuccess;
+        resultAlert = "alert-success";
+    }
+    else if (ViewBag.AddCommentFailed != null)
+    {
+        resultContent = @ViewBag.AddCommentFailed;
+        resultAlert = "alert-danger";
+    }
+    else if (ViewBag.AddCommentWarning != null)
+    {
+        resultContent = @ViewBag.AddCommentWarning;
+        resultAlert = "alert-danger";
+    }
+}
+
+
+
+
+        <div class="alert @resultAlert margin-bottom-30">
+            <!-- SUCCESS -->
+            <button type="button" class="close" data-dismiss="alert">
+                <span aria-hidden="true">×</span>
+                <span class="sr-only">Close</span>
+            </button>
+            @resultContent
+        </div>

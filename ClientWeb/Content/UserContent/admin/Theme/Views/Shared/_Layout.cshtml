@@ -1,0 +1,305 @@
+﻿@{
+    string lang = TempData["lang"].ToString();
+}
+<!DOCTYPE html>
+<!--[if IE 8]>			<html class="ie ie8"> <![endif]-->
+<!--[if IE 9]>			<html class="ie ie9"> <![endif]-->
+<!--[if gt IE 9]><!-->
+<html>
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.PageTittle | @(lang == "FA" ? "پارک علم و فناوری آذربایجان غربی" : lang == "EN" ? "West Azarbaijan Science and Technology Park" : lang == "TR" ? "Batı Azerbaycan Azerbaycan Bilim ve Teknoloji Parkı" : "غرب الاذربایجان للعلوم والتكنولوجيا بارك")</title>
+    <meta name="keywords" content="پارک علم و فناوری,آذربایجان غربی" />
+    <meta name="description" content="وب سایت پارک علم و فناوری" />
+    <meta name="Author" content="شرکت توسعه تجارت الکترونیک هزاره سوم" />
+
+    <!-- mobile settings -->
+    <meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1, user-scalable=0" />
+    <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+    <!-- WEB FONTS : use %7C instead of | (pipe) -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400%7CRaleway:300,400,500,600,700%7CLato:300,400,400italic,600,700" rel="stylesheet" type="text/css" />
+
+    <!-- CORE CSS -->
+    <link href="@TempData["WebsiteThemePath"]plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- SLIDER -->
+    @RenderSection("SliderCSS", false)
+
+    <!-- THEME CSS -->
+    <link href="@TempData["WebsiteThemePath"]css/essentials.css" rel="stylesheet" type="text/css" />
+    <link href="@TempData["WebsiteThemePath"]css/layout.css" rel="stylesheet" type="text/css" />
+    <link href="@TempData["WebsiteThemePath"]css/thematics-education.css" rel="stylesheet" type="text/css" />
+    @if (TempData["LangDirection"] as string == "RTL")
+    {
+        <link href="@TempData["WebsiteThemePath"]plugins/bootstrap/RTL/bootstrap-rtl.min.css" rel="stylesheet" type="text/css" />
+        <link href="@TempData["WebsiteThemePath"]plugins/bootstrap/RTL/bootstrap-flipped.min.css" rel="stylesheet" type="text/css" />
+        <link href="@TempData["WebsiteThemePath"]css/layout-RTL.css" rel="stylesheet" type="text/css" />
+    }
+    <style>
+        .fanbazarBtn:hover {
+            background-color: #23527c !important;
+        }
+
+        @@media only screen and (max-width: 1300px) {
+            .Resp_Logo {
+                margin-right: 0 !important;
+            }
+
+                .Resp_Logo > img {
+                    height: 30px !important;
+                }
+
+            .Resp_Lang {
+                margin-left: 0 !important;
+                font-size: 12px !important;
+            }
+
+            .fa-bars {
+                font-size: 12px !important;
+            }
+
+            .fa-search {
+                font-size: 12px !important;
+                margin-left: -50px !important;
+            }
+
+            #topNav div.nav-main-collapse {
+                max-height: 1500px !important;
+            }
+        }
+
+        @@media only screen and (max-width: 335px) {
+            .Resp_Logo > img {
+                height: 20px !important;
+                margin-top: 10px;
+            }
+        }
+
+        @@media screen and (max-width: 1300px) and (min-width: 990px) {
+            #topMain.nav-pills > li > a {
+                font-size: 9px !important;
+                margin-right: -17px !important;
+            }
+        }
+    </style>
+    <!-- PAGE LEVEL SCRIPTS -->
+    <link href="@TempData["WebsiteThemePath"]css/header-1.css" rel="stylesheet" type="text/css" />
+    <link href="@TempData["WebsiteThemePath"]css/color_scheme/blue.css" rel="stylesheet" type="text/css" id="color_scheme" />
+
+    @RenderSection("CSSForThisPage", false)
+
+</head>
+
+
+<!--
+    AVAILABLE BODY CLASSES:
+
+    smoothscroll 			= create a browser smooth scroll
+    enable-animation		= enable WOW animations
+
+    bg-grey					= grey background
+    grain-grey				= grey grain background
+    grain-blue				= blue grain background
+    grain-green				= green grain background
+    grain-blue				= blue grain background
+    grain-orange			= orange grain background
+    grain-yellow			= yellow grain background
+
+    boxed 					= boxed layout
+    pattern1 ... patern11	= pattern background
+    menu-vertical-hide		= hidden, open on click
+
+    BACKGROUND IMAGE [together with .boxed class]
+    data-background="@TempData["WebsiteThemePath"]images/boxed_background/1.jpg"
+-->
+<body class="smoothscroll enable-animation">
+    <script>
+        var plugin_path = '@TempData["WebsiteThemePath"]plugins/';
+    </script>
+    <!-- SLIDE TOP -->
+    @*<div id="slidetop">
+
+            <div class="container">
+
+                <div class="row">
+
+                    <div class="col-md-4">
+                        <h6><i class="icon-heart"></i> WHY SMARTY?</h6>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas metus nulla, commodo a sodales sed, dignissim pretium nunc. Nam et lacus neque. Ut enim massa, sodales tempor convallis et, iaculis ac massa. </p>
+                    </div>
+
+                    <div class="col-md-4">
+                        <h6><i class="icon-attachment"></i> RECENTLY VISITED</h6>
+                        <ul class="list-unstyled">
+                            <li><a href="#"><i class="fa fa-angle-right"></i> Consectetur adipiscing elit amet</a></li>
+                            <li><a href="#"><i class="fa fa-angle-right"></i> This is a very long text, very very very very very very very very very very very very </a></li>
+                            <li><a href="#"><i class="fa fa-angle-right"></i> Lorem ipsum dolor sit amet</a></li>
+                            <li><a href="#"><i class="fa fa-angle-right"></i> Dolor sit amet,consectetur adipiscing elit amet</a></li>
+                            <li><a href="#"><i class="fa fa-angle-right"></i> Consectetur adipiscing elit amet,consectetur adipiscing elit</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-md-4">
+                        <h6><i class="icon-envelope"></i> CONTACT INFO</h6>
+                        <ul class="list-unstyled">
+                            <li><b>Address:</b> PO Box 21132, Here Weare St, <br /> Melbourne, Vivas 2355 Australia</li>
+                            <li><b>Phone:</b> 1-800-565-2390</li>
+                            <li><b>Email:</b> <a href="mailto:support@yourname.com">support@yourname.com</a></li>
+                        </ul>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <a class="slidetop-toggle" href="#"></a>
+
+        </div>*@
+    <!-- /SLIDE TOP -->
+    <!-- wrapper -->
+    <div id="wrapper">
+
+        <!-- Top Bar -->
+        <div id="topBar">
+            <div class="container">
+
+                <!-- right -->
+                @*<ul class="top-links list-inline pull-right">*@
+                @*<li class="text-welcome">Welcome to Smarty, <strong>John Doe</strong></li>
+                    <li>
+
+                        <a class="dropdown-toggle no-text-underline" data-toggle="dropdown" href="#">MY ACCOUNT</a>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a tabindex="-1" href="#"><i class="fa fa-history"></i> ORDER HISTORY</a></li>
+                            <li class="divider"></li>
+                            <li><a tabindex="-1" href="#"><i class="fa fa-bookmark"></i> WISHLIST</a></li>
+                            <li><a tabindex="-1" href="#"><i class="fa fa-cog"></i> SETTINGS</a></li>
+                            <li class="divider"></li>
+                            <li><a tabindex="-1" href="#"><i class="glyphicon glyphicon-off"></i> LOGOUT</a></li>
+                        </ul>
+
+                    </li>*@
+                @*<li><a target="_blank" href="@System.Configuration.ConfigurationManager.AppSettings["AdminAddress"]">پنل مدیریت</a></li>*@
+                @*<li><a href="page-register-1.html">REGISTER</a></li>*@
+                @*</ul>*@
+
+                <!-- left -->
+                @*@Html.Action("LanguageList", "Utility")*@
+
+            </div>
+        </div>
+        <!-- /Top Bar -->
+        <!--
+            AVAILABLE HEADER CLASSES
+
+            Default nav height: 96px
+            .header-md 		= 70px nav height
+            .header-sm 		= 60px nav height
+
+            .noborder 		= remove bottom border (only with transparent use)
+            .transparent	= transparent header
+            .translucent	= translucent header
+            .sticky			= sticky header
+            .static			= static header
+            .dark			= dark header
+            .bottom			= header on bottom
+
+            shadow-before-1 = shadow 1 header top
+            shadow-after-1 	= shadow 1 header bottom
+            shadow-before-2 = shadow 2 header top
+            shadow-after-2 	= shadow 2 header bottom
+            shadow-before-3 = shadow 3 header top
+            shadow-after-3 	= shadow 3 header bottom
+
+            .clearfix		= required for mobile menu, do not remove!
+
+            Example Usage:  class="clearfix sticky header-sm transparent noborder"
+        -->
+        <div id="header" class="sticky clearfix">
+
+            <!-- SEARCH HEADER -->
+            <div class="search-box over-header">
+                <a id="closeSearch" href="#" class="glyphicon glyphicon-remove" style="@(TempData["lang"].ToString()=="FA"?"":"margin-right: 30px;")"></a>
+                <a id="closeSearch" href="#" onclick="document.getElementById('pipoSearch').submit()" class="glyphicon glyphicon-search margin-left-30"></a>
+                @using (Html.BeginForm("Search", "Post", new
+                {
+                    Type = 2,
+                    profile = TempData["UserName"],
+                    lang = TempData["lang"],
+                    id = ViewBag.id,
+
+                }, FormMethod.Get, new { @class = "widget_search", id = "pipoSearch" }))
+                {
+                    <input type="text" name="SearchText" class="form-control" placeholder="@(TempData["lang"].ToString()=="FA"?"جستجو ...":"Search ...")" />
+                }
+            </div>
+
+            <!-- /SEARCH HEADER -->
+            <!-- TOP NAV -->
+            <header id="topNav">
+                <div class="container">
+
+                    <!-- Mobile Menu Button -->
+                    <button class="btn btn-mobile" data-toggle="collapse" data-target=".nav-main-collapse" style="float: left;">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                    @Html.Action("LanguageList", "Utility")
+                    <!-- BUTTONS -->
+                    <ul class="pull-right nav nav-pills nav-second-main" style="margin-left:0;">
+                        <!-- SEARCH -->
+                        <li class="search">
+                            <a href="javascript:;">
+                                <i class="fa fa-search"></i>
+                            </a>
+                        </li>
+                        <!-- /SEARCH -->
+                    </ul>
+                    <!-- /BUTTONS -->
+                    <!-- Logo -->
+                    <a class="logo pull-left Resp_Logo" href="@Url.Action("PageDetail", "Page",new { profile = TempData["UserName"], lang=TempData["lang"], id = 0})" style="margin-right: -50px;">
+                        <img src="@TempData["WebsiteThemePath"]images/logo_light.png" alt="" style="max-width: 210px;height: 50px;" />
+                    </a>
+
+                    <!--
+                        Top Nav
+
+                        AVAILABLE CLASSES:
+                        submenu-dark = dark sub menu
+                    -->
+                    @Html.Action("MainMenu", "Utility", new { profile = TempData["UserName"] })
+
+                </div>
+            </header>
+            <!-- /Top Nav -->
+
+        </div>
+
+
+
+        @RenderBody()
+        <!-- FOOTER -->
+        @Html.Action("Footer", "Utility", new { profile = TempData["UserName"] })
+
+        <!-- /FOOTER -->
+
+    </div>
+    <!-- /wrapper -->
+    <!-- SCROLL TO TOP -->
+    <a href="#" id="toTop"></a>
+    <a class="fanbazarBtn" style="line-height: 40px;width: 150px;font-size: 12pt;text-align: center; margin-top: 1px;margin-right: 2px;position:fixed; bottom:55px;left:0;z-index:3000;color:white;background-color:#337ab7;" href="http://wastp.ir/fanbazar/FA/Page/PageDetail/0">@(lang == "FA" ? "ورود به فن بازار" : lang == "EN" ? "Enter to Fanbazar" : lang == "TR" ? "Fanbazarin girişi" : "أدخل الفن بازار")</a>
+
+
+    <!-- PRELOADER -->
+    @*<div id="preloader">
+            <div class="inner">
+                <span class="loader"></span>
+            </div>
+        </div>*@<!-- /PRELOADER -->
+    <!-- JAVASCRIPT FILES -->
+    <script type="text/javascript" src="@TempData["WebsiteThemePath"]plugins/jquery/jquery-2.1.4.min.js"></script>
+
+    <script type="text/javascript" src="@TempData["WebsiteThemePath"]js/scripts.js"></script>
+    @RenderSection("jsForThisPage", false)
+</body>
+</html>

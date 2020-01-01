@@ -1,0 +1,68 @@
+﻿@using ClientWeb.Models.BLL;
+@using ClientWeb.CustomHelper
+@{
+    string lang = TempData["lang"].ToString();
+}
+<section id="slider" class="fullheight" style="overflow:visible !important">
+
+    <div class="swiper-container" data-effect="">
+        <div class="swiper-wrapper">
+            <!-- SLIDE 1 -->
+            <div class="swiper-slide">
+                <div class="overlay dark-3"><!-- dark overlay [1 to 9 opacity] --></div>
+                <div class="slider-video">
+                    <video poster="@TempData["WebsiteThemePath"]DefaultContent/video/park6img.png" preload="auto" loop autoplay muted>
+                        <source src='@TempData["WebsiteThemePath"]DefaultContent/video/park6.mp4' type='video/webm' />
+                        <source src='@TempData["WebsiteThemePath"]DefaultContent/video/park6.mp4' type='video/mp4' />
+                    </video>
+                </div>
+                <div class="display-table">
+                    <div class="display-table-cell vertical-align-middle">
+                        <div class="container">
+                            <div class="row">
+                                @if (lang == "FA")
+                                {
+                                    <div class="col-md-8 col-xs-12" style="direction:rtl">
+                                        <h1 class="bold font-raleway wow fadeInUp size-50" data-wow-delay="0.4s">پارک علم و فناوری آذربایجان غربی</h1>
+                                        <p class="lead font-lato weight-300 hidden-xs wow fadeInUp justify" data-wow-delay="0.6s">پارک علم و فناوری آذربایجان غربی وابسته به وزارت علوم، تحقیقات و فناوری برای تحقق آرمان توسعه علمی کشور در عرصه‌های ملی و بین المللی فعالیت می‌نماید. این پارک در افق آرمانی خود در 10 سال آینده، مجموعه‌ای دارای مرجعیت فناوری در استان آذربایجان غربی، جنوب شرق ترکیه و شمال شرق عراق در حوزه تجارت و بازرگانی بین المللی بوده و کانون اصلی شبکه ارتباطی صادرات هر نوع محصول دانش‌بنیان کشور با کشورهای همجوار ترکیه، عراق و کشورهای مشترک المنافع (CIS) خواهد شد و نیز خواهد توانست به عنوان موتور محرکه توسعه اقتصادی بر اساس مزیت‌های منطقه‌ای عمل کرده و سهم قابل توجه و فزاینده‌ای در تولید ناخالص داخلی استان داشته باشد.</p>
+                                    </div>
+                                }
+                                else if(lang == "EN")
+                                {
+                                    <div class="col-md-8 col-xs-12" style="direction:ltr">
+                                        <h1 class="bold font-raleway wow fadeInUp size-50" data-wow-delay="0.4s">West Azarbaijan Science and Technology Park</h1>
+                                        <p class="lead font-lato weight-300 hidden-xs wow fadeInUp justify" data-wow-delay="0.6s">‌Science and Technology Park of West Azarbaijan is affiliated to the Ministry of Science, Research and Technology to realize the country's scientific development goals in national and international arenas. The park will be in its ideal horizons in the next 10 years, a set of technology expertise in West Azerbaijan, southeastern Turkey and northeastern Iraq in the field of international trade and commerce, and the main focus of the export communication network of any type of country's knowledge of the country with neighboring countries of Turkey Iraq and the Commonwealth of Independent States (CIS), and will also be able to act as an engine for economic development based on regional benefits and a significant and increasing share of GDP in the province.</p>
+                                    </div>
+                                }
+                                else if (lang == "TR")
+                                {
+                                    <div class="col-md-8 col-xs-12" style="direction:ltr">
+                                        <h1 class="bold font-raleway wow fadeInUp size-50" data-wow-delay="0.4s">Batı Azerbaycan'ın Bilim ve Teknoloji Parkı</h1>
+                                        <p class="lead font-lato weight-300 hidden-xs wow fadeInUp justify" data-wow-delay="0.6s">Batı Azerbaycan'ın Bilim ve Teknoloji Parkı, ülkenin bilimsel gelişim hedeflerini ulusal ve uluslararası arenada gerçekleştirmek için Bilim, Araştırma ve Teknoloji Bakanlığı'na bağlı. Park önümüzdeki 10 yıl içerisinde ideal ufkunda, Batı Azerbaycan, güneydoğu Türkiye ve kuzeydoğu Irak'ta uluslararası ticaret ve ticaret alanında bir dizi teknoloji uzmanlığı ve her türlü ihracat iletişim ağının ana odağı olacak Ülkenin komşu ülkeler Irak ve Bağımsız Devletler Topluluğu (BDT) ülkeleriyle birlikte ülke bilgisi ve bölgesel faydalar ve ilde GSYİH'nın önemli ve artan payına dayalı ekonomik kalkınma için bir motor olarak hareket edebilecektir.‌</p>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="col-md-8 col-xs-12" style="direction:rtl">
+                                        <h1 class="bold font-raleway wow fadeInUp size-50" data-wow-delay="0.4s">غرب اذربایجان للعلوم والتكنولوجيا بارك</h1>
+                                        <p class="lead font-lato weight-300 hidden-xs wow fadeInUp justify" data-wow-delay="0.6s">‌حديقة العلوم والتكنولوجيا في غرب أزربايجان تابعة لوزارة العلوم والبحوث والتكنولوجيا لتحقيق أهداف التنمية العلمية في البلاد في الساحتين الوطنية والدولية. ستكون الحديقة في آفاقها المثالية في السنوات العشر القادمة ، وهي مجموعة من الخبرات التكنولوجية في أذربيجان الغربية وجنوب شرق تركيا وشمال شرق العراق في مجال التجارة الدولية والتجارة ، والتركيز الرئيسي لشبكة اتصالات التصدير من أي نوع معرفة البلد بالبلد المجاور لتركيا العراق وكومنولث الدول المستقلة (CIS) ، وسيتمكن أيضاً من العمل كمحرك للتنمية الاقتصادية على أساس المنافع الإقليمية وحصة كبيرة ومتنامية من الناتج المحلي الإجمالي في المقاطعة.</p>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /SLIDE 1 -->
+
+        </div>
+
+        <!-- Swiper Pagination -->
+        <div class="swiper-pagination"></div>
+
+        <!-- Swiper Arrows -->
+        <div class="swiper-button-next"><i class="fa fa-angle-right"></i></div>
+        <div class="swiper-button-prev"><i class="fa fa-angle-left"></i></div>
+    </div>
+
+</section>

@@ -1,0 +1,16 @@
+﻿@model IEnumerable<ClientWeb.Models.DataModels.LinkModel>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="download-btns">
+                @foreach (var item in Model)
+                {
+                    string path = item.Image == "Rahbari.jpg" ? @TempData["WebsiteThemePath"]+ "DefaultContent/Links/Rahbari.jpg" : ViewBag.PrePath + item.Image;
+                    <a href="@item.Link" style="padding: 0; border: none;" class="button button-download hvr-fade">
+                        <img style="width: 170px; height: 60px;margin: 0;border: none;" src="@path" class="apple-icon">
+                    </a>
+                }
+            </div>
+        </div>
+    </div>
+</div>

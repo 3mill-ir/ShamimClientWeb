@@ -1,0 +1,12 @@
+﻿@model IEnumerable<ClientWeb.Models.DataModels.TagDataModel>
+<div class="block left-module">
+    <p class="title_block">برچسب ها</p>
+    <div class="block_content">
+        <div class="tags">
+            @foreach (var item in Model)
+            {
+                <a href="@Url.Action("TagsPost","Post",new {TagID=item.ID })"><span class="level1">@item.Text</span></a>
+            }
+        </div>
+    </div>
+</div>

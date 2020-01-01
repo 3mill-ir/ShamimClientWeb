@@ -1,0 +1,21 @@
+﻿@model ClientWeb.Models.DataModels.PopUpModel
+@using ClientWeb.CustomHelper
+@if (Model.Status)
+{
+    <div id="REQUIRED-ID" class="modal fade" data-autoload="true" data-autoload-delay="1000">
+        <div class="modal-dialog modal-md" style="margin-top:150px;">
+            <div class="modal-content" style="text-align:center;">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <a><h4 class="modal-title" id="myModalLabel">@Model.PopUpText</h4></a>
+                </div><!-- /Modal Header -->
+                <!-- body modal -->
+                <div class="modal-body clearfix">
+                    <img src="@(!string.IsNullOrEmpty(Model.PopUpMedia) ? Html.ReturnPathPhysicalMode("PopUpPath", TempData["UserName"] as string, "AdminAddress", "PopUp") + Model.PopUpMedia : TempData["WebsiteThemePath"] + "DefaultContent/Slider/NoImage.jpg")" style="height:400px;width: 100%;" />
+                </div>
+                <a href="@Model.Link" class="btn btn-primary btn-lg btn-block">اطلاعات بیشتر</a>
+            </div>
+        </div>
+    </div>
+}

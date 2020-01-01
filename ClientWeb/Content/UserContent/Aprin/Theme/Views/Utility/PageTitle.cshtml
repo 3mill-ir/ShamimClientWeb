@@ -1,0 +1,33 @@
+﻿@model ClientWeb.Models.DataModels.PageTitleDataModel
+@{ var item = Model;}
+
+<section id="page-breadcrumb" style="height: 70px;margin-top: -45px;">
+    <div class="vertical-center sun">
+        <div class="container">
+            <div class="row">
+                <div class="action">
+                    <div class="col-sm-12">
+                        <ol class="" style="direction:ltr;padding:0;list-style:none;">
+                            @while (item != null)
+                            {
+                                if (item.Type == "DynamicPost")
+                                {
+                                    <li><a href="@Url.Action("ListPost", "Post",new { profile = TempData["UserName"], lang = "FA", id = item.Id})">@item.Name</a></li>
+                                }
+                                else if (item.Type == "StaticPost")
+                                {
+                                    <li><a href="@Url.Action("PageDetail", "Page",new { profile = TempData["UserName"], lang = "FA", id = item.Id})">@item.Name</a></li>
+                                }
+                                else if (item.Type == "NoneStaticDynamic")
+                                {
+                                    <li><a href="#">@item.Name</a></li>
+                                }
+                                item = item.Menu2;
+                            }
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

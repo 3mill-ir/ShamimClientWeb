@@ -1,0 +1,125 @@
+﻿@model ClientWeb.Models.DataModels.MenuNew
+@{TempData["FormCounter"] = 0; }
+<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+<style>
+    .toggle-handle {
+        background-color: #f3f3f3;
+    }
+
+        .toggle-handle:hover {
+            background-color: #f3f3f3;
+        }
+
+    .toggle-off {
+        text-shadow: none;
+        background-color: #f3f3f3;
+    }
+</style>
+@if (Model != null)
+{
+    @FormGenerator(Model.AttributeGroup.Where(u => u.F_AttributeGroupID == null), 0)
+}
+@helper FormGenerator(IEnumerable<ClientWeb.Models.DataModels.AttributeGroupNew> AttributeGroups, int count)
+{
+foreach (var item in AttributeGroups)
+{
+    var temp = item.AttributeGroup1;
+        <div style="margin-right:@(count*50)px;">
+            <div class="col-md-12 col-sm-12" style="margin-bottom:30px;">
+                <div class="ad-detail-heading">
+                    <h4>@item.Name</h4>
+                </div>
+            </div>
+            @foreach (var attribute in item.Attribute)
+        {
+                @Attr_AttrItem(attribute, 0, false)
+            }
+        </div>
+    if (temp.Count() > 0)
+    {
+            @FormGenerator(temp, count + 1)
+    }
+}
+}
+@helper Attr_AttrItem(ClientWeb.Models.DataModels.AttributeNew attribute, int count2, bool flag, string IDName = "", string ClassName = "")
+{
+    <div id="@IDName" class="col-md-12 @ClassName @(flag ? "PipoHidden" : "PipoShow") col-sm-12" style="margin-bottom:10px;">
+        <div style="margin-right:@(50 * count2)px" class="form-group @(attribute.ComponentType == "CheckBox" ? "toggle-btn" : "")">
+            <label class="col-sm-2 col-form-label">@attribute.Name</label>
+            <div class="col-sm-10">
+                @if (attribute.ComponentType == "TextBox" || attribute.ComponentType == "Number" || attribute.ComponentType == "DateTime")
+                {
+                    <input id="PipoTextBox_@attribute.ID" type="@(attribute.ComponentType == "TextBox" ? "text" : attribute.ComponentType == "Number" ? "number" : "date")" class="form-control" title="" name="Attributes[@TempData["FormCounter"]].Value" placeholder="@attribute.Name را وارد کنید">
+                }
+                else if (attribute.ComponentType == "RichTextBox")
+                {
+                    <textarea class="form-control" title="" name="Attributes[@TempData["FormCounter"]].Value" placeholder="@attribute.Name را وارد کنید" rows="5"></textarea>
+                }
+                else if (attribute.ComponentType == "CheckBox2")
+                {
+                    var AtHelper = attribute.AttributeItem1;
+                    if (AtHelper.Count > 1)
+                    {
+                        <div style="margin-bottom:10px;">
+                            <input data-toggle="toggle" name="Attributes[@TempData["FormCounter"]].Value" data-on="@AtHelper[0].Name" data-style="slow android" data-onstyle="info" data-off="@AtHelper[1].Name" type="checkbox" onchange="if($(this).is(':checked')){@(AtHelper[0].Attribute.Count > 0 ? flag ? "PipoFunc(" + IDName + "," + ClassName + ")" : "PipoFunc(" + AtHelper[0].ID + "," + attribute.ID + ")" : "PipoRemove(" + (flag == true ? ClassName : attribute.ID + "") + ")")}else{@(AtHelper[1].Attribute.Count > 0 ? flag ? "PipoFunc(" + IDName + "," + ClassName + ")" : "PipoFunc(" + AtHelper[1].ID + "," + attribute.ID + ")" : "PipoRemove(" + (flag == true ? ClassName : attribute.ID + "") + ")")}">
+                        </div>
+                    }
+                }
+                else if (attribute.ComponentType == "CheckBox")
+                {
+                    var AtHelper = attribute.AttributeItem1;
+                    if (AtHelper.Count > 1)
+                    {
+                        <div class="checkbox">
+                            <label>
+                                <input onchange="CheckBoxFixer($(this).is(':checked'),'hidden_@attribute.ID','@AtHelper[0].Name','@AtHelper[1].Name')" type="checkbox" onclick="if($(this).is(':checked')){@(AtHelper[0].Attribute.Count > 0 ? flag ? "PipoFunc(" + IDName + "," + ClassName + ")" : "PipoFunc(" + AtHelper[0].ID + "," + attribute.ID + ")" : "PipoRemove(" + (flag == true ? ClassName : attribute.ID + "") + ")")}else{@(AtHelper[1].Attribute.Count > 0 ? flag ? "PipoFunc(" + IDName + "," + ClassName + ")" : "PipoFunc(" + AtHelper[1].ID + "," + attribute.ID + ")" : "PipoRemove(" + (flag == true ? ClassName : attribute.ID + "") + ")")}" value="">
+                                <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                <input hidden name="Attributes[@TempData["FormCounter"]].Value" id="hidden_@attribute.ID" />
+                            </label>
+                        </div>
+                    }
+                }
+                else if (attribute.ComponentType == "ComboBox")
+                {
+                    <select name="Attributes[@TempData["FormCounter"]].Value" class="select-general form-control">
+                        @foreach (var AtItem in attribute.AttributeItem1)
+                        {
+                            <option onchange="@(AtItem.Attribute.Count > 0 ? flag ? "PipoFunc(" + IDName + "," + ClassName + ")" : "PipoFunc(" + AtItem.ID + "," + attribute.ID + ")" : "PipoRemove(" + (flag == true ? ClassName : attribute.ID + "") + ")")">@AtItem.Name</option>
+                        }
+                    </select>
+                }
+                else if (attribute.ComponentType == "RadioButton")
+                {
+                    foreach (var AtItem in attribute.AttributeItem1)
+                    {
+                        <div class="radio" style="float:right;margin-top:0;">
+                            <label>
+                                <input onclick="@(AtItem.Attribute.Count > 0 ? flag ? "PipoFunc(" + IDName + "," + ClassName + ")" : "PipoFunc(" + AtItem.ID + "," + attribute.ID + ")" : "PipoRemove(" + (flag == true ? ClassName : attribute.ID + "") + ")")" type="radio" name="Attributes[@TempData["FormCounter"]].Value" value="@AtItem.Name">
+                                <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+                                @AtItem.Name
+                            </label>
+                        </div>
+                    }
+                }
+                @Html.Hidden("Attributes[" + TempData["FormCounter"] + "].F_AttributeItemID", attribute.F_AttributeItemID)
+                @Html.Hidden("Attributes[" + TempData["FormCounter"] + "].F_AttributeID", attribute.ID)
+                @{TempData["FormCounter"] = int.Parse(TempData["FormCounter"].ToString()) + 1;}
+            </div>
+        </div>
+        @foreach (var item in attribute.AttributeItem1)
+        {
+            foreach (var attr in item.Attribute)
+            {
+                @Attr_AttrItem(attr, count2 + 1, true, "Attr_" + item.ID, "ParentAttr_" + attribute.ID)
+            }
+        }
+    </div>
+}
+@*<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>*@
+<!-- CORE JS -->
+@*<script type="text/javascript" src="~/Content/FanBazarContent/rtl/js/custom.js"></script>*@
+<script>
+    $(':checkbox').each(function () {
+        this.click(); this.click();
+    });
+</script>

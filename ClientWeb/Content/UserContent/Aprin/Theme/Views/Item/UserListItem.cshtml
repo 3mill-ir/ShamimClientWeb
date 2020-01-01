@@ -1,0 +1,63 @@
+﻿@model  PagedList.IPagedList<ClientWeb.Models.DataModels.ItemDataModel>
+@using PagedList.Mvc;
+@{
+    ViewBag.CurrentState = "Offer";
+}
+<div class="columns-container">
+    <div class="container" id="columns">
+        <!-- row -->
+        <div class="row">
+            <!-- Center colunm-->
+            <div class="center_column col-xs-12 col-sm-9" id="center_column">
+                <h2 class="page-heading" style="margin-bottom: 20px;margin-top: 7px;">
+                   لیست کالاهای من
+                </h2>
+                <div class="dashboard-main-disc">
+                    <div class="">
+                        <ul class="followers">
+                            @foreach (var item in Model)
+                            {
+                                <li class="client clearfix" style="width:100%;">
+                                    <div class="col-md-2">
+                                        <img style="width:100px;height:100px;" src="@(!string.IsNullOrEmpty(item.Image) ? ViewBag.PrePath + item.Image : "/Content/DefaultContent/Imgs/No_Image.png") " class="avatar">
+                                    </div>
+                                    <div class="client-details col-md-10">
+                                        <p><a href="@Url.Action("UserItemDetail","Item",new {Type=ViewBag.Type,ID=item.ID })" class="name">نام : @item.Name</a></p>
+                                        <ul class="icons-nav">
+                                            <li><a href="javascript:void(0)"><i class="fa fa-close"></i></a></li>
+                                            <li><a href="@Url.Action("PutItem","Item",new {ID=item.ID,lang=ViewBag.lang,Type=ViewBag.Type,profile=TempData["UserName"] })"><i class="fa fa-pencil-square-o"></i></a></li>
+                                        </ul>
+                                        <p style="margin-top: 10px;"><a style="font-size: 13px;text-align:justify;" href="@Url.Action("UserItemDetail","Item",new {Type=ViewBag.Type,ID=item.ID,lang=ViewBag.lang })" class="name">توضیحات : @item.Description</a></p>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                    <div style="text-align:center;direction:ltr!important;">
+                        صفحه @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) از @Model.PageCount
+                        @Html.PagedListPager(Model, page => Url.Action("UserListItem", "Item", new
+                   {
+                       page,
+                       PageSize = ViewBag.PageSize,
+                       Type = ViewBag.Type,
+                       FromDate = ViewBag.FromDate,
+                       ToDate = ViewBag.ToDate,
+                       SearchText = ViewBag.SearchText,
+                       profile = ViewBag.profile,
+                       lang = ViewBag.lang,
+                       id = ViewBag.id,
+
+                   }))
+                    </div>
+                </div>
+            </div>
+            <!-- ./ Center colunm -->
+            <!-- Left colunm -->
+            <div class="column col-xs-12 col-sm-3" id="left_column">
+                @Html.Action("UserIntroduction", "Utility")
+            </div>
+            <!-- ./left colunm -->
+        </div>
+        <!-- ./row-->
+    </div>
+</div>

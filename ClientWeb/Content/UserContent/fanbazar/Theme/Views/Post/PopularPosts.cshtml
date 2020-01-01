@@ -1,0 +1,18 @@
+﻿@model IEnumerable<ClientWeb.Models.DataModels.PostDataModel>
+<div class="widget">
+    <div class="widget-heading">
+        <span class="title">محبوب ترین خبر ها</span>
+    </div>
+    <ul class="related-post">
+        @foreach (var item in Model)
+        {
+            <li>
+                <img src="@(!string.IsNullOrEmpty(item.ImagePath) ? ViewBag.PrePath + item.ImagePath : "/Content/DefaultContent/Imgs/No_Image.png")" alt="@item.ImageAlt" class="img-responsive">
+                <div style="width: 75%;float: right;text-align: justify;">
+                    <a href="@Url.Action("PostDetail","Post", new {profile=TempData["UserName"], lang = item.Language, id = item.ID })">@item.Tittle</a>
+                    <span><i class="fa fa-calendar" style="margin-right:5px;"></i>@ClientWeb.Models.BLL.Tools.SpecialJalaliFormat(item.CreatedOnUTC ?? default(DateTime))</span>
+                </div>
+            </li>
+        }
+    </ul>
+</div>

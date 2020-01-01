@@ -1,0 +1,59 @@
+﻿@model ClientWeb.Models.DataModels.ShopPagedList
+<div id="cart-block" class="col-sm-2 shopping-cart-box" style="margin-right: 20px;margin-left: -30px;">
+    <a class="cart-link" href="#">
+        <span class="title" style="font-family: 'Vazir FD',Arial,sans-serif;">سبد خرید</span>
+        @if (Model.ShopList.Count > 0 && Model.ShopList.FirstOrDefault().ShopItem.Count > 0)
+        {
+            <span class="notify notify-left">@Model.ShopList.FirstOrDefault().ShopItem.Count.ToString()</span>
+        }
+    </a>
+    <div class="cart-block" style="width: 380px;font-family: 'Vazir FD',Arial,sans-serif;">
+        <div class="cart-block-content">
+            @if (Model.ShopList.Count > 0 && Model.ShopList.FirstOrDefault().ShopItem.Count > 0)
+            {
+                <div class="cart-buttons">
+                    <a style="width:100%;margin-bottom:10px;background-color:crimson;" class="btn-check-out" href="@Url.Action("ShoppingCartList", "ShoppingCart")">مشاهده سبد خرید</a>
+                </div>
+                <div class="cart-block-list">
+                    <ul>
+                        @foreach (var item in Model.ShopList.FirstOrDefault().ShopItem.OrderByDescending(u => u.CreatedDateOnUtc))
+                        {
+                            <li class="product-info">
+                                <div class="p-left">
+                                    <a href="#" class="remove_link"></a>
+                                    <a href="#">
+                                        <img style="height:100px;" class="img-responsive" src="@(!string.IsNullOrEmpty(item.Item.Image) ? ViewBag.PrePath + item.Item.Image : "/Content/DefaultContent/Imgs/No_Image.png")" alt="@item.Item.Name">
+                                    </a>
+                                </div>
+                                <div class="p-right">
+                                    <p class="p-name">@item.Item.Name</p>
+                                    @{
+                                        string cost = "";
+                                        if (string.IsNullOrEmpty(item.Item.Price))
+                                        { cost = "جهت استعلام قیمت تماس بگیرید"; }
+                                        else
+                                        {
+                                            cost = (double.Parse(item.Item.Price) * item.Count).ToString();
+                                        }
+                                    }
+                                    <p class="p-rice">@cost تومان</p>
+                                </div>
+                            </li>
+                                        }
+                    </ul>
+                </div>
+                <div class="toal-cart">
+                    <span>جمع مبالغ</span>
+                    <span class="toal-price pull-left">@Model.ShopList.FirstOrDefault().TotalPrice تومان</span>
+                </div>
+                <div class="cart-buttons">
+                    <a style="width: 100%;" href="@Url.Action("AcceptShopping", "ShoppingCart")" class="btn-check-out">ثبت سفارش و ارسال</a>
+                </div>
+                                        }
+                                        else
+                                        {
+                                            <div>سبد خرید شما خالی می باشد !</div>
+                                        }
+        </div>
+    </div>
+</div>

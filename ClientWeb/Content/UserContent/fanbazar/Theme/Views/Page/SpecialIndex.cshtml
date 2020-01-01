@@ -1,0 +1,32 @@
+﻿@model IEnumerable<ClientWeb.Models.DataModels.PostDataModel>
+<section class="dashboard-menu dashboard-menu-2 light-blue">
+    @Html.Action("SpecialMenu", "Utility", new {profile=TempData["UserName"], CurrentState = "News", lang = ViewBag.lang })
+</section>
+<section class="dashboard light-blue">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-sm-12 col-xs-12 col-md-push-8">
+                @Html.Action("UserIntroduction", "Utility",new { profile=TempData["UserName"]})
+            </div>
+            <div class="col-md-8 col-sm-12 col-xs-12 col-md-pull-4">
+                <div class="all-ads-list-box2">
+                    @foreach (var item in Model)
+                    {
+                        <div class="ad-box ad-box-2" style="width: 100%;">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="ad-box-2-detail">
+                                    <div class="ad-title-box">
+                                        <div class="ad-title"><a href="@Url.Action("PostDetail", "Post", new { id = item.ID, lang = ViewBag.lang, profile = ViewBag.profile })">@item.Tittle</a></div>
+                                    </div>
+                                    <div class="ad-bottom-area">
+                                        <a href="@Url.Action("PostDetail","Post",new {id = item.ID, lang = ViewBag.lang, profile = ViewBag.profile  })" class="btn btn-default pull-right flip">ادامه مطلب ...<i class="fa fa-angle-double-right"></i> </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

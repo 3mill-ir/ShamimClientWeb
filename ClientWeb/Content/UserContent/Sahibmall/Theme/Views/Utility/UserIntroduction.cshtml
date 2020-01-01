@@ -1,0 +1,30 @@
+﻿@model ClientWeb.Models.DataModels.UserInformationDataModel
+@{ 
+    Layout = null;
+}
+<div class="block left-module" style="font-family: 'Vazir FD',Arial,sans-serif;">
+    <p class="title_block">اطلاعات حساب کاربری</p>
+    <div class="block_content">
+        <!-- layered -->
+        <div class="layered">
+            <div class="layered-content">
+                <ul class="blog-list-sidebar clearfix">
+                    <li>
+                        <div class="post-thumb" style="width: 100%;">
+                            <a href="#"><img src="~/Content/DefaultContent/Imgs/User.png" alt="کاربر"></a>
+                        </div>
+                        <div class="post-info" style="float: right;width: 100%;margin: 0;">
+                            <div class="post-meta" style="font-size: 15px;line-height: 30px;">
+                                <span class="date" style="float: right;width: 100%;"><i class="fa fa-user" style="margin-left: 5px;"></i>@Model.FirstName @Model.LastName</span>
+                                <span class="date" style="float: right;width: 100%;"><i class="fa fa-map-marker" style="margin-left: 5px;"></i>@Model.Address</span>
+                                <span class="date" style="float: right;width: 100%;"><i class="fa fa-user-secret" style="margin-left: 5px;"></i>@Model.CodeMelli</span>
+                                <span class="date" style="float: right;width: 100%;"><i class="fa fa-envelope" style="margin-left: 5px;"></i>@Model.Email</span>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- ./layered -->
+    </div>
+</div>

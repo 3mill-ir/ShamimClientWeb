@@ -1,0 +1,10 @@
+﻿@model IEnumerable<ClientWeb.Models.DataModels.LinkModel>
+<div class="footer_block">
+    <h4>لینک های برتر</h4>
+    <ul class="footer-links">
+        @foreach (var item in Model)
+        {
+            <li> <a href="@item.Link">@item.Text</a></li>
+        }
+    </ul>
+</div>

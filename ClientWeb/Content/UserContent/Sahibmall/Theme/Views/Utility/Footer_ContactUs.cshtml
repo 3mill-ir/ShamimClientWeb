@@ -1,0 +1,29 @@
+﻿@model ClientWeb.Models.DataModels.ContactManagementModel
+<style>
+    .social-link .fa-instagram {
+        background-color: #9d1010;
+    }
+
+    .social-link .fa-send {
+        background-color: #10799d;
+    }
+
+    .social-link .fa-envelope {
+        background-color: lightgreen;
+    }
+</style>
+<div>
+    <p class="tit-name">آدرس:</p>
+    <div class="tit-contain">@Model.AddressInput</div>
+    <p class="tit-name">تلفن تماس :</p>
+    <div class="tit-contain">@Model.PhoneInput</div>
+    <p class="tit-name">پست الکترونیک :</p>
+    <div class="tit-contain">@Model.EmailInput</div>
+    <div class="social-link">
+        <a href="@Model.Facebook"><i class="fa fa-facebook"></i></a>
+        <a href="@Model.Instagram"><i class="fa fa-instagram"></i></a>
+        <a href="@Model.Telegram"><i class="fa fa-send"></i></a>
+        <a href="@Model.Twitter"><i class="fa fa-twitter"></i></a>
+        <a href="@Model.EmailInput"><i class="fa fa-envelope"></i></a>
+    </div>
+</div>

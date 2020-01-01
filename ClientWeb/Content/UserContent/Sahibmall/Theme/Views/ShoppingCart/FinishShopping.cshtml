@@ -1,0 +1,70 @@
+﻿@model ClientWeb.Models.DataModels.ShopPagedList
+@using ClientWeb.Models.BLL
+@using ClientWeb.Models.DataModels
+@{
+    ViewBag.CurrentState = "ShoppingCart";
+    int count = 0;
+}
+<div class="columns-container">
+    <div class="container" id="columns">
+        <!-- row -->
+        <div class="row">
+            <!-- Center colunm-->
+            <div class="center_column col-xs-12 col-sm-12" id="center_column">
+                <div style="text-align: center;font-size: 25px;color: #18ab18;background-color: #d6ffd6;padding: 10px;width: 65%;margin: 0 auto;">کاربر گرامی سفارش شما با موفقیت ثبت شد</div>
+                <div class="column col-xs-12 col-sm-12">
+                    <div class="block left-module" style="font-family: 'Vazir FD',Arial,sans-serif;">
+                        <div class="block_content">
+                            <!-- layered -->
+                            <div class="layered">
+                                <div class="layered-content">
+                                    <table class="table table-bordered table-responsive cart_summary" style="width: 65%;margin:0 auto;">
+                                        <thead>
+                                            <tr>
+                                                <th>نام کالا</th>
+                                                <th style="text-align:center;">قیمت واحد</th>
+                                                <th style="text-align:center;">تعداد</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            @foreach (var item in Model.ShopList.FirstOrDefault().ShopItem)
+                                            {
+                                                <tr>
+                                                    <td class="cart_description" style="width: 65%;">
+                                                        <span>@item.Item.Name</span>
+                                                    </td>
+                                                    <td class="price" style="text-align:center;"><span>@Tools.PriceString(item.Item.Price)</span></td>
+                                                    <td class="qty">
+                                                        <input class="form-control input-sm" disabled type="text" value="@item.Count">
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                        <tfoot style="text-align: right;">
+                                            <tr>
+                                                <td colspan="1">نحوه ارسال : </td>
+                                                <td colspan="2"  style="text-align: center;">@Model.ShopList.FirstOrDefault().DeliveryType</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="1"><strong>هزینه ارسال : </strong></td>
+                                                <td colspan="2" style="text-align: center;"><strong>@Tools.PriceString(Model.ShopList.FirstOrDefault().DeliveryCost)</strong></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="1"><strong></strong>مبلغ کل فاکتور سفارشات : </td>
+                                                <td colspan="2" style="text-align: center;"><strong>@Tools.PriceString(Model.ShopList.FirstOrDefault().TotalPrice)</strong></td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                            <!-- ./layered -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ./ Center colunm -->
+        </div>
+        <!-- ./row-->
+    </div>
+</div>

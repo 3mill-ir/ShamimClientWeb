@@ -1,0 +1,131 @@
+﻿@model ClientWeb.Models.DataModels.ItemNew
+@section js_Requested{
+<script src="~/Content/ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="~/CKFinderScripts/ckfinder.js"></script>
+<script src="~/Content/ckeditor/adapters/jquery.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            CallAjax();
+            $("#Categories").change(function () {
+                CallAjax();
+            });
+        });
+        function CallAjax() {
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetForm", "Item")',
+                dataType: 'html',
+                data: { ID: $("#Categories").val(), profile: '@TempData["UserName"]', Type: '@ViewBag.Type' ,lang:'@TempData["lang"]'},
+                beforesend: document.getElementById('Form_Loading').style.display = 'block',
+                success: function (Result) {
+                    $("#AjaxResult").empty();
+                    $("#AjaxResult").append(Result);
+                    document.getElementById('Form_Loading').style.display = 'none';
+                },
+                error: function (ex) {
+                    alert('خطا در بارگذاری اطلاعات');
+                    document.getElementById('Form_Loading').style.display = 'none';
+                }
+            });
+            return false;
+        }
+    </script>
+    <script>
+        function PipoFunc(TargetIDName, ClassName) {
+            var els = document.getElementsByClassName("ParentAttr_" + ClassName);
+            Array.prototype.forEach.call(els, function (el) { el.classList.add('PipoHidden'); el.classList.remove('PipoShow'); });
+            var item = document.getElementById('Attr_' + TargetIDName);
+            if (item.classList.contains('PipoShow')) {
+                item.classList.remove('PipoShow');
+                item.classList.add('PipoHidden');
+            }
+            else {
+                item.classList.remove('PipoHidden');
+                item.classList.add('PipoShow');
+            }
+            console.log = console.warn = console.error = () => { };
+            console.error('Something bad happened.');
+        }
+        function PipoRemove(ClassName) {
+            var els = document.getElementsByClassName("ParentAttr_" + ClassName);
+            Array.prototype.forEach.call(els, function (el) { el.classList.add('PipoHidden'); el.classList.remove('PipoShow'); });
+        }
+        function CheckBoxFixer(Status, IDName, Value1, Value2) {
+            var temp = document.getElementById(IDName);
+            if (Status == false)
+                temp.setAttribute("value", Value1);
+            else
+                temp.setAttribute("value", Value2);
+        }
+    </script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+}
+<style>
+    .PipoHidden {
+        display: none !important;
+    }
+
+    .PipoShow {
+        display: block !important;
+    }
+</style>
+<section class="dashboard-menu dashboard-menu-2 light-blue">
+    @Html.Action("SpecialMenu", "Utility", new { CurrentState = ViewBag.CurrentState, lang = ViewBag.lang })
+</section>
+<section class="dashboard light-blue">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="dashboard-main-disc">
+                    <div class="heading-inner">
+                        @{ 
+                            string PText= ViewBag.CurrentState  == "Offer" ? "محصول جدید" : ViewBag.CurrentState == "Demand" ? "تقاضای جدید" : "شرکت";
+                        }
+                        <p class="title">افزودن @PText</p>
+                    </div>
+                    <div class="row">
+                        @using (Html.BeginForm("PostItem", "Item", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
+                            @Html.Hidden("lang",ViewBag.lang as string)
+                            @Html.Hidden("Type", ViewBag.Type as string)
+                            @Html.AntiForgeryToken()
+                            <div class="col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <label>دسته بندی<span class="required">*</span></label>
+                                    @Html.DropDownListFor(model => model.F_MenuID, ViewBag.Categories as SelectList, new { id = "Categories", @class = "select-general form-control select2-hidden-accessible" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control", placeholder = "عنوان آیتم را وارد کنید" })
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    @Html.TextAreaFor(model => model.Description, new { @class = "ckeditor", placeholder = "توضیحات آیتم مورد نظر را وارد کنید", rows = "6", @type = "text" })
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <label>آپلود تصویر<span class="required"></span></label>
+                                    <input class="form-control" type="file" name="Image" />
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12">
+                                <div id="Form_Loading" style="display: none;margin-right: 45%;padding-bottom: 20px;">
+                                    <img src="@TempData["WebsiteThemePath"]DefaultContent/Imgs/ajax-load.gif" class="img-responsive" width="60" />
+                                </div>
+                            </div>
+                            <div id="AjaxResult">
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="form-group form-action">
+                                    <button type="submit" class="btn btn-default btn-search-submit pull-right flip">ثبت اطلاعات</button>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,95 @@
+﻿@model ClientWeb.Models.RegisterViewModel
+
+<div class="columns-container">
+    <div class="container" id="columns">
+        <!-- page heading-->
+        <h2 class="page-heading" style="text-align:center;">
+            <span class="page-heading-title2">فرم ثبت نام</span>
+        </h2>
+        <!-- ../page heading-->
+        <div class="page-content">
+            <div class="row">
+                <div class="col-sm-12 col-md-8 col-md-push-2">
+                    <div class="box-authentication">
+                        @using (Ajax.BeginForm("Register", "Account", null, new AjaxOptions
+                        {
+                            UpdateTargetId = "RegisterResultBox",
+                            InsertionMode = InsertionMode.Replace,
+                            LoadingElementId = "AjaxRegister_Progress",
+                            HttpMethod = "Post"
+                        }, null))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="login-box-inner">
+                                <div class="form-group" style="margin-top:20px;">
+                                    <input style="float:right;" type="text" name="FirstName" class="form-control" placeholder="نام">
+                                </div>
+                                <div class="form-group" style="margin-top:20px;">
+                                    <input type="text" name="LastName" class="form-control" placeholder="نام خانوادگی">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                    <input name="UserName" class="form-control" type="text" placeholder="نام کاربری">
+                                </div>
+                                <div class="input-group" style="margin-top:20px;">
+                                    <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                                    <input type="password" name="Password" class="form-control" placeholder="کلمه عبور">
+                                </div>
+                                <div class="input-group" style="margin-top:20px;">
+                                    <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                                    <input type="password" name="ConfirmPassword" class="form-control" placeholder="تکرار کلمه عبور">
+                                </div>
+                                <div class="input-group" style="margin-top:20px;">
+                                    <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                    <input name="Email" class="form-control" type="text" placeholder="ایمیل">
+                                </div>
+                                <div class="form-group" style="margin-top:20px;">
+                                    <input type="number" name="Ssn" class="form-control" placeholder="شماره همراه">
+                                </div>
+                                <div class="form-group" style="margin-top:20px;">
+                                    @Html.DropDownList("State", ClientWeb.Models.BLL.Tools.GetStates(0), new { id = "State", @class = "form-control",style="float:right;width:47%;" })
+                                </div>
+                                <div class="form-group" style="margin-top:20px;">
+                                    @Html.DropDownList("CityId", ClientWeb.Models.BLL.Tools.GetCity(0), new { id = "City", @class = "form-control", style = "float:right;width:47%;margin-right:40px;" })
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <button style="margin-top:20px;background-color: #2a3259;" type="submit" class="btn btn-info col-xs-12">ثبت اطلاعات</button>
+                                    </div>
+                                </div>
+                                <div id="AjaxRegister_Progress" style="display:none;margin-top:10px;margin-right:47%;">
+                                    <img src="@TempData["WebsiteThemePath"]DefaultContent/Imgs/ajax-load.gif" class="img-responsive" width="30" />
+                                </div>
+                                <div class="row" id="RegisterResultBox"></div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+        $(document).ready(function () {
+            //Dropdownlist Selectedchange event
+            $("#State").change(function () {
+                $("#City").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("GetCity", "Utility")',
+                    dataType: 'json',
+                    data: { id: $("#State").val() },
+                    success: function (states) {
+                        $.each(states, function (i, state) {
+                            $("#City").append('<option value="' + state.Value + '">' + state.Text + '</option>');
+                        });
+                        $("#City").trigger('change');
+                    },
+                    error: function (ex) {
+                        alert('خطا در بارگذاری اطلاعات شهر' + ex);
+                    }
+                });
+                return false;
+            });
+        });
+</script>

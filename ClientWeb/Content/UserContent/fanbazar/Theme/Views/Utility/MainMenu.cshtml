@@ -1,0 +1,89 @@
+﻿@model IEnumerable<ClientWeb.Models.DataModels.MenuDataModel>
+<header class="nav-down">
+    <a class="navbar-brand visible-xs" id="navbar-logo-mobile" href="@Url.Action("PageDetail", "Page", new { profile =TempData["UserName"], lang = TempData["lang"], id = 0 })"><img src="@TempData["WebsiteThemePath"]DefaultContent/brand.png" alt="" class="img-responsive"></a>
+    <nav class="navbar navbar-default hidden-xs" id="navbar">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+                <a class="navbar-brand" id="navbar-logo" href="@Url.Action("PageDetail", "Page", new { profile =TempData["UserName"], lang = TempData["lang"], id = 0 })"><img src="@TempData["WebsiteThemePath"]DefaultContent/brand.png" alt="" class="img-responsive"></a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" data-hover="dropdown" data-animations="fadeInDown fadeInRight fadeInUp fadeInLeft">
+                <ul class="nav navbar-nav navbar-right flip" id="menu-right">
+                    @WebMenu(Model.Where(u => u.F_MenuID == null))
+                    @helper WebMenu(IEnumerable<ClientWeb.Models.DataModels.MenuDataModel> categories)
+                    {
+foreach (var item in categories)
+{
+    var temp = Model.Where(u => u.F_MenuID == item.ID);
+        <li class="@(temp.Count()>0 ? "dropdown" : "")">
+            @if (item.Type == "StaticPost")
+            {  <a href="@Url.Action("PageDetail", "Page",new { profile = TempData["UserName"], lang = "FA", id = item.ID})" @(temp.Count() > 0 ? "class=\"dropdown-toggle\"" : "") @(temp.Count() > 0 ? "data-toggle=\"dropdown\"" : "") @(temp.Count() > 0 ? "data-hover=\"dropdown\"" : "")>
+                @item.Name@if (temp.Count() > 0)
+                {<span class="caret"></span>}
+            </a> }
+            else if (item.Type == "DynamicPost")
+            {  <a href="@Url.Action("ListPost", "Post",new { profile = TempData["UserName"], lang = "FA", id = item.ID})" @(temp.Count() > 0 ? "class=\"dropdown-toggle\"" : "") @(temp.Count() > 0 ? "data-toggle=\"dropdown\"" : "") @(temp.Count() > 0 ? "data-hover=\"dropdown\"" : "")>
+                @item.Name@if (temp.Count() > 0)
+                {<span class="caret"></span>}
+            </a> }
+            else
+            {<a href="" @(temp.Count() > 0 ? "class=\"dropdown-toggle\"" : "") @(temp.Count() > 0 ? "data-toggle=\"dropdown\"" : "") @(temp.Count() > 0 ? "data-hover=\"dropdown\"" : "")>
+                @item.Name@if (temp.Count() > 0)
+                {<span class="caret"></span>}
+            </a> }
+            @if (temp.Count() > 0)
+            {
+                <ul class="dropdown-menu" role="menu">
+                    @WebMenu(temp)
+                </ul>
+            }
+        </li>
+
+}
+}
+                    <li><a href="@Url.Action("PageDetail", "Page", new { profile =TempData["UserName"], lang = TempData["lang"], id = 0 })" class="submit-btn"><i class="fa fa-home"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<!-- mobile-menu-area-start -->
+<div class="mobile-menu-area visible-xs hidden-sm">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-xs-12">
+                <div class="mobile-menu">
+                    <nav id="mobile-menu-active">
+                        <ul>
+                            <li class="active"><a href="@Url.Action("PageDetail", "Page", new { profile =TempData["UserName"], lang = TempData["lang"], id = 0 })">خانه</a></li>
+                            @MobileMenu(Model.Where(u => u.F_MenuID == null))
+                            @helper MobileMenu(IEnumerable<ClientWeb.Models.DataModels.MenuDataModel> categories)
+                            {
+foreach (var item in categories)
+{
+    var temp = Model.Where(u => u.F_MenuID == item.ID);
+        <li>
+            @if (item.Type == "StaticPost")
+            {  <a href="@Url.Action("PageDetail", "Page", new { profile = TempData["UserName"], lang = "FA", id = item.ID })"> @item.Name</a> }
+            else if (item.Type == "DynamicPost")
+            {  <a href="@Url.Action("ListPost", "Post", new { profile = TempData["UserName"], lang = "FA", id = item.ID})">@item.Name</a> }
+            else
+            {<a href="">@item.Name</a>}
+            @if (temp.Count() > 0)
+            {
+                <ul>
+                    @MobileMenu(temp)
+                </ul>
+            }
+        </li>
+
+}
+}
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- mobile-menu-area-end -->

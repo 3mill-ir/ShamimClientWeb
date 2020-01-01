@@ -1,0 +1,32 @@
+﻿@{
+    Layout = null;
+    string resultContent = "";
+    string resultAlert = "";
+    if (ViewBag.PollSuccess != null)
+    {
+        resultContent = @ViewBag.PollSuccess;
+        resultAlert = "alert-success";
+    }
+    else if (ViewBag.PollError != null)
+    {
+        resultContent = @ViewBag.PollError;
+        resultAlert = "alert-danger";
+    }
+    else if (ViewBag.PollWarning != null)
+    {
+        resultContent = @ViewBag.PollWarning;
+        resultAlert = "alert-danger";
+    }
+}
+
+
+
+
+<div class="alert @resultAlert margin-bottom-30">
+    <!-- SUCCESS -->
+    <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">×</span>
+        <span class="sr-only">Close</span>
+    </button>
+    @resultContent
+</div>

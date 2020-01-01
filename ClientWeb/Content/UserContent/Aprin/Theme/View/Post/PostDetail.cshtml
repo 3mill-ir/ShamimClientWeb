@@ -1,0 +1,18 @@
+﻿@model ClientWeb.Models.DataModels.PostDataModel
+@using PagedList.Mvc;
+@using ClientWeb.Models.BLL;
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryajax")
+<script>
+    function SetCommentID(ID) {
+        document.getElementById("CommentForm").action = "/FanBazar/Comment/PostComment?PostID=" +@Model.ID +"&F_CommentID=" + ID;
+        document.getElementById("RelatedComment").innerHTML = "<i onclick=\"Clean()\" class=\"fa fa-close\" style=\"color:red;cursor:pointer\"></i>";
+        document.getElementById("RelatedComment").innerText = document.getElementById("comment_" + ID).innerText;
+    }
+    function Clean() {
+        document.getElementById("CommentForm").action = "/FanBazar/Comment/PostComment?PostID=" +@Model.ID +"&F_CommentID=-1";
+        document.getElementById("RelatedComment").innerText = "";
+        document.getElementById("RelatedComment").innerHTML = "<i onclick=\"Clean()\" class=\"fa fa-close\" style=\"color:red;cursor:pointer\"></i>";
+        document.getElementById("CommentHelper").style.display = "none";
+    }
+</script> 

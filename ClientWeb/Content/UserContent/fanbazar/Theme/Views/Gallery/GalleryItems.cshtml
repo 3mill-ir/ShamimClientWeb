@@ -1,0 +1,68 @@
+﻿@model PagedList.IPagedList<ClientWeb.Models.DataModels.GalleryModelAdmin>
+@using PagedList.Mvc;
+<section class="ad-breadcrumb parallex">
+    <div class="container page-banner">
+        <div class="row">
+            <div class="col-sm-6 col-md-6">
+                <h1>گالری تصاویر</h1>
+            </div>
+            <div class="col-sm-6 col-md-6">
+            </div>
+        </div>
+    </div>
+</section>
+<section class="dashboard-menu dashboard-menu-2 light-blue">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="dashboard-menu-container">
+                    <ul>
+                        @foreach (var item in ViewBag.Folders as List<string>)
+                        {
+                            <li @(item == ViewBag.FolderName ? "class=active" : "")>
+                                <a href="@Url.Action("GalleryItems", "Gallery", new {lang=ViewBag.lang, FolderName = item, profile = TempData["UserName"] })">
+                                    <div class="menue-name">@item</div>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section>
+    <div class="container" style="width:95%;">
+        <div class="row">
+            <div id="portfolio" class="portfolio-nogutter">
+                <div class="row mix-grid">
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-md-3 col-sm-3">
+                            <div class="papular-reviews">
+                                <div class="image">
+                                    <img style="height: 250px;width: 100%;" src="@ViewBag.PrePath@item.Path" class="img-responsive">
+                                    <a target="_blank" href="@ViewBag.PrePath@item.Path" class="absolute-in-image">
+                                        <div class="duration"><span><i class="fa fa-search"></i></span></div>
+                                    </a>
+                                </div>
+                                <div class="content text-center" style="background-color: #e9e9e9;">
+                                    <h4>@item.Text</h4>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<section class="page-header page-header-xs" style="padding-top:0;">
+    <div class="container text-center">
+        <ul class="pagination pagination-lg pagination-simple">
+            @Html.PagedListPager(Model, page => Url.Action("GalleryItems", "Gallery", new { page, FolderName = ViewBag.FolderName, profile = ViewBag.Profile, }))
+        </ul>
+    </div>
+</section>
+

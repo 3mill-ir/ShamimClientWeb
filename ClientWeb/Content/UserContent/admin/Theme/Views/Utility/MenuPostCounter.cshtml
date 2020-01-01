@@ -1,0 +1,26 @@
+﻿@model ClientWeb.Models.DataModels.ListMenuPostCountDataModel
+
+
+<div class="side-nav margin-bottom-60 margin-top-30">
+
+    <div class="side-nav-head">
+        <button class="fa fa-bars"></button>
+        <h4> @Model.Name</h4>
+    </div>
+    <ul class="list-group list-group-bordered list-group-noicon uppercase">
+        @{ string current = "";}
+        @foreach (var m in Model.MenuCount)
+        {
+            current = "";
+            if ( m.MenuId== ViewBag.currentid)
+            {
+                current = "fa fa-angle-double-left";
+            }
+            <li class="list-group-item ">
+               <a href="@Url.Action("ListPost", "Post",new { profile = TempData["UserName"], lang = "FA", id = m.MenuId})" ><i class="@current"></i><span class="size-11 text-muted pull-right">@m.PostCount</span> @m.MenuName</a></li>
+        }
+    </ul>
+
+
+
+</div>

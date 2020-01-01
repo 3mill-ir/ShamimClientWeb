@@ -1,0 +1,21 @@
+﻿@model IEnumerable<ClientWeb.Models.DataModels.LinkModel>
+@{
+    string lang = TempData["lang"].ToString();
+}
+<ul class="footer-links list-unstyled">
+    @if (lang=="FA")
+    {
+        foreach (var item in Model)
+        {
+            <li><a href="@item.Link"> &nbsp;	@item.Text</a></li>
+        }
+    }
+    else
+    {
+        <li><a href="http://wastp.ir/fanbazar"> &nbsp;	</a>Fanbazar</li>
+        <li><a href="http://3mill.ir/download/AppSend?path=mobile/android/park&secretkey=3mill186"> &nbsp;	</a> @(lang == "EN" ? "Download the ShamimePark app" : lang == "TR" ? "ShamimePark uygulamasını indirin" : "قم بتنزيل تطبيق ShamimePark")</li>
+        <li><a href="http://www.president.ir/fa"> &nbsp;	</a>@(lang == "EN" ? "President Office" : lang == "TR" ? "Başkan Ofisi" : "مكتب الرئيس")</li>
+        <li><a href="https://www.msrt.ir/fa"> &nbsp;	</a>@(lang == "EN" ? "Ministry of Research and Technology" : lang == "TR" ? "Araştırma ve Teknoloji Bakanlığı" : "وزارة البحث والتكنولوجيا")</li>
+        <li><a href="http://pub.daneshbonyan.ir"> &nbsp;	</a>@(lang == "EN" ? "Knowledge Based Companies" : lang == "TR" ? "Bilgi Tabanlı Şirketler" : "شركات قائمة على المعرفة")</li>
+    }
+</ul>

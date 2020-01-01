@@ -1,0 +1,14 @@
+﻿@model ClientWeb.Models.DataModels.ScriptsModel
+@{
+    string lang = TempData["lang"].ToString();
+}
+<div class="list-group" style="margin-top:10px;margin-right:10px;">
+    <span href="#" class="list-group-item active">
+     @(lang == "FA" ? Model.ScriptName : lang == "EN" ? "Daily quote" : lang == "TR" ? "Günün konuşması" : "خطاب اليوم")
+        <span class="pull-right" id="slide-submenu">
+        </span>
+    </span>
+    <div style="margin-top:10px;text-align: center;">
+        @Html.Raw(Model.Script)
+    </div>
+</div>

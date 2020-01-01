@@ -1,0 +1,281 @@
+﻿@using ClientWeb.Models.BLL
+@section SliderCSS{
+    <link href="@TempData["WebsiteThemePath"]plugins/slider.swiper/dist/css/swiper.min.css" rel="stylesheet" type="text/css" />
+}
+
+@section jsForThisPage{
+    <!-- SWIPER SLIDER -->
+    <script type="text/javascript" src="@TempData["WebsiteThemePath"]plugins/slider.swiper/dist/js/swiper.min.js"></script>
+    <script type="text/javascript" src="@TempData["WebsiteThemePath"]js/view/demo.swiper_slider.js"></script>
+
+
+}
+<!-- REVOLUTION SLIDER -->
+@Html.Partial("IntroSlider", TempData["WebsiteThemePath"])
+<!-- /REVOLUTION SLIDER -->
+<!-- -->
+<section>
+    <div class="container">
+        <div class="row">
+            <!-- LEFT -->
+            <div class="col-sm-12">
+                <!-- breaking news -->
+                @Html.Action("Breakingnews", "Post", new { profile = TempData["UserName"], F_MenuID = 61 })
+                <!-- /breaking news -->
+                <!-- TWO COLUMNS -->
+                <div class="row">
+                    <!-- first column -->
+                    <div class="col-md-8">
+                        @Html.Action("RecentPostsHome", "Post", new { profile = TempData["UserName"], F_MenuID = 60, count = 8 })
+                    </div>
+                    <!-- second column -->
+                    <div class="col-md-4">
+                        @Html.Action("RecentPostsHomeThird", "Post", new { profile = TempData["UserName"], F_MenuID = 65, count = 2 })
+                        @Html.Action("RecentPostsHomeSecond", "Post", new { profile = TempData["UserName"], F_MenuID = 63, count = 2 })
+                    </div>
+                </div>
+                <!-- /TWO COLUMNS -->
+            </div>
+            <!-- /LEFT -->
+        </div>
+    </div>
+</section>
+<!-- / -->
+<!-- Parallax -->
+<!--
+    Note: remove class="rounded" from the img for squared image!
+-->
+@{ 
+    PostManagement pm = new PostManagement();
+    var Newses = pm.RecentPosts(205, 3, TempData["UserName"].ToString());
+}
+<section class="parallax parallax-3" style="margin-top: -90px;margin-bottom:-70px;background-image:url('@TempData["WebsiteThemePath"]DefaultContent/Imgs/parallax2.jpg');">
+    <div class="overlay dark-6"><!-- dark overlay [1 to 9 opacity] --></div>
+
+    <div class="container">
+
+        <div class="owl-carousel text-center owl-testimonial nomargin" data-plugin-options='{"singleItem": true, "autoPlay": 3500, "navigation": false, "pagination": true, "transitionStyle":"fade"}'>
+            @foreach (var item in Newses)
+            {
+                <div class="testimonial">
+                    <figure>
+                        <img class="rounded" src="@(!string.IsNullOrEmpty(item.ImagePath) ? Tools.ReturnPathPhysicalMode("DynamicPageImages", TempData["UserName"].ToString(), "AdminAddress", "") + item.ImagePath : @TempData["WebsiteThemePath"]+"DefaultContent/Imgs/Park.png")" alt="بدون تصویر" />
+                    </figure>
+                    <div class="testimonial-content nopadding">
+                        <p class="lead">@item.Tittle</p>
+                        <cite>
+                            <a href="@Url.Action("PostDetail", "Post", new { profile = TempData["UserName"], lang = item.Language, id = item.ID })">@item.Description</a>
+                            <span>@Html.Raw(Tools.GetHtmldetail("DetailHTMLFilePath", item.Detail, TempData["UserName"] as string))</span>
+                        </cite>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+<!-- / -->
+<!-- /Parallax -->
+@*<!-- Courses -->
+    <section>
+        <div class="container">
+
+            <!-- H2 -->
+            <div class="heading-title">
+                <h2>Courses</h2>
+                <p class="font-lato size-18">Lorem ipsum dolor sit amet.</p>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-4">
+                    <img class="img-responsive" src="@TempData["WebsiteThemePath"]images/demo/thematics/education/edu1-min.jpg" alt="img" />
+                    <h3 class="margin-top-10">Chemical Engineering</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas metus nulla, commodo a sodales sed, dignissim pretium nunc. Nam et lacus neque.</p>
+                    <a href="#" class="btn btn-default">VIEW COURSE</a>
+                </div>
+
+                <div class="col-sm-4">
+                    <img class="img-responsive" src="@TempData["WebsiteThemePath"]images/demo/thematics/education/edu2-min.jpg" alt="img" />
+                    <h3 class="margin-top-10">Bachelor of Nursing</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas metus nulla, commodo a sodales sed, dignissim pretium nunc. Nam et lacus neque.</p>
+                    <a href="#" class="btn btn-default">VIEW COURSE</a>
+                </div>
+
+                <div class="col-sm-4">
+                    <img class="img-responsive" src="@TempData["WebsiteThemePath"]images/demo/thematics/education/edu3-min.jpg" alt="img" />
+                    <h3 class="margin-top-10">Mental Health</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas metus nulla, commodo a sodales sed, dignissim pretium nunc. Nam et lacus neque.</p>
+                    <a href="#" class="btn btn-default">VIEW COURSE</a>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+    <!-- /Courses -->
+    <!-- Testimonials -->
+    <section class="padding-xxs dark">
+        <div class="container">
+
+            <div class="owl-carousel text-center owl-testimonial nomargin" data-plugin-options='{"singleItem": true, "autoPlay": 3500, "navigation": false, "pagination": true, "transitionStyle":"fade"}'>
+                <div class="testimonial">
+                    <figure>
+                        <img class="rounded" src="@TempData["WebsiteThemePath"]images/demo/people/300x300/11-min.jpg" alt="" />
+                    </figure>
+                    <div class="testimonial-content nopadding">
+                        <p class="lead">Incidunt deleniti blanditiis quas aperiam recusandae consequatur ullam quibusdam cum libero.</p>
+                        <cite>
+                            Joana Doe
+                            <span>Company Ltd.</span>
+                        </cite>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <figure>
+                        <img class="rounded" src="@TempData["WebsiteThemePath"]images/demo/people/300x300/12-min.jpg" alt="" />
+                    </figure>
+                    <div class="testimonial-content nopadding">
+                        <p class="lead">Quod necessitatibus quis expedita harum provident eos obcaecati id culpa.</p>
+                        <cite>
+                            Melissa Doe
+                            <span>Company Ltd.</span>
+                        </cite>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <!-- /Testimonials -->
+    <!-- Overview -->
+    <section>
+        <div class="container text-center">
+
+            <div class="row text-left">
+
+                <div class="col-sm-8">
+                    <img src="@TempData["WebsiteThemePath"]images/demo/laptop.png" alt="product image" />
+                </div>
+
+                <div class="col-sm-4">
+                    <h3 class="weight-300">Quick <span>Overview</span></h3>
+
+                    <p>Lorem ipsum dolor sit amet, hinc dolores noluisse at vel, ex quod aperiri scaevola has, cum te sanctus denique. Eu liber docendi petentium has, labore.</p>
+                    <p>Etiam falli mentitum id mel, ut mel sumo postulant referrentur. At has minim imperdiet, soluta offendit ocurreret sea an. </p>
+
+                    <hr />
+
+                    <ul class="list-unstyled list-icons">
+                        <li><i class="fa fa-check"></i> Nobis nemore epicuri pro ea</li>
+                        <li><i class="fa fa-check"></i> Qui dicunt singulis dissentias an</li>
+                        <li><i class="fa fa-check"></i> Ea vis diceret constituam</li>
+                        <li><i class="fa fa-check"></i> Mei no autem idque integre, sumo facilis</li>
+                        <li><i class="fa fa-check"></i> Est quodsi labitur moderatius an</li>
+                    </ul>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <!-- /Overview -->*@
+
+
+<section style="margin-bottom:-90px;">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-3">
+
+                <div class="box-icon box-icon-center box-icon-round box-icon-transparent box-icon-large box-icon-content" style="background-color:#36ac8b;">
+                    <div class="box-icon-title">
+                        <i class="fa fa-users" style="margin-right:-33px"></i>
+                        <h2>پذیرش و ارزیابی</h2>
+                    </div>
+                    <hr />
+                    <p>
+                        <a href="#" class="btn btn-translucid btn-lg btn-block size-16">مزایا و شرایط عضویت</a>
+                        <a href="#" class="btn btn-translucid btn-lg btn-block size-16">انواع پذیرش و استقرار</a>
+                        <a href="#" class="btn btn-translucid btn-lg btn-block size-16">ارزیابی واحد های مستقر</a>
+                        <a href="#" class="btn btn-translucid btn-lg btn-block size-16">ارزیابی ثبت اختراعات</a>
+                        <hr />
+                        <a href="#" class="btn btn-translucid btn-lg btn-block btn-reveal">
+                            <i class="fa fa-file-text-o"></i>
+                            <span class="size-16">فرم ها و دستورالعمل ها</span>
+                        </a>
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <div class="box-icon box-icon-center box-icon-round box-icon-transparent box-icon-large box-icon-content" style="background-color:#a0ce4e;">
+                    <div class="box-icon-title">
+                        <i class="fa fa-cubes" style="margin-right:-33px"></i>
+                        <h2>پشتیبانی و خدمات مدیریتی</h2>
+                    </div>
+                    <hr />
+                    <p>
+                        <a href="#" class="btn btn-translucid btn-lg btn-block size-16">تسهیلات</a>
+                        <a href="#" class="btn btn-translucid btn-lg btn-block size-16">خروج اموال از شرکت</a>
+                        <a href="#" class="btn btn-translucid btn-lg btn-block size-16">تسویه حساب شرکت</a>
+                        <a href="#" class="btn btn-translucid btn-lg btn-block size-16">فسخ قرارداد</a>
+                        <hr />
+                        <a href="#" class="btn btn-translucid btn-lg btn-block btn-reveal">
+                            <i class="fa fa-file-text-o"></i>
+                            <span class="size-16">فرم ها و دستورالعمل ها</span>
+                        </a>
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <div class="box-icon box-icon-center box-icon-round box-icon-transparent box-icon-large box-icon-content" style="background-color:#cb9536;">
+                    <div class="box-icon-title">
+                        <i class="fa fa-building" style="margin-right:-33px"></i>
+                        <h2>تجاری سازی</h2>
+                    </div>
+                    <hr />
+                    <p>
+                        <a href="#" class="btn btn-translucid btn-lg btn-block size-16">آموزش و مشاوره</a>
+                        <a href="#" class="btn btn-translucid btn-lg btn-block size-16">رونمایی و فن بازار</a>
+                        <a href="#" class="btn btn-translucid btn-lg btn-block size-16">نمایشگاه ها و رویدادهای تجاری</a>
+                        <a href="#" class="btn btn-translucid btn-lg btn-block size-16">بازاریابی و ارتباط با صنعت</a>
+                        <hr />
+                        <a href="#" class="btn btn-translucid btn-lg btn-block btn-reveal">
+                            <i class="fa fa-file-text-o"></i>
+                            <span class="size-16">فرم ها و دستورالعمل ها</span>
+                        </a>
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <div class="box-icon box-icon-center box-icon-round box-icon-transparent box-icon-large box-icon-content" style="background-color:#73b9dc;">
+                    <div class="box-icon-title">
+                        <i class="fa fa-desktop " style="margin-right:-33px"></i>
+                        <h2>سامانه ها</h2>
+                    </div>
+                    <hr />
+                    <p>
+                        <a href="#" class="btn btn-translucid btn-lg btn-block size-16"> ثبت نام آنلاین مشاورین علمی</a>
+                        <a href="#" class="btn btn-translucid btn-lg btn-block size-16"> اتوماسیون مکاتبات اداری</a>
+                        <a href="#" class="btn btn-translucid btn-lg btn-block size-16"> سامانه پذیرش آنلاین</a>
+                        <a href="#" class="btn btn-translucid btn-lg btn-block size-16"> سامانه پست الکترونیکی </a>
+                        <hr />
+                        <a href="#" class="btn btn-translucid btn-lg btn-block btn-reveal">
+                            <i class="fa fa-map-signs"></i>
+                            <span class="size-16">نقشه سایت</span>
+                        </a>
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</section>

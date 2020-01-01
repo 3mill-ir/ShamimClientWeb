@@ -1,0 +1,63 @@
+﻿@model ClientWeb.Models.DataModels.ItemNew
+@{TempData["FormCounter"] = 0; }
+<style>
+    .toggle-handle {
+        background-color: #f3f3f3;
+    }
+
+        .toggle-handle:hover {
+            background-color: #f3f3f3;
+        }
+
+    .toggle-off {
+        text-shadow: none;
+        background-color: #f3f3f3;
+    }
+
+    .PipoHidden {
+        display: none !important;
+    }
+
+    .PipoShow {
+        display: block !important;
+    }
+</style>
+@section js_Requested{
+    <script>
+        function PipoFunc(TargetIDName, ClassName) {
+            var els = document.getElementsByClassName("ParentAttr_" + ClassName);
+            Array.prototype.forEach.call(els, function (el) { el.classList.add('PipoHidden'); el.classList.remove('PipoShow'); });
+            var item = document.getElementById('Attr_' + TargetIDName);
+            if (item.classList.contains('PipoShow')) {
+                item.classList.remove('PipoShow');
+                item.classList.add('PipoHidden');
+            }
+            else {
+                item.classList.remove('PipoHidden');
+                item.classList.add('PipoShow');
+            }
+        }
+        function PipoRemove(ClassName) {
+            var els = document.getElementsByClassName("ParentAttr_" + ClassName);
+            Array.prototype.forEach.call(els, function (el) { el.classList.add('PipoHidden'); el.classList.remove('PipoShow'); });
+        }
+        $(':checkbox').each(function () {
+            this.click();
+            this.click();
+        });
+        function CheckBoxFixer(Status, IDName, Value1, Value2) {
+            var temp = document.getElementById(IDName);
+            if (Status == false)
+                temp.setAttribute("value", Value1);
+            else
+                temp.setAttribute("value", Value2);
+        }
+        $('.PipoRadio').each(function () {
+            if (this.checked) {
+                this.click();
+            }
+        });
+    </script>
+}
+
+ 

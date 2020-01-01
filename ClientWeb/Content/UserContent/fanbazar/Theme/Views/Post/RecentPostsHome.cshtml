@@ -1,0 +1,15 @@
+﻿@model IEnumerable<ClientWeb.Models.DataModels.PostDataModel>
+@using ClientWeb.Models.BLL
+<div class="footer_block dark_gry">
+        <h4>خبر های اخیر</h4>
+        <ul class="recentpost">
+            @foreach (var item in Model)
+            {
+            <li style="text-align:justify;">
+                <span><a class="plus" href="@Url.Action("PostDetail","Post", new {profile=TempData["UserName"], lang = item.Language, id = item.ID })"><img src="@(!string.IsNullOrEmpty(item.ImagePath)?ViewBag.PrePath+item.ImagePath:"/Content/DefaultContent/Imgs/No_Image.png")" alt="@item.ImageAlt" /><i>+</i></a></span>
+                <p><a href="@Url.Action("PostDetail","Post", new {profile=TempData["UserName"], lang = item.Language, id = item.ID })">@item.Tittle</a></p>
+                <h3 style="direction:ltr;">@Tools.SpecialJalaliFormat(item.CreatedOnUTC ?? default(DateTime))</h3>
+            </li>
+            }
+        </ul>
+    </div>

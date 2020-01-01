@@ -1,0 +1,58 @@
+﻿<div id="nav-top-menu" class="nav-top-menu">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-2" id="box-vertical-megamenus">
+                <div class="box-vertical-megamenus">
+                    <a href="@Url.Action("PageDetail", "Page", new { profile =TempData["UserName"], lang = TempData["lang"], id = 0 })">
+                        <h4 class="title" style="text-align:center;">
+                            <span class="title-menu"><i class="fa fa-home" style="margin-top: 16px;margin-left: 10px;"></i>صاحیب مال</span>
+                        </h4>
+                    </a>
+                </div>
+            </div>
+            <div id="main-menu" class="col-sm-10 main-menu">
+                <nav class="navbar navbar-default">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <a class="navbar-brand" href="#">منو</a>
+                        </div>
+                        <div id="navbar" class="navbar-collapse collapse">
+                            <ul class="nav navbar-nav">
+                                <li @(ViewBag.CurrentState == "News" ? "class=active" : "")><a href="@Url.Action("PageDetail", "Page", new { profile =TempData["UserName"], lang =TempData["lang"], id = 0 })">آخرین خبر ها</a></li>
+                                <li @(ViewBag.CurrentState == "OrderedList" ? "class=active" : "")><a href="@Url.Action("OrderedList", "ShoppingCart", new { profile=TempData["UserName"],lang =TempData["lang"]})">سفارش های من</a></li>
+                                <li @(ViewBag.CurrentState == "Offer" ? "class=active" : "")><a href="@Url.Action("UserListItem", "Item", new { profile=TempData["UserName"],lang =TempData["lang"], Type = "FanbazarOffer,FanbazarOfferDemand" })">لیست کالاها</a></li>
+                                <li @(ViewBag.CurrentState == "AddOffer" ? "class=active" : "")><a href="@Url.Action("PostItem","Item",new {profile=TempData["UserName"],lang=TempData["lang"],Type= "FanbazarOffer,FanbazarOfferDemand" })">افزودن کالای جدید</a></li>
+                                <li @(string.IsNullOrEmpty(ViewBag.CurrentState) ? "class=active" : "")><a href="@Url.Action("ListItem","Item",new {profile=TempData["UserName"],lang=TempData["lang"],Type= "FanbazarOffer,FanbazarOfferDemand" })">لیست محصولات جهت خرید</a></li>
+                                @*<li @(ViewBag.CurrentState == "EditProfile" ? "class=active" : "")><a href="@Url.Action("EditProfile","Account",new {profile=TempData["UserName"],lang=TempData["lang"]})">ویرایش حساب کاربری</a></li>*@
+                                <li @(ViewBag.CurrentState == "ChangePassword" ? "class=active" : "")><a href="@Url.Action("ChangePassword","Account",new {profile=TempData["UserName"],lang=TempData["lang"] })">ویرایش کلمه عبور</a></li>
+                                @*<li>
+                                    <a href="javascript:document.getElementById('logoutForm2').submit()">
+                                        <div class="menue-name">خروج از حساب کاربری</div>
+                                    </a>
+                                    @using (Html.BeginForm("LogOff", "Account", new { profile = TempData["UserName"], lang = TempData["lang"] }, FormMethod.Post, new { id = "logoutForm2", style = "display=none;" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                    }
+                                </li>*@
+                            </ul>
+                        </div><!--/.nav-collapse -->
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <!-- userinfo on top-->
+        <div id="form-search-opntop">
+        </div>
+        <!-- userinfo on top-->
+        <div id="user-info-opntop">
+        </div>
+        <!-- CART ICON ON MMENU -->
+        <div id="shopping-cart-box-ontop">
+            <i class="fa fa-shopping-cart"></i>
+            <div class="shopping-cart-box-ontop-content"></div>
+        </div>
+    </div>
+</div>

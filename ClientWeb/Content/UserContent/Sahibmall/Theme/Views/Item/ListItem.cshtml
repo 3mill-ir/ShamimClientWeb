@@ -1,0 +1,75 @@
+﻿@model PagedList.IPagedList<ClientWeb.Models.DataModels.ItemNew>
+@using PagedList.Mvc;
+@using ClientWeb.Models.BLL;
+<div class="columns-container">
+    <div class="container" id="columns">
+        <!-- row -->
+        <div class="row">
+            @*<div class="center_column col-xs-12 col-sm-3" id="center_column">
+                @Html.Action("RuzPic", "Utility", new { profile = TempData["UserName"] })
+            </div>*@
+            <!-- Center colunm-->
+            <div class="center_column col-xs-12 col-sm-10 col-sm-push-1" id="center_column">
+                <h2 class="page-heading" style="border-bottom:none;">
+                    لیست کالاها
+                </h2>
+                <ul class="blog-posts">
+                    @foreach (var item in Model)
+                    {
+                        <li class="post-item">
+                            <article class="entry">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="entry-thumb">
+                                            <a href="#">
+                                                <img src="@(!string.IsNullOrEmpty(item.Image) ? ViewBag.PrePath + item.Image : "/Content/DefaultContent/Imgs/No_Image.png")">
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <div class="entry-ci">
+                                            <h3 class="entry-title"><a href="@Url.Action("ItemDetail","Item", new {profile=TempData["UserName"], ID = item.ID,lang=TempData["lang"],Type=ViewBag.Type })">@item.Name</a></h3>
+                                            <div class="entry-meta-data">
+                                                <span class="comment-count">
+                                                    <i class="fa fa-eye"></i> @item.NumberOfVisitors
+                                                </span>
+                                                <span class="date"><i class="fa fa-calendar"></i>@ClientWeb.Models.BLL.Tools.GetDateTimeReturnJalaliDate(item.CreatedDateOnUTC ?? default(DateTime))</span>
+                                            </div>
+                                            <div class="entry-excerpt">
+                                                @item.Description
+                                            </div>
+                                            <div class="entry-more">
+                                                <div class="col-sm-6 col-xs-12">
+                                                    <div class="form-group form-action">
+                                                        <a style="width:100%;margin-top: 20px;background-color: #b2d233;"  href="@Url.Action("ItemDetail","Item", new {profile=TempData["UserName"], ID = item.ID,lang=TempData["lang"],Type=ViewBag.Type })" class="btn btn-default btn-warning btn-search-submit pull-right flip">نمایش جزئیات محصول</a>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6 col-xs-12">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        </li>
+                    }
+                </ul>
+                <div class="sortPagiBar clearfix">
+                    <div class="bottom-pagination" style="text-align:center;direction:ltr!important;float: none;">
+                        @*صفحه @(ViewBag.Total < ViewBag.page ? 0 : ViewBag.page) از @ViewBag.Total*@
+                        @Html.PagedListPager(Model, page => Url.Action("ListItem", "Item", new
+                   {
+                       page,
+                       Type = ViewBag.Type,
+                       profile = ViewBag.profile,
+                       ID = ViewBag.F_MenuID,
+
+                   }))
+                    </div>
+                </div>
+            </div>
+            <!-- ./ Center colunm -->
+        </div>
+        <!-- ./row-->
+    </div>
+</div>

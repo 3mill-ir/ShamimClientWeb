@@ -1,0 +1,111 @@
+﻿@model ClientWeb.Models.DataModels.PageDataModel
+
+@section jsForThisPage{
+
+    @{
+        if (this.ViewContext.HttpContext.Items["piporesult"] != null)
+        {
+            string ChartType = this.ViewContext.HttpContext.Items["piporesultType"] != null ? this.ViewContext.HttpContext.Items["piporesultType"].ToString() : "PieChart";
+            <script>
+                loadScript(plugin_path + 'chart.chartjs/Chart.min.js', function () {
+                    var ScoreResult = [];
+                    var LableResult = [];
+                    @if (ChartType != "BarChart") {
+                    foreach (var p in this.ViewContext.HttpContext.Items["piporesult"] as List<string[]>)
+         {
+
+                     <text>
+                    ScoreResult.push({
+                        value: "@p[0]",
+                        color: "@p[1]",
+                        highlight: "@p[2]",
+                        label: "@p[3]"
+                    });
+                    </text>
+                            }
+                        if (ChartType == "PieChart")
+                        {
+                        <text>
+                    var ctx = document.getElementById("PipoChartCanvas").getContext("2d");
+
+                    new Chart(ctx).Doughnut(ScoreResult);    </text>
+                        }
+                        else
+                        {
+          <text>
+                    var ctx = document.getElementById("PipoChartCanvas").getContext("2d");
+
+                    new Chart(ctx).Doughnut(ScoreResult);    </text>
+                        }
+                        }
+                        else {
+                            foreach (var p in this.ViewContext.HttpContext.Items["piporesult"] as List<string[]>)
+                            {
+
+                     <text>
+                    ScoreResult.push("@p[0]");
+                    LableResult.push("@p[1]");
+                    </text>
+                        }
+                        <text>
+                    var barChartCanvas = {
+                        labels: LableResult,
+                        datasets: [
+                            {
+                                fillColor: "rgba(220,220,220,0.5)",
+                                strokeColor: "rgba(220,220,220,0.8)",
+                                highlightFill: "rgba(220,220,220,0.75)",
+                                highlightStroke: "rgba(220,220,220,1)",
+                                data: ScoreResult
+                            }
+                        ]
+                    };
+                    var ctx = document.getElementById("PipoChartCanvas").getContext("2d");
+                    new Chart(ctx).Bar(barChartCanvas);
+                    </text>
+
+                    }
+                });
+            </script>
+        }
+
+    }
+}
+<section class="page-header dark page-header-xs">
+    @Html.Action("PageTitle", "Utility", new { F_MenuID = Model.ID})
+</section>
+
+<section>
+    <div class="container">
+        <div class="row">
+            <!-- LEFT -->
+            <div class="col-md-9 col-sm-9">
+               @Html.Raw(Model.ActionContent)
+            </div>
+
+            <!-- RIGHT -->
+            <div class="col-md-3 col-sm-3">
+                <!-- /INLINE SEARCH -->
+                @*<hr />*@
+                <!-- side navigation -->
+                @Html.Partial("SideSlider")
+
+                @*<div class="divider"></div>
+                @Html.Action("SideLinks", "Utility", new { profile = TempData["UserName"] })*@
+                <div class="divider"><!-- divider --></div>
+                @Html.Action("RuzPic", "Utility")
+                <div class="divider"><!-- divider --></div>
+                @Html.Action("RuzWord", "Utility")
+
+                <!-- JUSTIFIED TAB -->
+                <div class="tabs nomargin-top hidden-xs margin-bottom-60">
+                    <!-- Poll -->
+                    @Html.Action("PollQuestion", "Poll", new { profile = TempData["UserName"] })
+                    <!-- /Poll -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- / -->
+

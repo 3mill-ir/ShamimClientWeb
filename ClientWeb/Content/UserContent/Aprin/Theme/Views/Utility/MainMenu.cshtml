@@ -1,0 +1,38 @@
+﻿@model IEnumerable<ClientWeb.Models.DataModels.MenuDataModel>
+@using ClientWeb.Models.BLL
+@using ClientWeb.Models.BLL
+@using ClientWeb.Models
+<style>
+    .navbar-nav>li{
+        float:right !important;
+    }
+</style>
+<div class="collapse navbar-collapse">
+
+    <ul class="nav navbar-nav navbar-right">
+
+
+        @foreach (var item in Model.Where(q => q.F_MenuID == null))
+            {
+                var temp = Model.Where(u => u.F_MenuID == item.ID);
+            <li @(temp.Count() > 0 ? "class=dropdown" : "")>
+                <a href="@(item.Type == "StaticPost" ? Url.Action("PageDetail", "Page", new { profile = TempData["UserName"], lang = "FA", id = item.ID }) : item.Type == "DynamicPost" ? Url.Action("ListPost", "Post", new { profile = TempData["UserName"], lang = "FA", id = item.ID }) : "")" @(temp.Count() > 0 ? "class=\"dropdown-toggle\" data-toggle=\"dropdown\"" : "")>
+                    @if (temp.Count() > 0)
+                    {<i class="fa fa-angle-down"></i>} @item.Name
+                </a>
+                @if (temp.Count() > 0)
+                {
+                    <ul class="dropdown-menu container-fluid sub-menu">
+                        @foreach (var item2 in temp)
+                        {
+                            <li class="link_container"><a href=@(item.Type == "StaticPost" ? Url.Action("PageDetail", "Page", new { profile = TempData["UserName"], lang = "FA", id = item2.ID }) : item2.Type == "DynamicPost" ? Url.Action("ListPost", "Post", new { profile = TempData["UserName"], lang = "FA", id = item2.ID }) : "")> @item2.Name</a></li>
+                        }
+                    </ul>
+                }
+            </li>
+        }
+
+
+
+    </ul>
+</div>

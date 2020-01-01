@@ -1,0 +1,18 @@
+﻿@model IEnumerable<ClientWeb.Models.DataModels.SliderModel>
+@using ClientWeb.CustomHelper
+
+<div class="flexslider">
+    <ul class="slides">
+        @foreach (var item in Model)
+        {
+        <!-- Slide -->
+            <li>
+                <a href="@item.Link">
+                    <img style="height:400px;" src="@(!string.IsNullOrEmpty(item.Img) ? Html.ReturnPathPhysicalMode("SliderPath", TempData["UserName"] as string, "AdminAddress", "Slider") + item.Img : TempData["WebsiteThemePath"] + "DefaultContent/Slider/NoImage.jpg")" alt="">
+                    <div class="flex-caption" style="direction:rtl;font-family: 'VazirBold',Arial,Helvetica,sans-serif;font-size: 15px;">@item.Title</div>
+                </a>
+            </li>
+        <!-- /Slide -->
+        }
+    </ul>
+</div>

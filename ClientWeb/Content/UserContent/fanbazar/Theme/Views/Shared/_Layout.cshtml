@@ -1,0 +1,327 @@
+﻿@using ClientWeb.Models;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <!--[if IE]>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="ScriptsBundle">
+    <title>@ViewBag.PageTittle | فن بازار پارک علم و فناوری آذربایجان غربی</title>
+    <meta name="keywords" content="پارک علم و فناوری,آذربایجان غربی" />
+    <meta name="description" content="وب سایت پارک علم و فناوری" />
+    <meta name="Author" content="شرکت توسعه تجارت الکترونیک هزاره سوم" />
+    <link rel="icon" href="@TempData["WebsiteThemePath"]DefaultContent/brand.png" type="image/x-icon">
+    <!-- BOOTSTRAPE STYLESHEET CSS FILES -->
+    <link rel="stylesheet" href="@TempData["WebsiteThemePath"]rtl/css/bootstrap.min.css">
+    <link rel="stylesheet" href="@TempData["WebsiteThemePath"]rtl/css/bootstrap-rtl.min.css">
+    <!-- JQUERY SELECT -->
+    <link href="@TempData["WebsiteThemePath"]rtl/css/select2.min.css" rel="stylesheet" />
+    <!-- JQUERY MENU -->
+    <link rel="stylesheet" href="@TempData["WebsiteThemePath"]rtl/css/bootstrap-dropdownhover.css">
+    <!-- ANIMATION -->
+    <link rel="stylesheet" href="@TempData["WebsiteThemePath"]rtl/css/animate.min.css">
+    <!-- OWl  CAROUSEL-->
+    <link rel="stylesheet" href="@TempData["WebsiteThemePath"]rtl/css/owl.carousel.css">
+    <link rel="stylesheet" href="@TempData["WebsiteThemePath"]rtl/css/owl.style.css">
+    <!-- TEMPLATE CORE CSS -->
+    <link rel="stylesheet" href="@TempData["WebsiteThemePath"]rtl/css/style.css">
+    <!-- RTL CSS -->
+    <link rel="stylesheet" href="@TempData["WebsiteThemePath"]rtl/css/rtl.css">
+    <!-- MOBILE MENU CSS -->
+    <link href="@TempData["WebsiteThemePath"]rtl/css/meanmenu.min.css" rel="stylesheet">
+    <!-- FONT AWESOME -->
+    <link rel="stylesheet" type="text/css" href="@TempData["WebsiteThemePath"]rtl/css/font-awesome.min.css">
+    <link rel="stylesheet" href="@TempData["WebsiteThemePath"]rtl/css/et-line-fonts.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="@TempData["WebsiteThemePath"]rtl/fonts/classified/flaticon.css">
+    <link rel="stylesheet" href="@TempData["WebsiteThemePath"]rtl/css/dropzone.css">
+    <!-- Google Fonts -->
+    <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900%7cOpen+Sans:400,600,700" rel="stylesheet" type="text/css">
+    <!-- Theme Color -->
+    <link rel="stylesheet" id="color" href="@TempData["WebsiteThemePath"]rtl/css/colors/defualt.css">
+    <!-- For Style Switcher -->
+    @*<link rel="stylesheet" id="theme-color" type="text/css" href="#" />*@
+
+    <link rel="stylesheet" href="@TempData["WebsiteThemePath"]rtl/css/dropzone.css">
+    @RenderSection("CSS_Requested", required: false)
+    <!-- JavaScripts -->
+    <script src="@TempData["WebsiteThemePath"]rtl/js/modernizr.js"></script>
+    <script src='https://www.google.com/recaptcha/api.js?hl=fa'></script>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryajax")
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="rtl">
+    <div class="page">
+        @*<div id="spinner">
+            <div class="spinner-img">
+                <img alt="AdZone Preloader" src="@TempData["WebsiteThemePath"]rtl/images/loader.gif" />
+                <h2>لطفا صبر کنید ...</h2>
+            </div>
+        </div>*@
+        <!-- Color Switcher -->
+        @*@Html.Action("ColorSwitcher", "Utility")*@
+        <div class="header-top clear">
+            <div class="container">
+                <div class="row">
+                    @Html.Action("TopBarContact", "Utility", new { profile = TempData["UserName"] })
+                    <div class="col-md-5 col-sm-6 col-xs-12">
+                        <div class="header-top-right pull-right flip header-top-info" style="width:100%;">
+                            <ul>
+                                @*<li class="country">
+                                        <div class="btn-group" role="group">
+                                            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fa fa-globe"></i> زبان
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="#">انگلیسی</a></li>
+                                                <li><a href="#">سوئدی</a></li>
+                                                <li><a href="#">عربی</a></li>
+                                                <li><a href="#">روسی</a></li>
+                                                <li><a href="#">چینی</a></li>
+                                            </ul>
+                                        </div>
+                                    </li>*@
+                                <li><a href="" data-toggle="modal" data-target=".register-model"> <i class="fa fa-user"></i> عضویت</a></li>
+                                @if (string.IsNullOrEmpty((TempData["FanBazar_User"] as AccountAuthorizeModel).UserName))
+                                {
+                                    <li><a href="" data-toggle="modal" data-target=".login-model"> <i class="fa fa-sign-in"></i> ورود</a></li>
+                                }
+                                else
+                                {
+                                    <li class="country top-profile">
+                                        <div class="btn-group" role="group">
+                                            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fa fa-gear"></i> سلام  @((TempData["FanBazar_User"] as AccountAuthorizeModel).UserName)
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li> <a href="@Url.Action("PageDetail", "Page", new { profile ="sahibmall", lang = "FA", id = 0 })"><i class="fa fa-user"></i>پنل من</a></li>
+                                                <li> <a href="@Url.Action("EditProfile","Account")"><i class="fa fa-edit"></i>ویرایش حساب کاربری</a></li>
+                                                <li><a href="@Url.Action("ChangePassword","Account")"><i class="fa fa-product-hunt"></i>ویرایش کلمه عبور</a></li>
+                                                <li><a href="javascript:document.getElementById('logoutForm').submit()"><i class="fa fa-power-off"></i>خروج از ناحیه کاربری</a></li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                }
+                                @if (!string.IsNullOrEmpty(TempData["LoginResult"] as string))
+                                {
+                                    <li style="color:@(TempData["LoginResult"].ToString().Split(',')[1]);">@TempData["LoginResult"].ToString().Split(',')[0]</li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", style = "display:none;" }))
+        {
+            @Html.AntiForgeryToken()
+        }
+        @Html.Action("MainMenu", "Utility", new { profile = TempData["UserName"] })
+        @RenderBody()
+        <a class="fanbazarBtn" style="line-height: 40px;width: 280px;font-size: 12pt; text-align: center;margin-top: 1px; margin-right: 2px;position: fixed;bottom: 0; right: 0;z-index: 3000;color: white;background-color:#6bc242;">تماس با پشتیبانی : 04432751253</a>
+        @Html.Action("Footer", "Utility", new { profile = TempData["UserName"] })
+        <a href="#" class="scrollup"><i class="fa fa-chevron-up"></i></a>
+        @if (string.IsNullOrEmpty(ViewBag.UserName) || ViewBag.UserName == "NotFound")
+        {
+        <!-- LOGIN MODEL  -->
+            <div class="modal fade login-model" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-sm" role="document">
+                    <div class="modal-content">
+                        <div class="login-logo">
+                            <h2 style="text-align:right;">ورود</h2>
+                        </div>
+                        <div class="login-box-inner">
+                            @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input hidden name="Lang" value="@ViewBag.lang" />
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                    <input class="form-control" name="Username" type="text" placeholder="نام کاربری">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                                    <input type="password" name="Password" class="form-control" placeholder="رمز عبور">
+                                </div>
+                                <div class="input-group">
+                                    <div class="g-recaptcha" data-sitekey="6LdY8AcUAAAAAKLgpwjEui5GrN9DtJoIzEW8G0Ik"></div>
+                                </div>
+                                <div class="remember-me-wrapper">
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <div class="checkbox-nice">
+                                                @Html.CheckBox("RememberMe", new { @class = "remember-me", @checked = "checked" })
+                                                <label>
+                                                    مرا به خاطر بسپار
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <a href="" class="login-forget-link col-xs-6">
+                                            رمز عبور خود را فراموش کرده اید ؟
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <button type="submit" class="btn btn-default col-xs-12">ورود</button>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        <!-- REGISTERATION MODEL  -->
+        <div class="modal fade register-model" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="login-logo">
+                        <h2 style="text-align:right;">همین الان ثبت نام کنید</h2>
+                    </div>
+                    @using (Ajax.BeginForm("Register", "Account", null, new AjaxOptions
+                    {
+                        UpdateTargetId = "RegisterResultBox",
+                        InsertionMode = InsertionMode.Replace,
+                        LoadingElementId = "AjaxRegister_Progress",
+                        HttpMethod = "Post"
+                    }, null))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="login-box-inner">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                <input name="UserName" class="form-control" type="text" placeholder="نام کاربری">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                                <input type="password" name="Password" class="form-control" placeholder="کلمه عبور">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                                <input type="password" name="ConfirmPassword" class="form-control" placeholder="تکرار کلمه عبور">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                <input name="Email" oninvalid="this.setCustomValidity('لطفا آدرس پست الکترونیکی را وارد کنید')" class="form-control" type="text" placeholder="ایمیل" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text"  oninvalid="this.setCustomValidity('لطفا نام را وارد کنید')" name="FirstName" class="form-control" placeholder="نام" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text"  oninvalid="this.setCustomValidity('لطفا نام خانوادگی را وارد کنید')" name="LastName" class="form-control" placeholder="نام خانوادگی" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="number"  oninvalid="this.setCustomValidity('لطفا کد ملی را وارد کنید')" name="Ssn" class="form-control" placeholder="کد ملی" required>
+                            </div>
+                            <div class="form-group">
+                                @Html.DropDownList("State", ClientWeb.Models.BLL.Tools.GetStates(0), new { id = "State", @class = "form-control" })
+                            </div>
+                            <div class="form-group">
+                                @Html.DropDownList("CityId", ClientWeb.Models.BLL.Tools.GetCity(0), new { id = "City", @class = "form-control" })
+                            </div>
+                            @*<div class="remember-me-wrapper">
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <div class="checkbox-nice">
+                                                @Html.CheckBox("AcceptTerms", new { @class = "remember-me", @checked = "checked" })
+                                                <label>
+                                                    می پذیرم
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <a href="" class="login-forget-link col-xs-6">
+                                            مطالعه قوانین سایت
+                                        </a>
+                                    </div>
+                                </div>*@
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <button type="submit" class="btn btn-default col-xs-12">ثبت اطلاعات</button>
+                                </div>
+                            </div>
+                            <div id="AjaxRegister_Progress" style="display:none;margin-top:10px;margin-right:125px;">
+                                <img src="@TempData["WebsiteThemePath"]DefaultContent/Imgs/ajax-load.gif" class="img-responsive" width="30" />
+                            </div>
+                            <div class="row" id="RegisterResultBox"></div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">var Pipopath = '@TempData["WebsiteThemePath"]';</script>
+
+    <!-- JAVASCRIPT JS  -->
+    <script type="text/javascript" src="@TempData["WebsiteThemePath"]rtl/js/jquery-3.1.1.min.js"></script>
+    <!-- JQUERY MIGRATE  -->
+    <script type="text/javascript" src="@TempData["WebsiteThemePath"]rtl/js/jquery-migrate-1.2.1.min.js"></script>
+    <!-- BOOTSTRAP CORE JS -->
+    <script type="text/javascript" src="@TempData["WebsiteThemePath"]rtl/js/bootstrap.min.js"></script>
+    <!-- JQUERY SELECT -->
+    <script type="text/javascript" src="@TempData["WebsiteThemePath"]rtl/js/select2.min.js"></script>
+    <!-- MEGA MENU -->
+    <script type="text/javascript" src="@TempData["WebsiteThemePath"]rtl/js/bootstrap-dropdownhover.js"></script>
+    <!-- JQUERY EASING -->
+    <script type="text/javascript" src="@TempData["WebsiteThemePath"]rtl/js/easing.js"></script>
+    <!-- JQUERY COUNTERUP -->
+    <script type="text/javascript" src="@TempData["WebsiteThemePath"]rtl/js/counterup.js"></script>
+    <!-- JQUERY WAYPOINT -->
+    <script type="text/javascript" src="@TempData["WebsiteThemePath"]rtl/js/waypoints.min.js"></script>
+    <!-- JQUERY REVEAL -->
+    <script type="text/javascript" src="@TempData["WebsiteThemePath"]rtl/js/footer-reveal.min.js"></script>
+    <!-- Owl Carousel -->
+    <script type="text/javascript" src="@TempData["WebsiteThemePath"]rtl/js/owl-carousel.js"></script>
+    <!-- MOBILE MENU JS -->
+    <script type="text/javascript" src="@TempData["WebsiteThemePath"]rtl/js/jquery.meanmenu.js"></script>
+    <!--Style Switcher -->
+    <script src="@TempData["WebsiteThemePath"]rtl/js/color-switcher.js"></script>
+    <!-- CORE JS -->
+    <script type="text/javascript" src="@TempData["WebsiteThemePath"]rtl/js/custom.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="@TempData["WebsiteThemePath"]rtl/js/dropzone.js"></script>
+    <script src="@TempData["WebsiteThemePath"]rtl/js/form-dropzone.js"></script>
+    <script>
+        $(function () {
+            $(document).tooltip();
+        });
+    </script>
+    <!-- FOR THIS PAGE ONLY -->
+    @RenderSection("js_Requested", required: false)
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //Dropdownlist Selectedchange event
+            $("#State").change(function () {
+                $("#City").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("GetCity", "Utility")',
+                    dataType: 'json',
+                    data: { id: $("#State").val() },
+                    success: function (states) {
+                        $.each(states, function (i, state) {
+                            $("#City").append('<option value="' + state.Value + '">' + state.Text + '</option>');
+                        });
+                        $("#City").trigger('change');
+                    },
+                    error: function (ex) {
+                        alert('خطا در بارگذاری اطلاعات شهر' + ex);
+                    }
+                });
+                return false;
+            });
+        });
+    </script>
+</body>
+</html>

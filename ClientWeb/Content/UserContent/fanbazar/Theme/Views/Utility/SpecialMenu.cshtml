@@ -1,0 +1,49 @@
+﻿<div class="container">
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="dashboard-menu-container">
+                <ul>
+                    <li @(ViewBag.CurrentState == "News" ? "class=active" : "")>
+                        <a href="@Url.Action("PageDetail","Page",new { profile = TempData["Username"], lang = TempData["lang"], id = 0 })">
+                            <div class="menue-name">اخبار</div>
+                        </a>
+                    </li>
+                    <li @(ViewBag.CurrentState == "Offer" ? "class=active" : "")>
+                        <a href="@Url.Action("UserListItem", "Item", new { profile=TempData["UserName"],lang = TempData["lang"], Type = "FanbazarOffer" })">
+                            <div class="menue-name"> محصولات و فناوری های من </div>
+                        </a>
+                    </li>
+                    <li @(ViewBag.CurrentState == "Company" ? "class=active" : "")>
+                        <a href="@Url.Action("UserListItem","Item",new {profile=TempData["UserName"], Type="FanbazarCompany",lang= TempData["lang"] })">
+                            <div class="menue-name">شرکت های من</div>
+                        </a>
+                    </li>
+                    <li @(ViewBag.CurrentState == "Demand" ? "class=active" : "")>
+                        <a href="@Url.Action("UserListItem","Item",new {profile=TempData["UserName"], Type="FanbazarDemand",lang= TempData["lang"]})">
+                            <div class="menue-name">تقاضا های من</div>
+                        </a>
+                    </li>
+                    <li @(ViewBag.CurrentState == "EditProfile" ? "class=active" : "")>
+                        <a href="@Url.Action("EditProfile","Account",new {lang= TempData["lang"]})">
+                            <div class="menue-name">ویرایش حساب کاربری</div>
+                        </a>
+                    </li>
+                    <li @(ViewBag.CurrentState == "ChangePassword" ? "class=active" : "")>
+                        <a href="@Url.Action("ChangePassword","Account",new {lang= TempData["lang"] })">
+                            <div class="menue-name">تغییر کلمه عبور</div>
+                        </a>
+                    </li>
+                    <li>
+                        @using (Html.BeginForm("LogOff", "Account", new { lang = TempData["lang"] }, FormMethod.Post, new { id = "logoutForm2" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <a href="javascript:document.getElementById('logoutForm2').submit()">
+                                <div class="menue-name">خروج از حساب کاربری</div>
+                            </a>
+                        }
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

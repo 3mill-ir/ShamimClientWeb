@@ -1,0 +1,24 @@
+﻿@model ClientWeb.Models.DataModels.PageDataModel
+<div class="columns-container">
+    <div class="container" id="columns">
+        <!-- row -->
+        <div class="row">
+            <!-- Left colunm -->
+            <div class="column col-xs-12 col-sm-3" id="left_column">
+                <!-- Banner -->
+                <!-- Poll -->
+                @Html.Action("PollQuestion", "Poll", new { profile = TempData["UserName"] })
+                <!-- ./Poll -->
+            </div>
+            <!-- ./left colunm -->
+            <!-- Center colunm-->
+            <div class="center_column col-xs-12 col-sm-9" id="center_column">
+                <h2 class="page-heading" style="border-bottom:none;">
+                    @Html.Action("PageTitle", "Utility", new { F_MenuID = ViewBag.F_MenuId })
+                </h2>
+                @Html.Raw(Model.ActionContent)
+            </div>
+        </div>
+        <!-- ./row-->
+    </div>
+</div>

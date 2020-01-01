@@ -1,0 +1,61 @@
+﻿@model PagedList.IPagedList<ClientWeb.Models.DataModels.GalleryModelAdmin>
+@using PagedList.Mvc;
+<div class="columns-container">
+    <div class="container" id="columns">
+        <!-- page heading-->
+        <h2 class="page-heading" style="text-align:center;">
+            <span class="page-heading-title2">گالری چند رسانه ای</span>
+        </h2>
+        <!-- ../page heading-->
+        <div class="page-content">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-md-push-2">
+                    <nav class="navbar navbar-default" style="width:70%;">
+                        <div class="container-fluid">
+                            <div id="navbar" class="navbar-collapse collapse">
+                                <ul class="nav navbar-nav" style="text-align:center;">
+                                    @foreach (var item in ViewBag.Folders as List<string>)
+                                    {
+                                        <li @(item == ViewBag.FolderName ? "class=active" : "")>
+                                            <a href="@Url.Action("GalleryItems", "Gallery", new {lang=ViewBag.lang, FolderName = item, profile = TempData["UserName"] })">
+                                                @item
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
+                            </div><!--/.nav-collapse -->
+                        </div>
+                    </nav>
+                </div>
+            </div>
+            <div class="row">
+                <div id="portfolio" class="portfolio-nogutter">
+                    <div class="row mix-grid">
+                        @foreach (var item in Model)
+                        {
+                            <div class="col-md-3 col-sm-3">
+                                <div class="papular-reviews">
+                                    <div class="image">
+                                        <img style="height: 250px;width: 100%;" src="@ViewBag.PrePath@item.Path" class="img-rounded">
+                                        <a target="_blank" href="@ViewBag.PrePath@item.Path" style="background-color: #2a3259;" type="submit" class="btn btn-info col-xs-12 absolute-in-image"><i style="margin-left: 10px;" class="fa fa-search"></i></a>
+                                    </div>
+                                    <div class="content text-center" style="background-color: #e9e9e9;padding: 15px;">
+                                        <h4 style="font-size: 15px;margin-top: 35px;">@item.Text</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+            </div>
+            <div class="container text-center">
+                <ul class="pagination pagination-lg pagination-simple">
+                    @Html.PagedListPager(Model, page => Url.Action("GalleryItems", "Gallery", new { page, FolderName = ViewBag.FolderName, profile = ViewBag.Profile, }))
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+

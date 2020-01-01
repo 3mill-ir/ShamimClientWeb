@@ -1,0 +1,31 @@
+﻿
+@model IEnumerable<ClientWeb.Models.DataModels.PostDataModel>
+@using ClientWeb.Models.BLL;
+@{
+    string lang = TempData["lang"].ToString();
+}
+<h3 class="page-header weight-300">
+    رویداد ها@(lang == "FA" ? "رویداد ها" : lang == "EN" ? "Events" : lang == "TR" ? "Olaylar" : "أحداث")
+</h3>
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-12" style="margin-bottom: -25px;">
+            <!-- article summary -->
+            <div class="row">
+                <div class="col-md-4 text-center">
+                    <img alt="@item.ImageAlt" class="img-responsive" src="@(!string.IsNullOrEmpty(item.ImagePath) ? ViewBag.PrePath + item.ImagePath : @TempData["WebsiteThemePath"]+"DefaultContent/Imgs/Park.png")" />
+                </div>
+                <div class="col-md-8">
+                    <h4 style="overflow: hidden;height: 50px;"><a style="font-size:14px;" href="@Url.Action("PostDetail", "Post", new { profile = TempData["UserName"], lang = item.Language, id = item.ID })">@item.Tittle</a></h4>
+                    <ul class="blog-post-info list-inline noborder-bottom" style="font-size:10px;line-height: 20px;">
+                        <li><a href="#"><i class="fa fa-calendar margin-left-6"></i><span class="font-lato">@Tools.SpecialJalaliFormat(item.CreatedOnUTC ?? default(DateTime))</span></a></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- /article summary -->
+        </div>
+    }
+</div>
+

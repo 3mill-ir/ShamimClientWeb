@@ -1,0 +1,418 @@
+﻿@model IEnumerable<ClientWeb.Models.DataModels.PostDataModel>
+<link rel="stylesheet" href="@TempData["WebsiteThemePath"]css/bootstrap.modallery.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<link rel="stylesheet prefetch" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<link rel="stylesheet prefetch" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="@TempData["WebsiteThemePath"]css/slider.css">
+<link rel="stylesheet" href="@TempData["WebsiteThemePath"]css/w3.css" type="text/css" media="screen">
+<link href="http://wastp.ir/wp-content/themes/company/css/lightgallery.css" rel="stylesheet">
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+<style>
+    #mySidenav a {
+        position: absolute;
+        left: -373px;
+        transition: 0.9s;
+        padding: 15px;
+        width: 15%;
+        text-decoration: none;
+        font-size: 20px;
+        color: white;
+        border-radius: 0 5px 5px 0;
+    }
+
+        #mySidenav a:hover {
+            left: 0;
+        }
+
+    #about {
+        top: 20px;
+        background-color: #4CAF50;
+    }
+
+    #blog {
+        top: 80px;
+        background-color: #2196F3;
+    }
+
+    #projects {
+        top: 140px;
+        background-color: #f44336;
+    }
+
+    #contact {
+        top: 200px;
+        background-color: #555;
+    }
+</style>
+<link rel="preload" href="https://adservice.google.com/adsid/integrator.js?domain=" as="script">
+<script type="text/javascript" async="" src="http://www.google-analytics.com/ga.js"></script>
+<script src="https://pagead2.googlesyndication.com/pub-config/r20160913/ca-pub-2783044520727903.js"></script>
+<script type="text/javascript" src="https://adservice.google.com/adsid/integrator.js?domain="></script>
+<script src="~/Scripts/charts.js"></script>
+<script src="~/Scripts/Chart.js/Chart.min.js"></script>
+<div class="row" style="height:auto;min-height: 496px;">
+    <div class="col-sm-2 col-md-2 col-lg-2 sidebar" style="width:20.666667%;">
+        <div class="list-group">
+            @Html.Action("PollQuestion", "Utility")
+        </div>
+    </div>
+    <div class="col-sm-8 col-md-8 col-lg-8 sidebar" style="width:60.667%;height:100%;margin-right:-10px; margin-left:10px; height:auto">
+        @foreach (var item in Model)
+        {
+            <header class="header">@Html.Raw(item.Tittle)</header>
+            <div style="" class="blogcontent">
+                <img src="~/Content/UserContent/DynamicPageImages/@item.ImagePath" style="width: 100%;max-height: 350px;"/>
+                <p>
+                    @Html.Raw(item.Description)
+                </p>
+                <p>
+                    <a class="btn btn-primary" data-toggle="collapse" href="@Url.Action("PostDetail", "Post", new { Id = item.ID, F_MenuId = item.F_MenuID })" style="border-radius: 6px;
+                    font-family: 'byekan',tahoma!important;
+                    border-style: double;
+                    border-bottom-color: red;
+                    border-bottom-width: 2px;
+                    border-bottom-right-radius: 16px;
+                    border-bottom-left-radius: 16px;" aria-expanded="false" aria-controls="collapseExample">
+                    برای ادامه کلیک کنید
+                    </a>
+                </p>
+            </div>
+        }
+        <!--video-->
+        @Html.Action("RelatedVideos", "Utility")
+    </div>
+    <div class="col-sm-2 col-md-2 col-lg-2 sidebar" style="width:20.667%;margin-right:-23px;">
+        @Html.Action("SideLinks", "Utility")
+    </div>
+    <div class="col-xs-8 col-sm-6 col-md-2" style=" border-bottom: double; border-radius: 5%; margin-top: 0;height: 245px;">
+        <div id="myCarousel" class="vertical-slider carousel vertical slide col-md-12" data-ride="carousel" style="width:initial;">
+            <div class="row" style="height:15%;">
+                <div class="col-md-12" style="margin-right:32%;margin-top: 7%;">
+                    <span data-slide="next" class="btn-vertical-slider glyphicon glyphicon-circle-arrow-up " style="font-size: 30px"></span>
+                </div>
+                <div class="col-md-8">
+                </div>
+            </div>
+            <!-- Carousel items -->
+            <div class="row" style="height:50%;padding-top:12%;">
+                <div class="carousel-inner" style="border-radius:8px;height:100px;">
+                    <div class="item" style="height: 100%;">
+                        <div class="row" style="height: 100%;">
+                            <div class="col-xs-6 col-sm-5 col-md-5" style="width: 100%;">
+                                <a href="#"> <img src="~/Content/img/8.jpg" class="img-responsive" style="height: 100%;" alt="Image"></a>
+                            </div>
+                        </div>
+                        <!--/row-fluid-->
+                    </div>
+                    <!--/item-->
+                    <div class="item" style="height: 100%;">
+                        <div class="row" style="height: 100%;">
+                            <div class="col-xs-6 col-sm-5 col-md-5" style="width: 100%;">
+                                <a href="#"> <img src="~/Content/img/6.jpg" class="img-responsive" style="height: 100%;" alt="Image"></a>
+                            </div>
+                        </div>
+                        <!--/row-fluid-->
+                    </div>
+                    <!--/item-->
+                    <div class="item active" style="height: 100%;">
+                        <div class="row" style="height: 100%;">
+                            <div class="col-xs-6 col-sm-5 col-md-5" style="width: 100%;">
+                                <a href="#"> <img src="~/Content/img/5.jpg" class="img-responsive" style="height: 100%;" alt="Image"></a>
+                            </div>
+                        </div>
+                        <!--/row-fluid-->
+                    </div>
+                    <!--/item-->
+                </div>
+            </div>
+
+
+            <div class="row" style="height:15%;">
+                <div class="col-md-12" style="margin-right:32%;padding-top:12%;">
+                    <span data-slide="prev" class="btn-vertical-slider glyphicon glyphicon-circle-arrow-down" style="color: Black;font-size: 30px;"></span>
+                </div>
+                <div class="col-md-8">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-2 col-md-2 col-lg-2 sidebar" style="width:20.666667%;margin-right:-15px;">
+        @Html.Action("RuzPic", "Utility")
+    </div>
+    <div class="col-sm-8 col-md-8 col-lg-8 sidebar" style="width:60.667%;height:100%;margin-right:-10px;margin-left:10px;">
+        <header class="header">تصاویر</header>
+        <div class="container" style="margin:50px auto;margin: 15px;border-bottom: solid;border-bottom-style: solid;border-radius: 6px;padding-right: 10px;width: initial;">
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <img src="~/Content/img/4.jpg" data-to="~/Content/img/4.jpg" data-caption="This one has a caption" class="modallery" style="width:100%;">
+            </div>
+            <div class="col-md-6">
+                <img src="~/Content/img/3.jpg" data-to="~/Content/img/3.jpg" data-caption="This one has a caption" class="modallery" style="width:100%;">
+            </div>
+            <div class="col-md-6">
+                <img src="~/Content/img/2.jpg" data-to="~/Content/img/2.jpg" data-caption="This one has a caption" class="modallery" style="width:100%;">
+            </div>
+            <div class="col-md-6" style="margin-top:-168px;">
+                <img src="~/Content/img/2.jpg" data-to="~/Content/img/1.jpg" data-caption="This one has a caption" class="modallery" style="width: 100%;">
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-2 col-md-2 col-lg-2 sidebar" style="width:20.667%;margin-right:-23px;">
+        @Html.Action("RuzWord", "Utility")
+    </div>
+
+</div>
+<!-- Modal#1 -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">تیتر خبر یک</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"></span>
+                </button>
+            </div>
+            <div class="modal-body" style="text-align:justify;">
+                به گزارش روابط عمومی پارک علم و فناوری آذربایجان غربی، اولین شورای مرکز رشد دانشگاه آزاد اسلامی مهاباد با حضور...	به گزارش روابط عمومی پارک علم و فناوری آذربایجان غربی، اولین شورای مرکز رشد دانشگاه آزاد اسلامی مهاباد با حضور...به گزارش روابط عمومی پارک علم و فناوری آذربایجان غربی، اولین شورای مرکز رشد دانشگاه آزاد اسلامی مهاباد با حضور...	به گزارش روابط عمومی پارک علم و فناوری آذربایجان غربی، اولین شورای مرکز رشد دانشگاه آزاد اسلامی مهاباد با حضور...به گزارش روابط عمومی پارک علم و فناوری آذربایجان غربی، اولین شورای مرکز رشد دانشگاه آزاد اسلامی مهاباد با حضور...	به گزارش روابط عمومی پارک علم و فناوری آذربایجان غربی، اولین شورای مرکز رشد دانشگاه آزاد اسلامی مهاباد با حضور...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+                <button type="button" class="btn btn-primary">مشاهده تصاویر</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">2</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">      </span>
+                </button>
+            </div>
+            <div class="modal-body" style="text-align:justify;">
+                به گزارش روابط عمومی پارک علم و فناوری آذربایجان غربی، اولین شورای مرکز رشد دانشگاه آزاد اسلامی مهاباد با حضور...	به گزارش روابط عمومی پارک علم و فناوری آذربایجان غربی، اولین شورای مرکز رشد دانشگاه آزاد اسلامی مهاباد با حضور...به گزارش روابط عمومی پارک علم و فناوری آذربایجان غربی، اولین شورای مرکز رشد دانشگاه آزاد اسلامی مهاباد با حضور...	به گزارش روابط عمومی پارک علم و فناوری آذربایجان غربی، اولین شورای مرکز رشد دانشگاه آزاد اسلامی مهاباد با حضور...به گزارش روابط عمومی پارک علم و فناوری آذربایجان غربی، اولین شورای مرکز رشد دانشگاه آزاد اسلامی مهاباد با حضور...	به گزارش روابط عمومی پارک علم و فناوری آذربایجان غربی، اولین شورای مرکز رشد دانشگاه آزاد اسلامی مهاباد با حضور...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+                <button type="button" class="btn btn-primary">مشاهده تصاویر</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modalslider -->
+<div class="modal fade" id="exampleModalslider" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">مشخصات خبر</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"></span>
+                </button>
+            </div>
+            <div class="modal-body" style="padding:0;">
+                <img src="~/Content/img/lake.jpg" class="img-responsive" style="height:50%;padding:4px;">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Content/js/jquery-1.9.1.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="~/Content/js/bootstrap.min.js"></script>
+<script src="~/Content/js/npm.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        //Hover Menu in Header
+        $('ul.nav li.dropdown').hover(function () {
+            $(this).find('.mega-dropdown-menu').stop(true, true).delay(200).fadeIn(200);
+            $('.darkness').stop(true, true).fadeIn();
+        }, function () {
+            $(this).find('.mega-dropdown-menu').stop(true, true).delay(200).fadeOut(200);
+            $('.darkness').stop(true, true).delay(200).fadeOut();
+        });
+    });
+</script>
+<script type="text/javascript">
+    $('.carosel-control-right').click(function () {
+        $(this).blur();
+        $(this).parent().find('.carosel-item').first().insertAfter($(this).parent().find('.carosel-item').last());
+    });
+</script>
+<script type="text/javascript">
+    $('.carosel-control-left').click(function () {
+        $(this).blur();
+        $(this).parent().find('.carosel-item').last().insertBefore($(this).parent().find('.carosel-item').first());
+    });
+</script>
+<script type="text/javascript">
+    $('.multi-item-carousel').carousel({
+        interval: false
+    });
+</script>
+<script type="text/javascript">
+    $('.multi-item-carousel .item').each(function () {
+        var next = $(this).next();
+        if (!next.length) {
+            next = $(this).siblings(':first');
+        }
+        next.children(':first-child').clone().appendTo($(this));
+
+        if (next.next().length > 0) {
+            next.next().children(':first-child').clone().appendTo($(this));
+        } else {
+            $(this).siblings(':first').children(':first-child').clone().appendTo($(this));
+        }
+    });
+
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        //Events that reset and restart the timer animation when the slides change
+        $("#transition-timer-carousel").on("slide.bs.carousel", function (event) {
+            //The animate class gets removed so that it jumps straight back to 0%
+            $(".transition-timer-carousel-progress-bar", this)
+                .removeClass("animate").css("width", "0%");
+        }).on("slid.bs.carousel", function (event) {
+            //The slide transition finished, so re-add the animate class so that
+            //the timer bar takes time to fill up
+            $(".transition-timer-carousel-progress-bar", this)
+                .addClass("animate").css("width", "100%");
+        });
+
+        //Kick off the initial slide animation when the document is ready
+        $(".transition-timer-carousel-progress-bar", "#transition-timer-carousel")
+            .css("width", "100%");
+    });
+</script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<script type="text/javascript">
+    $('.carousel[data-type="multi"] .item').each(function () {
+        var next = $(this).next();
+        if (!next.length) {
+            next = $(this).siblings(':first');
+        }
+        next.children(':first-child').clone().appendTo($(this));
+
+        for (var i = 0; i < 2; i++) {
+            next = next.next();
+            if (!next.length) {
+                next = $(this).siblings(':first');
+            }
+
+            next.children(':first-child').clone().appendTo($(this));
+        }
+    });
+</script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="~/Content/js/index.js">
+    $(function () {
+
+        $('#slide-submenu').on('click', function () {
+            $(this).closest('.list-group').fadeOut('slide', function () {
+                $('.mini-submenu').fadeIn();
+            });
+
+        });
+
+        $('.mini-submenu').on('click', function () {
+            $(this).next('.list-group').toggle('slide');
+            $('.mini-submenu').hide();
+        })
+    })
+
+</script>
+<script type="text/javascript">
+    function centerModal() {
+        $(this).css('display', 'block');
+        var $dialog = $(this).find(".modal-dialog");
+        var offset = ($(window).height() - $dialog.height()) / 2;
+        // Center modal vertically in window
+        $dialog.css("margin-top", offset);
+    }
+
+    $('.modal').on('show.bs.modal', centerModal);
+    $(window).on("resize", function () {
+        $('.modal:visible').each(centerModal);
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('.btn-vertical-slider').on('click', function () {
+
+            if ($(this).attr('data-slide') == 'next') {
+                $('#myCarousel').carousel('next');
+            }
+            if ($(this).attr('data-slide') == 'prev') {
+                $('#myCarousel').carousel('prev')
+            }
+
+        });
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="~/Content/js/bootstrap.modallery.min.js"></script>
+<script>
+    $(document).modallery({
+        title: 'در این جا تصاویر وارد می شود',
+        navigate: true,
+        arrows: true,
+        keypress: true
+    });
+</script>
+<script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-36251023-1']);
+    _gaq.push(['_setDomainName', 'jqueryscript.net']);
+    _gaq.push(['_trackPageview']);
+
+    (function () {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+</script>
+<style>
+    .pb-video-container {
+        padding-top: 20px;
+        background: gainsboro;
+        border-style: double;
+        border-right: navajowhite;
+        border-left: navajowhite;
+        border-top: navajowhite;
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+    }
+
+    .pb-video {
+        border: 1px solid #e6e6e6;
+        padding: 5px;
+    }
+
+        .pb-video:hover {
+            background: #2c3e50;
+        }
+
+    .pb-video-frame {
+        transition: width 2s, height 2s;
+    }
+
+        .pb-video-frame:hover {
+            height: 300px;
+        }
+
+    .pb-row {
+        margin-bottom: 10px;
+    }
+</style>

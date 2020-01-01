@@ -1,0 +1,32 @@
+﻿@model ClientWeb.Models.DataModels.ContactManagementModel
+  
+<style>
+    .social-link .fa-instagram {
+        background-color: #9d1010;
+    }
+
+    .social-link .fa-send {
+        background-color: #10799d;
+    }
+
+    .social-link .fa-envelope {
+        background-color: lightgreen;
+    }
+</style>
+<div class="col-md-3 col-sm-6">
+    <div class="contact-info bottom">
+        <h2>ارتباط با ما</h2>
+        <address>
+            <a href="mailto:someone@example.com" style="margin-left: 45px;">@Model.EmailInput</a><br>
+            @Model.FaxInput : تلفن <br>
+            @Model.PhoneInput: فکس <br>
+        </address>
+
+        <h2>آدرس</h2>
+        <address>
+            @Model.AddressInput
+        </address>
+    </div>
+</div>
+
+

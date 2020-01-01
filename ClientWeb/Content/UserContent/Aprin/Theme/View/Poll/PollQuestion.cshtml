@@ -1,0 +1,43 @@
+﻿@model ClientWeb.Models.DataModels.PollQuestionModel
+<script src="@TempData["WebsiteThemePath"]assets/js/charts.js"></script>
+<script src="@TempData["WebsiteThemePath"]assets/js/Chart.js/Chart.min.js"></script>
+<style>
+    .pie-legend {
+        list-style: none;
+    }
+</style>
+@{
+    Random rnd = new Random();
+    <script>
+        var ScoreResult = [];
+        var LableResult = [];
+        var AllResult = [];
+        var AllSubResult = [];
+
+        @if(Model.ChartType!="BarChart")
+            {
+            for (int i=0; i < @Model.PollAnswer.Count; i++){
+        <text>
+        ScoreResult.push({
+            value: '@Model.PollAnswer[i].Score',
+            color: '#@Model.PollAnswer[i].Color',
+            highlight: '#6C7A89',
+            label: '@Model.PollAnswer[i].Text'
+        });
+        </text>
+            }
+            }
+            else{
+            for (int i=0; i < Model.PollAnswer.Count; i++){
+        <text>
+        ScoreResult.push("@Model.PollAnswer[i].Score");
+        LableResult.push("@Model.PollAnswer[i].Text");
+        </text>
+            }
+
+}
+        jQuery(document).ready(function () {
+            Charts.init("@Model.ChartType", "pieChart", "pieLegend", ScoreResult, LableResult);
+        });
+    </script>
+} 

@@ -1,0 +1,190 @@
+﻿@model IEnumerable<ClientWeb.Models.DataModels.MenuDataModel>
+@using ClientWeb.Models.BLL
+@using ClientWeb.Models.BLL
+@using ClientWeb.Models
+<style>
+    .vertical-menu-content {
+        display: none !important;
+    }
+
+    .NDisplay {
+        display: none !important;
+    }
+
+    .BDisplay {
+        display: block !important;
+    }
+</style>
+<script>
+    function CatMenu() {
+        var c = document.getElementById('CatMenuID');
+        //if (c.classList.contains('NDisplay') || !c.classList.contains('BDisplay')) {
+        if (c.classList.contains('NDisplay')) {
+            c.classList.remove('NDisplay');
+            c.classList.add('BDisplay');
+        }
+        else {
+            c.classList.remove('BDisplay');
+            c.classList.add('NDisplay');
+        }
+    }
+</script>
+<!-- MAIN HEADER -->
+<div class="container main-header">
+    <div class="row">
+
+        <div class="col-sm-3 col-lg-3">
+            <div style="margin-top:16px;">
+                <a href="@Url.Action("RegisterUser", "Account",new { profile=TempData["UserName"],lang="FA"})" style="background-color: #2A3316;width: 34%; border-radius: 2px;color: #fff; font-weight: bold; background-color: #2a3259; padding: 12px;float: right; margin-left: 2px;text-align: center;background-color: #b2d233;"><span>ثبت نام</span></a>
+                @if (string.IsNullOrEmpty((TempData["FanBazar_User"] as AccountAuthorizeModel).UserName))
+                {
+                    <a href="@Url.Action("Login", "Account",new { profile=TempData["UserName"],lang="FA"})" style="background-color: #2A3316;width: 62%;border-radius: 2px;color: #fff;font-weight: bold;background-color: #2a3259;padding: 12px;float: right;margin-right: 2px;text-align: center;"> <i style="margin-top: 3px;" class="fa fa-sign-in"></i> ورود</a>
+                }
+                else
+                {
+                    <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 62%; border-radius: 2px;font-weight: bold;padding: 12px;float: right;margin-right:5px;text-align: center;">
+                        سلام @(TempData["FanBazar_User"] as AccountAuthorizeModel).UserName)
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu mega_dropdown" style="z-index:5000">
+                        <li> <a href="@Url.Action("Index", "Home", new { lang = ViewBag.lang, Type = "SpecialIndex" })"><i class="fa fa-user" style="margin-left: 10px;margin-top: 2px;"></i>پنل من</a></li>
+                        <li> <a href="@Url.Action("EditProfile", "Account")"><i class="fa fa-edit" style="margin-left: 10px;margin-top: 2px;"></i>ویرایش حساب کاربری</a></li>
+                        <li><a href="@Url.Action("ChangePassword", "Account")"><i class="fa fa-lock" style="margin-left: 10px;margin-top: 2px;"></i>ویرایش کلمه عبور</a></li>
+                        <li><a href="javascript:document.getElementById('logoutForm').submit()"><i class="fa fa-power-off" style="margin-left: 10px;margin-top: 2px;"></i>خروج از ناحیه کاربری</a></li>
+                    </ul>
+                }
+                @*@if (!string.IsNullOrEmpty(TempData["LoginResult"] as string))
+                {
+                    <a style="color:@(TempData["LoginResult"].ToString().Split(',')[1]);">@TempData["LoginResult"].ToString().Split(',')[0]</a>
+                }*@
+            </div>
+        </div>
+
+
+        <div class="col-sm-7 col-lg-7 header-search-box" style="padding-right: 4px;padding-left: 0px;">
+            @using (Html.BeginForm("SearchItem", "Item", null, FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-inline" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-group form-category">
+                    <select class="select-category select2-hidden-accessible" id="CatID" name="CatID" style="width: 30%;" tabindex="-1" aria-hidden="true">
+                        <option value="شرکت ها">شرکت ها</option>
+                        <option value="محصولات">محصولات</option>
+                    </select>
+                </div>
+                <div class="form-group input-serach" style="width: 60%;">
+                    <input type="text" placeholder="کلمات کلیدی را وارد کنید ...">
+                </div>
+                <button type="submit" class="pull-left btn-search"></button>
+            }
+        </div>
+
+        <div class="col-sm-2 col-lg-2 logo" style="margin-top:15px;">
+            <a href="@Url.Action("PageDetail", "Page", new { profile = TempData["UserName"], lang = "FA", id = 187 })"><img style="margin: -35px 0;height: 105px;margin-right: 24px;" alt="" src="@TempData["WebsiteThemePath"]assets/images/logo.png" /></a>
+        </div>
+
+    </div>
+</div>
+<!-- END MANIN HEADER -->
+<div id="nav-top-menu" class="nav-top-menu">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3" id="box-vertical-megamenus">
+                @{
+                    var mn = new MenuManagement();
+                    var test = mn.LoadMenu(TempData["UserName"].ToString(), "FanbazarOffer,FanbazarOfferDemand", "FA");
+                }
+                <div class="box-vertical-megamenus">
+                    <h4 class="title">
+                        <span class="title-menu">دسته بندی ها</span>
+                        <span class="btn-open-mobile pull-left home-page"><i class="fa fa-bars" id="CatMenuBtn" onclick="CatMenu()"></i></span>
+                    </h4>
+                    <div class="vertical-menu-content is-home" id="CatMenuID">
+                        <ul class="vertical-menu-list">
+                            @{ string Path = Tools.ReturnPathPhysicalMode("MenuImages", TempData["UserName"].ToString(), "AdminAddress", "PostListView");}
+                            @foreach (var item in test.Where(u => u.F_MenuID == null))
+                            {
+                                <li>
+                                    @{var Temp = test.Where(u => u.F_MenuID == item.ID);}
+                                    <a class="@(Temp.Count()>0?"parent":"")" href="@Url.Action("ListItem", "Item", new { profile = TempData["UserName"].ToString(), Type = "FanbazarOffer,FanbazarOfferDemand", lang = "FA" })">@item.Name</a>
+                                    @if (Temp.Count() > 0)
+                                    {
+                                        <div class="vertical-dropdown-menu" style="width: 900px;">
+                                            <div class="vertical-groups col-sm-12">
+                                                @foreach (var item2 in Temp)
+                                                {
+                                                    <div class="mega-group col-sm-3">
+                                                        <h4 class="mega-group-header"><span><a href="@Url.Action("ListItem", "Item", new { profile = TempData["UserName"].ToString(), Type = "FanbazarOffer,FanbazarOfferDemand", lang = "FA" })">@item2.Name</a></span></h4>
+                                                        <ul class="group-link-default">
+                                                            @{var Temp2 = test.Where(u => u.F_MenuID == item2.ID);}
+                                                            @foreach (var item3 in Temp2)
+                                                            {
+                                                                <li><a href="@Url.Action("ListItem", "Item", new { profile = TempData["UserName"].ToString(), Type = "FanbazarOffer,FanbazarOfferDemand", lang = "FA" })">@item3.Name</a></li>
+                                                            }
+                                                        </ul>
+                                                    </div>
+                                                                }
+
+                                                @*<div class="mega-custom-html col-sm-12">
+                                                        <a href="#"><img style="height:150px;" src="@(!string.IsNullOrEmpty(item.Image) ? Path + item.Image : TempData["WebsiteThemePath"]+"DefaultContent/Imgs/No_Image.png")" alt="Banner"></a>
+                                                    </div>*@
+                                            </div>
+                                        </div>
+                                                                }
+                                </li>
+                                                                }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div id="main-menu" class="col-sm-9 main-menu">
+                <nav class="navbar navbar-default">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <a class="navbar-brand" href="#">منو</a>
+                        </div>
+                        <div id="navbar" class="navbar-collapse collapse">
+                            <ul class="nav navbar-nav">
+                                @foreach (var item in Model.Where(q => q.F_MenuID == null))
+                                {
+                                    var temp = Model.Where(u => u.F_MenuID == item.ID);
+                                    <li @(temp.Count() > 0 ? "class=dropdown" : "")>
+                                        <a href=@(item.Type == "StaticPost" ? Url.Action("PageDetail", "Page", new { profile = TempData["UserName"], lang = "FA", id = item.ID }) : item.Type == "DynamicPost" ? Url.Action("ListPost", "Post", new { profile = TempData["UserName"], lang = "FA", id = item.ID }) : "") @(temp.Count() > 0 ? "class=\"dropdown-toggle\" data-toggle=\"dropdown\"" : "")>
+                                            @item.Name
+                                        </a>
+                                        @if (temp.Count() > 0)
+                                        {
+                                            <ul class="dropdown-menu container-fluid">
+                                                <li class="block-container">
+                                                    <ul class="block">
+                                                        @foreach (var item2 in temp)
+                                                        {
+                                                            <li class="link_container"><a href=@(item.Type == "StaticPost" ? Url.Action("PageDetail", "Page", new { profile = TempData["UserName"], lang = "FA", id = item2.ID }) : item2.Type == "DynamicPost" ? Url.Action("ListPost", "Post", new { profile = TempData["UserName"], lang = "FA", id = item2.ID }) : "")> @item2.Name</a></li>
+                                                        }
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        }
+                                    </li>
+                                }
+                            </ul>
+                        </div><!--/.nav-collapse -->
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <!-- userinfo on top-->
+        <div id="form-search-opntop">
+        </div>
+        <!-- userinfo on top-->
+        @*<div id="user-info-opntop">
+        </div>*@
+        <!-- CART ICON ON MMENU -->
+        @*<div id="shopping-cart-box-ontop">
+            <i class="fa fa-shopping-cart"></i>
+            <div class="shopping-cart-box-ontop-content"></div>
+        </div>*@
+    </div>
+</div>

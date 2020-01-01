@@ -1,0 +1,108 @@
+﻿@model ClientWeb.Models.DataModels.ShopPagedList
+@using ClientWeb.Models.BLL
+@using ClientWeb.Models.DataModels
+@{
+    ViewBag.CurrentState = "ShoppingCart";
+    int count = 0;
+}
+<div class="columns-container">
+    <div class="container" id="columns">
+        <!-- row -->
+        <div class="row">
+            <!-- Center colunm-->
+            <div class="center_column col-xs-12 col-sm-9" id="center_column">
+
+                <h2 class="page-heading" style="margin-top: 7px;border-bottom:none;">
+                    شیوه پرداخت :
+                </h2>
+                <div class="column col-xs-12 col-sm-12">
+                    <div class="block left-module" style="font-family: 'Vazir FD',Arial,sans-serif;">
+                        <div class="block_content">
+                            <!-- layered -->
+                            <div class="layered">
+                                <div class="layered-content">
+                                    <ul class="blog-list-sidebar clearfix">
+                                        <li>
+                                            <div class="post-info" style="float: right;width: 100%;margin: 0;">
+                                                <div class="post-meta" style="line-height: 30px;">
+                                                    @using (Html.BeginForm("FinishShopping", "ShoppingCart", null, FormMethod.Post, new { id = "PipoForm" }))
+                                                    {
+                                                        @Html.AntiForgeryToken()
+                                                        @Html.Hidden("ID", Model.ShopList.FirstOrDefault().ID)
+                                                        <span class="date" style="float: right;width: 100%;">
+                                                            <div style="width:100%;">
+                                                                <label>
+                                                                    پرداخت حضوری
+                                                                </label>
+                                                                <label style="float: right;margin-top: 5px;margin-left: 10px;" class="c-ui-radio"><input type="radio" name="PayType" value="پرداخت حضوری" checked></label>
+                                                            </div>
+                                                            <div style="width:100%;">
+                                                                <label>
+                                                                    پرداخت از طریق درگاه (بانک ملت)
+                                                                </label>
+                                                                <label style="float: right;margin-top: 5px;margin-left: 10px;margin-right:-22px;" class="c-ui-radio"><input type="radio" name="PayType" value="درگاه بانک ملت"></label>
+                                                            </div>
+                                                            <div style="width:100%;">
+                                                                <label>
+                                                                    پرداخت از طریق درگاه (بانک پارسیان)
+                                                                </label>
+                                                                <label style="float: right;margin-top: 5px;margin-left: 10px;margin-right:-22px;" class="c-ui-radio"><input type="radio" name="PayType" value="درگاه بانک پارسیان"></label>
+                                                            </div>
+                                                            <div style="width:100%;">
+                                                                <label>
+                                                                    پرداخت از طریق درگاه (بانک تجارت)
+                                                                </label>
+                                                                <label style="float: right;margin-top: 5px;margin-left: 10px;margin-right:-22px;" class="c-ui-radio"><input type="radio" name="PayType" value="درگاه بانک تجارت"></label>
+                                                            </div>
+                                                        </span>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- ./layered -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ./ Center colunm -->
+            <!-- Left colunm -->
+            <div class="column col-xs-12 col-sm-3" id="left_column">
+                <div class="block left-module" style="font-family: 'Vazir FD',Arial,sans-serif;">
+                    <div class="block_content">
+                        <!-- layered -->
+                        <div class="layered">
+                            <div class="layered-content" style="margin-top:-25px;">
+                                <ul class="blog-list-sidebar clearfix">
+                                    <li>
+                                        <div class="post-info" style="float: right;width: 100%;margin: 0;">
+                                            <div class="post-meta" style="line-height: 30px;">
+                                                <span class="date" style="float: right;width: 100%;"> @Model.ShopList.FirstOrDefault().ShopItem.Count نوع کالا</span>
+                                                <span class="date" style="float: right;width: 100%;">مبلغ کل فاکتور :  @Tools.PriceString(Model.ShopList.FirstOrDefault().TotalPrice) تومان</span>
+                                                <span class="date" style="float: right;width: 100%;">هزینه ارسال : @Tools.PriceString(Model.ShopList.FirstOrDefault().DeliveryCost) تومان</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="post-info" style="float: right;width:100%;margin: 0;">
+                                            <div class="post-meta" style="font-size: 15px;line-height: 30px;text-align:center">
+                                                <span class="date" style="width: 100%;float: right;">مبلغ قابل پرداخت :</span>
+                                                <span class="date" style="width: 100%;float: right;color: red;font-size:22px;">@Tools.PriceString(Model.ShopList.FirstOrDefault().TotalPrice) + @Tools.PriceString(Model.ShopList.FirstOrDefault().DeliveryCost) تومان</span>
+                                                <a href="javascript:document.getElementById('PipoForm').submit()" style="float:right;width: 100%;background-color: #4fc0da;padding: 10px;color: white;border-radius: 5px;margin-top: 10px;">پرداخت و ثبت هایی سفارش</a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- ./layered -->
+                    </div>
+                </div>
+            </div>
+            <!-- ./left colunm -->
+        </div>
+        <!-- ./row-->
+    </div>
+</div>

@@ -1,0 +1,30 @@
+﻿@model  ClientWeb.Models.DataModels.UserInformationDataModel
+@using PagedList.Mvc;
+@{
+    ViewBag.CurrentState = "EditProfile";
+}
+ 
+<script type="text/javascript">
+    $(document).ready(function () {
+        //Dropdownlist Selectedchange event
+        $("#State").change(function () {
+            $("#City").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetCity", "Utility")',
+                dataType: 'json',
+                data: { id: $("#State").val() },
+                success: function (states) {
+                    $.each(states, function (i, state) {
+                        $("#City").append('<option value="' + state.Value + '">' + state.Text + '</option>');
+                    });
+                    $("#City").trigger('change');
+                },
+                error: function (ex) {
+                    alert('خطا در بارگذاری اطلاعات شهر' + ex);
+                }
+            });
+            return false;
+        });
+    });
+</script>

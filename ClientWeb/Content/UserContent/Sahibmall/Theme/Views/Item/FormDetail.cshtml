@@ -1,0 +1,120 @@
+﻿@model ClientWeb.Models.DataModels.ItemNew
+@{
+    ViewBag.CurrentState = "AddOffer";
+}
+@section js_Requested{
+@*@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryajax")*@
+    <script type="text/javascript">
+        $(document).ready(function () {
+            CallAjax();
+        });
+        function CallAjax() {
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetFormForUser", "Item")',
+                dataType: 'html',
+                data: { ID: '@ViewBag.ID', profile: '@TempData["UserName"]', Type: '@ViewBag.Type', lang: '@ViewBag.lang' },
+                beforesend: document.getElementById('Form_Loading').style.display = 'block',
+                success: function (Result) {
+                    $("#AjaxResult").empty();
+                    $("#AjaxResult").append(Result);
+                    document.getElementById('Form_Loading').style.display = 'none';
+                },
+                error: function (ex) {
+                    alert('خطا در بارگذاری اطلاعات');
+                    document.getElementById('Form_Loading').style.display = 'none';
+                }
+            });
+            return false;
+        }
+    </script>
+    <script>
+        function PipoFunc(TargetIDName, ClassName) {
+            var els = document.getElementsByClassName("ParentAttr_" + ClassName);
+            Array.prototype.forEach.call(els, function (el) { el.classList.add('PipoHidden'); el.classList.remove('PipoShow'); });
+            var item = document.getElementById('Attr_' + TargetIDName);
+            if (item.classList.contains('PipoShow')) {
+                item.classList.remove('PipoShow');
+                item.classList.add('PipoHidden');
+            }
+            else {
+                item.classList.remove('PipoHidden');
+                item.classList.add('PipoShow');
+            }
+            console.log = console.warn = console.error = () => { };
+            console.error('Something bad happened.');
+        }
+        function PipoRemove(ClassName) {
+            var els = document.getElementsByClassName("ParentAttr_" + ClassName);
+            Array.prototype.forEach.call(els, function (el) { el.classList.add('PipoHidden'); el.classList.remove('PipoShow'); });
+        }
+        function CheckBoxFixer(Status, IDName, Value1, Value2) {
+            var temp = document.getElementById(IDName);
+            if (Status == false)
+                temp.setAttribute("value", Value1);
+            else
+                temp.setAttribute("value", Value2);
+        }
+    </script>
+    @*<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>*@
+}
+<style>
+    .PipoHidden {
+        display: none !important;
+    }
+
+    .PipoShow {
+        display: block !important;
+    }
+</style>
+<div class="columns-container">
+    <div class="container" id="columns">
+        <!-- row -->
+        <div class="row">
+            <!-- Center colunm-->
+            <div class="center_column col-xs-12 col-sm-12" id="center_column">
+                <h2 class="page-heading" style="margin-bottom: 20px;margin-top: 7px;">
+                    @ViewBag.FormName
+                </h2>
+                <div class="dashboard-main-disc">
+                    <div class="row">
+                        @using (Ajax.BeginForm("FormDetailPost", "Item", null, new AjaxOptions
+                        {
+                            UpdateTargetId = "PostResult",
+                            InsertionMode = InsertionMode.Replace,
+                            LoadingElementId = "LoadingElement",
+                            HttpMethod = "Post"
+                        }, new { enctype = "multipart/form-data" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.Hidden("F_MenuID",(int)ViewBag.ID)
+                            <div class="col-md-12 col-sm-12">
+                                <div id="Form_Loading" style="display: none;margin-right: 45%;padding-bottom: 20px;">
+                                    <img src="~/Content/DefaultContent/Imgs/ajax-load.gif" class="img-responsive" width="60" />
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12" style="margin-top: 40px;">
+                                <div id="AjaxResult">
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="form-group form-action">
+                                    <button type="submit" style="background-color:#2a3259;color:white;" class="btn btn-default btn-search-submit pull-right flip">ثبت اطلاعات</button>
+                                </div>
+                                <div id="LoadingElement" style="display:none;">
+                                    <img src="@TempData["WebsiteThemePath"]DefaultContent/Imgs/ajax-load.gif" class="img-responsive" width="30" style="margin-top: -15px;margin-right: 20px;float: right;"/>
+                                </div>
+                                <div id="PostResult" style="margin-top: 50px;text-align:center;">
+
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <!-- ./ Center colunm -->
+        </div>
+        <!-- ./row-->
+    </div>
+</div>

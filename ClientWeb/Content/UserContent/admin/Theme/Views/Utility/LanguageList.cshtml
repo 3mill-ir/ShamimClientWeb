@@ -1,0 +1,29 @@
+﻿@model IEnumerable<ClientWeb.Models.DataModels.LanguageDataModel>
+@using ClientWeb.Models.DataModels;
+@{
+    string lang = TempData["lang"].ToString();
+    if (string.IsNullOrEmpty(lang))
+    {
+        lang = "FA";
+    }
+    ClientWeb.Models.DataModels.LanguageDataModel currentlang = new ClientWeb.Models.DataModels.LanguageDataModel();
+    currentlang = Model.Count() > 0 ? Model.FirstOrDefault(u => u.Language == lang) : new LanguageDataModel();
+
+}
+
+<ul class="pull-right nav nav-pills nav-second-main Resp_Lang" style="@(lang=="FA"?"margin-left:-90px;":"")">
+    @*<li><a href="page-faq-1.html">FAQ</a></li>*@
+    <li>
+
+
+        <a class="dropdown-toggle no-text-underline" data-toggle="dropdown" href="#"><img class="flag-lang" src="@TempData["WebsiteThemePath"]images/flags/@currentlang.Image" width="16" height="11" alt="lang" /> @currentlang.LanguageName</a>
+        <ul class="dropdown-langs dropdown-menu pull-right" style="background-color: #253b80;border: none;">
+            @foreach (var lan in TempData["LangList"] as List<LanguageDataModel>)
+            {
+                <li><a tabindex="-1" href="@Url.Action("PageDetail","Page",new { profile = TempData["Username"], lang = lan.Language, id = 0 })"><img class="flag-lang" src="@TempData["WebsiteThemePath"]images/flags/@lan.Image" width="16" height="11" alt="lang" /> @lan.LanguageName &nbsp;	&nbsp;	&nbsp;	&nbsp;	&nbsp;	</a></li>
+                <li class="divider"></li>
+            }
+        </ul>
+
+    </li>
+</ul>

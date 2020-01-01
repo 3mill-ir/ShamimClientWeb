@@ -1,0 +1,30 @@
+﻿@model IEnumerable<ClientWeb.Models.DataModels.PostDataModel>
+<div class="col-md-12 col-sm-12 col-xs-12" style="padding-top:100px;">
+    <div class="Heading-title black">
+        <h1>آخرین خبر ها</h1>
+    </div>
+</div>
+<div class="featured-slider" style="float: right;">
+    @foreach (var item in Model)
+    {
+        <div class="item">
+            <div class="papular-reviews">
+                <div class="image">
+                    <img alt="@item.ImageAlt" src="@(!string.IsNullOrEmpty(item.ImagePath)?ViewBag.PrePath+item.ImagePath:"/Content/DefaultContent/Imgs/No_Image.png")" style="width: 100%;height: 245px;" class="img-responsive">
+                    <div class="absolute-in-image">
+                        <a href="@Url.Action("PostDetail","Post", new {profile=TempData["UserName"], lang = item.Language, id = item.ID })"><div class="duration"><span>بیشتر ...</span></div></a>
+                    </div>
+                </div>
+                <div class="content">
+                    <span class="cat"><i class="flaticon-interface"></i></span>
+                    <h4>@item.Tittle</h4>
+                    <div class="rating-wrapper">
+                        <div class="raty-wrapper">
+                            <span> @ClientWeb.Models.BLL.Tools.SpecialJalaliFormat(item.CreatedOnUTC ?? default(DateTime))</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

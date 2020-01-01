@@ -1,0 +1,87 @@
+﻿@model ClientWeb.Models.DataModels.UserInformationDataModel
+@section js_Requested{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#State2").change(function () {
+                $("#City2").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("GetCity", "Utility")',
+                    dataType: 'json',
+                    data: { id: $("#State2").val() },
+                    success: function (states) {
+                        $.each(states, function (i, state) {
+                            $("#City2").append('<option value="' + state.Value + '">' + state.Text + '</option>');
+                        });
+                        $("#City2").trigger('change');
+                    },
+                    error: function (ex) {
+                        alert('خطا در بارگذاری اطلاعات شهر' + ex);
+                    }
+                });
+                return false;
+            });
+        });
+    </script>
+}
+<section class="dashboard-menu dashboard-menu-2 light-blue">
+    @Html.Action("SpecialMenu", "Utility", new { CurrentState = "EditProfile", lang = ViewBag.lang })
+</section>
+<section class="dashboard light-blue">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-sm-12 col-xs-12 col-md-push-8">
+                @Html.Action("UserIntroduction", "Utility")
+            </div>
+            <div class="col-md-8 col-sm-8 col-xs-12 col-md-pull-4">
+                <div class="dashboard-main-disc">
+                    <div class="heading-inner">
+                        <p class="title">ویرایش حساب کاربری</p>
+                    </div>
+                    <div class="row">
+                        @using (Html.BeginForm("EditProfile", "Account", null, FormMethod.Post, null))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>استان<span class="required">*</span></label>
+                                    @Html.DropDownList("F_StateID", ClientWeb.Models.BLL.Tools.GetStates(Model.F_StateID), new { id = "State2", @class = "select-general form-control select2-hidden-accessible" })
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>شهر<span class="required">*</span></label>
+                                    @Html.DropDownList("F_CityID", ClientWeb.Models.BLL.Tools.GetCity(Model.F_CityID,Model.F_StateID), new { id = "City2", @class = "select-general form-control select2-hidden-accessible" })
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    @Html.TextBoxFor(model=>model.FirstName,new {@class= "form-control", placeholder = "نام" })
+                                </div>
+                            </div>
+                                <div class="col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        @Html.TextBoxFor(model => model.LastName, new { @class = "form-control", placeholder = "نام خانوادگی" })
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        @Html.TextBoxFor(model => model.CodeMelli, new { @class = "form-control", placeholder = "کد ملی",type="number" })
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-sm-12">
+                                    @if (ViewBag.Alert != null)
+                                    {
+                                        <div style="padding: 0 10px;" class="alert alert-@(ViewBag.Alert.Split(',')[1])" role="alert">
+                                            <p>@(ViewBag.Alert.Split(',')[0])</p>
+                                        </div>
+                                    }
+                                    <button class="btn btn-default pull-right flip"><i class="fa fa-edit"></i>ویرایش</button>
+                                </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

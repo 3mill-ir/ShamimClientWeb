@@ -1,0 +1,23 @@
+﻿@model ClientWeb.Models.DataModels.PageTitleDataModel
+<div class="container">
+    @{ var item = Model;}
+    <h1>@ViewBag.Type@Model.Name</h1>
+    <ol class="breadcrumb" id="PipoOL" style="direction: ltr;">
+        @while (item != null)
+        {
+            if (item.Type == "DynamicPost")
+            {
+                <li><a href="@Url.Action("ListPost", "Post",new { profile = TempData["UserName"], lang = "FA", id = item.Id})">@item.Name</a></li>
+            }
+            else if (item.Type == "StaticPost")
+            {
+                <li><a href="@Url.Action("PageDetail", "Page",new { profile = TempData["UserName"], lang = "FA", id = item.Id})">@item.Name</a></li>
+            }
+            else if (item.Type == "NoneStaticDynamic")
+            {
+                <li><a href="#">@item.Name</a></li>
+            }
+            item = item.Menu2;
+        }
+    </ol>
+</div>

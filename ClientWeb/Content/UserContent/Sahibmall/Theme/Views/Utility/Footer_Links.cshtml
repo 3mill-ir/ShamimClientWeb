@@ -1,0 +1,8 @@
+﻿@model IEnumerable<ClientWeb.Models.DataModels.LinkModel>
+<div class="introduce-title">پیوند ها</div>
+<ul id="introduce-company" class="introduce-list">
+    @foreach (var item in Model)
+    {
+        <li><a href="@item.Link">@item.Text</a></li>
+    }
+</ul>

@@ -1,0 +1,14 @@
+Log : Directory Not Exist <<C:\Users\SH\Source\Workspaces\WebSite\ClientWeb\ClientWeb\Views\_RemotePartialsCache\admin>> Called by CacheHtml() At Time 2/4/2018 8:37:36 PM For User admin
+Log : Directory Not Exist <<C:\Users\SH\Source\Workspaces\WebSite\ClientWeb\ClientWeb\Views\_RemotePartialsCache\admin>> Called by CacheHtml() At Time 2/18/2018 7:39:20 PM For User admin
+Log : Directory Not Exist <<C:\Users\pipo\Source\Workspaces\WebSite\ClientWeb\ClientWeb\Content\UserContent\fanbazar\Gallery\>> Called by GalleryManagement() At Time 3/5/2018 7:46:19 PM For User fanbazar
+Log : Directory Not Exist <<C:\Users\behzad\Desktop\client\web\WebSite\ClientWeb\ClientWeb\Content\UserContent\Aprin\Gallery\>> Called by GalleryManagement() At Time 5/3/2018 10:00:31 ق.ظ For User Aprin
+Log : Directory Not Exist <<C:\Users\behzad\Desktop\client\web\WebSite\ClientWeb\ClientWeb\Content\UserContent\sahibmall\Gallery\>> Called by GalleryManagement() At Time 5/3/2018 10:06:33 ق.ظ For User sahibmall
+Log : Directory Not Exist <<C:\Users\Donanonymous\Source\Workspaces\Workspace11\WebSite\ClientWeb\ClientWeb\Content\UserContent\aprin\Gallery\>> Called by GalleryManagement() At Time 5/3/2018 10:07:08 AM For User aprin
+Log : Directory Not Exist <<C:\Users\Donanonymous\Source\Workspaces\Workspace11\WebSite\ClientWeb\ClientWeb\Content\UserContent\aprin\Gallery\>> Called by GalleryManagement() At Time 5/3/2018 10:16:00 AM For User aprin
+Log : Directory Not Exist <<C:\Users\Donanonymous\Source\Workspaces\Workspace11\WebSite\ClientWeb\ClientWeb\Content\UserContent\aprin\Gallery\>> Called by GalleryManagement() At Time 5/3/2018 10:17:10 AM For User aprin
+Log : Directory Not Exist <<C:\Users\Donanonymous\Source\Workspaces\Workspace11\WebSite\ClientWeb\ClientWeb\Content\UserContent\aprin\Gallery\>> Called by GalleryManagement() At Time 5/3/2018 10:18:07 AM For User aprin
+Log : Directory Not Exist <<C:\Users\Donanonymous\Source\Workspaces\Workspace11\WebSite\ClientWeb\ClientWeb\Content\UserContent\sahibmall\FormFiles\>> Called by EditProfile At Time 5/5/2018 4:41:10 AM For User sahibmall
+Log : Directory Not Exist <<C:\Users\Donanonymous\Source\Workspaces\Workspace11\WebSite\ClientWeb\ClientWeb\Content\UserContent\FormFiles\>> Called by EditProfile At Time 5/5/2018 5:38:24 AM For User sahibmall
+Log : Directory Not Exist <<C:\Users\Donanonymous\Source\Workspaces\Workspace11\WebSite\ClientWeb\ClientWeb\Content\UserContent\sahibmall\Gallery\>> Called by GalleryManagement() At Time 5/7/2018 10:02:35 AM For User sahibmall
+Log : Directory Not Exist <<C:\Users\Donanonymous\Source\Workspaces\Workspace11\WebSite\ClientWeb\ClientWeb\Content\UserContent\admin\Gallery\>> Called by GalleryManagement() At Time 5/7/2018 1:16:15 PM For User admin
+Log : Directory Not Exist <<C:\Users\Donanonymous\Source\Workspaces\Workspace11\WebSite\ClientWeb\ClientWeb\Content\UserContent\admin\Gallery\>> Called by GalleryManagement() At Time 5/7/2018 2:41:44 PM For User admin

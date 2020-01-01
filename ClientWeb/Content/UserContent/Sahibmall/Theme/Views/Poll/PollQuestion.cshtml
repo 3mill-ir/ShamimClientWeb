@@ -1,0 +1,107 @@
+﻿@model ClientWeb.Models.DataModels.PollQuestionModel
+<script src="@TempData["WebsiteThemePath"]assets/js/charts.js"></script>
+<script src="@TempData["WebsiteThemePath"]assets/js/Chart.js/Chart.min.js"></script>
+<style>
+    .pie-legend {
+        list-style: none;
+    }
+</style>
+@{
+    Random rnd = new Random();
+    <script>
+        var ScoreResult = [];
+        var LableResult = [];
+        var AllResult = [];
+        var AllSubResult = [];
+
+        @if(Model.ChartType!="BarChart")
+            {
+            for (int i=0; i < @Model.PollAnswer.Count; i++){
+        <text>
+        ScoreResult.push({
+            value: '@Model.PollAnswer[i].Score',
+            color: '#@Model.PollAnswer[i].Color',
+            highlight: '#6C7A89',
+            label: '@Model.PollAnswer[i].Text'
+        });
+        </text>
+            }
+            }
+            else{
+            for (int i=0; i < Model.PollAnswer.Count; i++){
+        <text>
+        ScoreResult.push("@Model.PollAnswer[i].Score");
+        LableResult.push("@Model.PollAnswer[i].Text");
+        </text>
+            }
+
+}
+        jQuery(document).ready(function () {
+            Charts.init("@Model.ChartType", "pieChart", "pieLegend", ScoreResult, LableResult);
+        });
+    </script>
+}
+<div class="block left-module">
+    <p class="title_block">نظرسنجی</p>
+    <div class="block_content" style="min-height: 280px;">
+        <!-- layered -->
+        <div class="layered">
+            <div class="layered-content">
+                @if (!string.IsNullOrEmpty(Model.Question))
+                {
+                <div class="col-sm-12">
+                    <div style="font-size:16px;color:black;">@Model.Question</div>
+                    @using (Ajax.BeginForm("PollQuestionPost", "Poll", new { AnswerID = Model.ID }, new AjaxOptions
+                        {
+                            UpdateTargetId = "AjaxPollParticipationNotification",
+                            InsertionMode = InsertionMode.Replace,
+                            LoadingElementId = "AjaxIndexPollPartivcipationNotification_Loading",
+                            HttpMethod = "Post"
+                        }, null))
+                        {
+                        @Html.HiddenFor(model => model.Question)
+                        @Html.HiddenFor(model => model.ID)
+                        <div>
+                            <p>
+                                @for (int i = 0; i < Model.PollAnswer.Count; i++)
+                                    {
+                                    <div style="width: 100% !important;float: right;">
+                                        @Html.RadioButton("PollAnswerId", Model.PollAnswer[i].ID, new { id = "radio-" + i, style = "width: 15px;float: right;" })
+                                        @Html.Label(Model.PollAnswer[i].Text, new { style = "font-size:14px;color:black;display: block;float: right;margin-right:5px;", @for = "radio-" + i })
+                                        @Html.HiddenFor(model => model.PollAnswer[i].ID)
+                                        @Html.HiddenFor(model => model.PollAnswer[i].Text)
+                                    </div>
+                                    }
+                            </p>
+                        </div>
+                        <p><button type="submit" style="width:100%;border: 1px solid #eaeaea;padding: 10px 12px;background: #ff3366;color: #fff;margin-bottom:10px;margin:10px 0;" class="btn btn-default btn-sm">ثبت نظر</button></p>
+                        }
+                </div>
+                <div id="AjaxIndexPollPartivcipationNotification_Loading" style="display:none;">
+                    <img src="@TempData["WebsiteThemePath"]DefaultContent/Imgs/ajax-load.gif" class="img-responsive" width="30" />
+                </div>
+                <div id="AjaxPollParticipationNotification" style="margin-bottom: 50px;">
+
+                </div>
+                }
+                else
+                {
+                <p style="font-size: 20px;line-height: 35px;">هیچ نظر سنجی در حال حاضر وجود ندارد!</p>
+                }
+            </div>
+        </div>
+        <!-- ./layered -->
+    </div>
+    <p class="title_block" style="border-top: 1px solid #eaeaea;">نمودار نظرسنجی</p>
+    <div class="block_content">
+        <!-- layered -->
+        <div class="layered">
+            <div class="layered-content">
+                <div class="text-center" style="">
+                    <canvas id="pieChart" class="full-width" style="width:225px;"></canvas>
+                    <div id="pieLegend" style="margin-top: 10px;margin-top: 10px;text-align: right;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

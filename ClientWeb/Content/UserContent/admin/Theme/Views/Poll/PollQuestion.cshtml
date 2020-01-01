@@ -1,0 +1,95 @@
+﻿@model ClientWeb.Models.DataModels.PollQuestionModel
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryajax")
+
+
+
+@if (Model != null)
+{
+    List<string[]> myresult = new List<string[]>();
+    if (Model.ChartType != "BarChart")
+    {
+        for (int i = 0; i < @Model.PollAnswer.Count; i++)
+        {
+            string[] temp = new string[4];
+            temp[0] = @Model.PollAnswer[i].Score.ToString();
+            temp[1] = "#" + Model.PollAnswer[i].Color;
+            temp[2] = "#6C7A89";
+            temp[3] = @Model.PollAnswer[i].Text;
+            myresult.Add(temp);
+        }
+    }
+    else
+    {
+        for (int i = 0; i < Model.PollAnswer.Count; i++)
+        {
+            string[] temp = new string[2];
+            temp[0] = Model.PollAnswer[i].Score.ToString();
+            temp[1] = Model.PollAnswer[i].Text;
+            myresult.Add(temp);
+        }
+    }
+        string lang = TempData["lang"].ToString();
+        this.ViewContext.HttpContext.Items["piporesult"] = myresult;
+        this.ViewContext.HttpContext.Items["piporesultType"] = Model.ChartType;
+    <div class="margin-bottom-60">
+        <div class="list-group">
+            <span href="#" class="list-group-item active">
+                @(lang == "FA" ? "شرکت در نظر سنجی" : lang == "EN" ? "Participate in the poll" : lang == "TR" ? "Ankete katıl" : "شارك في الاستطلاع")
+                <span class="pull-right" id="slide-submenu">
+                </span>
+            </span>
+            @if (Model != null)
+            {
+                <div>
+                    <div class="margin-bottom-10 margin-top-10">@Model.Question</div>
+                    @using (Ajax.BeginForm("PollQuestionPost", null, new { profile = TempData["UserName"], utilId = Model.ID }, new AjaxOptions
+                    {
+                        UpdateTargetId = "AjaxPollParticipationNotification",
+                        InsertionMode = InsertionMode.Replace,
+                        LoadingElementId = "AjaxIndexPollPartivcipationNotification_Loading",
+                        HttpMethod = "Post"
+                    }, null))
+                    {
+                        <div>
+
+                            @for (int i = 0; i < Model.PollAnswer.Count; i++)
+                            {
+                                <div>
+                                    <label class="pipocontainer">
+                                        @Html.RadioButton("PollAnswerId", Model.PollAnswer[i].ID, new { id = "radio-" + i })
+                                        <span class="pipocheckmark"></span>@Model.PollAnswer[i].Text
+                                    </label>
+                                </div>
+                            }
+
+                        </div>
+                        <button type="submit" class="btn btn-3d btn-sm btn-reveal btn-teal center fullwidth">
+                            <span>@(lang == "FA" ? "ثبت نظر" : lang == "EN" ? "Submit poll" : lang == "TR" ? "Anket kaydı" : "تسجيل الاستطلاع")</span>
+                            <i class="et-megaphone"></i>
+                        </button>
+                    }
+                </div>
+                <div class="text-center margin-bottom-20" id="AjaxIndexPollPartivcipationNotification_Loading" style="display:none;">
+                    <img src="@TempData["WebsiteThemePath"]DefaultContent/Imgs/ajax-load.gif" class="img-responsive" style="width:40px;"/>
+                </div>
+                <div id="AjaxPollParticipationNotification" style="margin-bottom: 50px;">
+
+                </div>
+                <div class="text-center" style="">
+                    <canvas class="chartjs" id="PipoChartCanvas" width="200" height="120"></canvas>
+                </div>
+                <div class="margin-top-20 text-center">
+                    @foreach (var m in Model.PollAnswer)
+                    {
+                        <span class="badge" style="background-color:#@m.Color">@m.Text</span>
+                    }
+                </div>
+            }
+            else
+            {
+                <p style="font-size: 20px;line-height: 35px;">@(lang == "FA" ? "هیچ نظر سنجی در حال حاضر وجود ندارد!" : lang == "EN" ? "No polls currently available!" : lang == "TR" ? "Anket mevcut değil!" : "لا استطلاعات الرأي المتاحة حاليا!")</p>
+            }
+        </div>
+    </div>
+}

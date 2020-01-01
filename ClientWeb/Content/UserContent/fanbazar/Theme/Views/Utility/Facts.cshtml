@@ -1,0 +1,57 @@
+﻿@model ClientWeb.Models.DataModels.FanbazarFactDataModel
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 col-md-3 col-xs-6">
+            <div class="fact-box">
+                <div class="single-facts-area">
+                    <div class="facts-icon">
+                        <i class="icon-profile-male"></i>
+                    </div>
+                    <div class="facts-detail">
+                        <span class="counter">@Model.UserCount</span>
+                        <h3>تعداد کاربران</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-3 col-xs-6">
+            <div class="fact-box">
+                <div class="single-facts-area">
+                    <div class="facts-icon">
+                        <i class="icon-flag"></i>
+                    </div>
+                    <div class="facts-detail">
+                        <span class="counter">@Model.CompanyCount</span>
+                        <h3>تعداد شرکت ها</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-3 col-xs-6">
+            <div class="fact-box">
+                <div class="single-facts-area">
+                    <div class="facts-icon">
+                        <i class="icon-beaker"></i>
+                    </div>
+                    <div class="facts-detail">
+                        <span class="counter">@Model.OfferCount</span>
+                        <h3>تعداد محصولات</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-3 col-xs-6">
+            <div class="fact-box">
+                <div class="single-facts-area">
+                    <div class="facts-icon">
+                        <i class="icon-document"></i>
+                    </div>
+                    <div class="facts-detail">
+                        <span class="counter">@Model.DemandCount</span>
+                        <h3>تعداد تقاضا ها</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

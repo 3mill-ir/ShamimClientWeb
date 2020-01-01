@@ -1,0 +1,252 @@
+﻿@using ClientWeb.Models.DataModels
+<footer id="footer">
+    <div class="container">
+        <!-- introduce-box -->
+           
+        @*<div id="introduce-box" class="row">
+            <div class="col-md-3">
+                <div id="address-box">
+                    <a href="@Url.Action("PageDetail", "Page", new { profile = TempData["UserName"], lang = "FA", id = 187 })"><img style="margin-top: -35px;height: 210px;" src="@TempData["WebsiteThemePath"]assets/images/logo.png" alt="" /></a>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-sm-6">
+                        @Html.Action("Footer_Links", "Utility", new { profile = TempData["UserName"] })
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="introduce-title">میانبر ها</div>
+                        <ul id="introduce-support" class="introduce-list">
+                            @foreach (var menu in (ViewBag.Menu as List<MenuDataModel>).Where(u => u.DisplayInFooter == true))
+                            {
+
+                                if (menu.Type == "DynamicPost")
+                                {
+                                    <li>
+                                        <a href="@Url.Action("ListPost", "Post",new { profile = TempData["UserName"], lang = "FA", id = menu.ID})">
+                                            @menu.Name
+                                        </a>
+                                    </li>
+                                }
+                                else if (menu.Type == "StaticPost")
+                                {
+                                    <li>
+                                        <a href="@Url.Action("PageDetail", "Page",new { profile = TempData["UserName"], lang = "FA", id = menu.ID})">
+                                            @menu.Name
+                                        </a>
+                                    </li>
+                                }
+                                else if (menu.Type == "NoneStaticDynamic")
+                                {
+                                    <li>
+                                        <a class="dropdown-toggle" href="#">
+                                            @menu.Name
+                                        </a>
+                                    </li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                @Html.Action("Footer_ContactUs", "Utility", new { profile = TempData["UserName"] })
+            </div>
+        </div>*@
+        
+        <!-- /#introduce-box -->
+        <!-- #trademark-box -->
+
+
+       <!--   <div id="trademark-box" class="row">
+            <div class="col-sm-12">
+                <ul id="trademark-list">
+                    <li id="payment-methods">درگاه های پرداخت مورد تایید</li>
+                    <li>
+                        <a href="#"><img src="@TempData["WebsiteThemePath"]assets/data/trademark-ups.jpg" alt="ups" /></a>
+                    </li>
+                    <li>
+                        <a href="#"><img src="@TempData["WebsiteThemePath"]assets/data/trademark-qiwi.jpg" alt="ups" /></a>
+                    </li>
+                    <li>
+                        <a href="#"><img src="@TempData["WebsiteThemePath"]assets/data/trademark-wu.jpg" alt="ups" /></a>
+                    </li>
+                    <li>
+                        <a href="#"><img src="@TempData["WebsiteThemePath"]assets/data/trademark-cn.jpg" alt="ups" /></a>
+                    </li>
+                    <li>
+                        <a href="#"><img src="@TempData["WebsiteThemePath"]assets/data/trademark-visa.jpg" alt="ups" /></a>
+                    </li>
+                    <li>
+                        <a href="#"><img src="@TempData["WebsiteThemePath"]assets/data/trademark-mc.jpg" alt="ups" /></a>
+                    </li>
+                    <li>
+                        <a href="#"><img src="@TempData["WebsiteThemePath"]assets/data/trademark-ems.jpg" alt="ups" /></a>
+                    </li>
+                    <li>
+                        <a href="#"><img src="@TempData["WebsiteThemePath"]assets/data/trademark-dhl.jpg" alt="ups" /></a>
+                    </li>
+                    <li>
+                        <a href="#"><img src="@TempData["WebsiteThemePath"]assets/data/trademark-fe.jpg" alt="ups" /></a>
+                    </li>
+                    <li>
+                        <a href="#"><img src="@TempData["WebsiteThemePath"]assets/data/trademark-wm.jpg" alt="ups" /></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+         <!-- /#trademark-box -->
+        @*<!-- #trademark-text-box -->
+        <div id="trademark-text-box" class="row">
+            <div class="col-sm-12">
+                <ul id="trademark-search-list" class="trademark-list">
+                    <li class="trademark-text-tit"> کلمات کلیدی HOT: KEYWORDS: </li>
+                    <li> <a href="#"> Xiaomio Mi3 </a> </li>
+                    <li> <a href="#"> Digiflipo Pro XT 712 Tablet </a> </li>
+                    <li> <a href="#"> Mi 3 Phones </a> </li>
+                    <li> <a href="#"> Iphoneo 6 Plus </a> </li>
+                    <li> <a href="#"> کیسه پیامرسان زنان </a> </li>
+                    <li> <a href="#"> کیف پول </a> </li>
+                    <li> <a href="#"> آستین زنان </a> </li>
+                    <li><a href="#"> Backpacks Totes </a></li>
+                </ul>
+            </div>
+            <div class="col-sm-12">
+                <ul id="trademark-tv-list" class="trademark-list">
+                    <li class="trademark-text-tit"> TVS: </li>
+                    <li> <a href="#"> Sonyo TV </a> </li>
+                    <li> <a href="#"> سامسونگ تلویزیون </a> </li>
+                    <li> <a href="#"> LGG TV </a> </li>
+                    <li> <a href="#"> Onidai TV </a> </li>
+                    <li> <a href="#"> Toshibao TV </a> </li>
+                    <li> <a href="#"> فیلیپس تلویزیون </a> </li>
+                    <li> <a href="#"> Micromaxo TV </a> </li>
+                    <li> <a href="#"> LED تلویزیون </a> </li>
+                    <li> <a href="#"> تلویزیون ال سی دی </a> </li>
+                    <li> <a href="#"> تلویزیون پلاسمای </a> </li>
+                    <li> <a href="#"> تلویزیون 3D </a> </li>
+                    <li><a href="#"> تلویزیون هوشمند </a></li>
+                </ul>
+            </div>
+            <div class="col-sm-12">
+                <ul id="trademark-mobile-list" class="trademark-list">
+                    <li class="trademark-text-tit"> MOBILES: </li>
+                    <li> <a href="#"> Moto E </a> </li>
+                    <li> <a href="#"> سامسونگ موبایل </a> </li>
+                    <li> <a href="#"> Micromaxi Mobile </a> </li>
+                    <li> <a href="#"> Nokian Mobile </a> </li>
+                    <li> <a href="#"> HTC One Mobile </a> </li>
+                    <li> <a href="#"> Sonyo Mobile </a> </li>
+                    <li> <a href="#"> Appleo Mobile </a> </li>
+                    <li> <a href="#"> LGG Mobile </a> </li>
+                    <li><a href="#"> Karbonni Mobile </a> </li>
+                </ul>
+            </div>
+            <div class="col-sm-12">
+                <ul id="trademark-laptop-list" class="trademark-list">
+                    <li class="trademark-text-tit"> LAPTOPS :: </li>
+                    <li> <a href="#"> لپ تاپ اپل </a> </li>
+                    <li> <a href="#"> لپ تاپ Acer </a> </li>
+                    <li> <a href="#"> لپ تاپ سامسونگ </a> </li>
+                    <li> <a href="#"> لپ تاپ Lenov </a> </li>
+                    <li> <a href="#"> لپ تاپ سونی </a> </li>
+                    <li> <a href="#"> لپ تاپ دللی </a> </li>
+                    <li> <a href="#"> Asuso Laptop </a> </li>
+                    <li> <a href="#"> لپ تاپ توشیبا </a> </li>
+                    <li> <a href="#"> لپ تاپ LGG </a> </li>
+                    <li> <a href="#"> لپ تاپ HPo </a> </li>
+                    <li><a href="#"> نوت بوک </a> </li>
+                </ul>
+            </div>
+            <div class="col-sm-12">
+                <ul id="trademark-watch-list" class="trademark-list">
+                    <li class="trademark-text-tit"> WATCHES: </li>
+                    <li> <a href="#"> FCUKo Watches </a> </li>
+                    <li> <a href="#"> ساعتهای تیتان </a> </li>
+                    <li> <a href="#"> Casioo Watches </a> </li>
+                    <li> <a href="#"> Fastrack Watches </a> </li>
+                    <li> <a href="#"> Timexi Watches </a> </li>
+                    <li> <a href="#"> Fossili Watches </a> </li>
+                    <li> <a href="#"> Dieselo Watches </a> </li>
+                    <li> <a href="#"> لپ تاپ توشیبا </a> </li>
+                    <li><a href="#"> ساعتهای لوکس </a> </li>
+                </ul>
+            </div>
+            <div class="col-sm-12">
+                <ul id="علامت تجاری-کفش-لیست" class="trademark-list">
+                    <li class="trademark-text-tit"> FOOTWEAR: </li>
+                    <li> <a href="#"> کفش </a> </li>
+                    <li> <a href="#"> کفشهای گاه به گاه </a> </li>
+                    <li> <a href="#"> کفش ورزشی </a> </li>
+                    <li> <a href="#"> Adidasi Shoes </a> </li>
+                    <li> <a href="#"> کفش های گاز </a> </li>
+                    <li> <a href="#"> Pumai Shoes </a> </li>
+                    <li> <a href="#"> کفشهای Reeboki </a> </li>
+                    <li> <a href="#"> کفش های Woodlandi </a> </li>
+                    <li> <a href="#"> نوار قرمز نوار </a> </li>
+                    <li><a href="#"> کفش Nikeo </a> </li>
+                </ul>
+            </div>
+        </div><!-- /#trademark-text-box -->*@
+        <style>
+            .footer-menu-list li {
+                border:none;
+                float:right;
+                width:100%;
+                text-align:right;
+            }
+            .PipoLi{
+                font-size:20px;
+            }
+        </style>
+        <!--  Comments goes here -->
+
+        <div id="footer-menu-box" style="border-top: none;">
+            <div class="row">
+                <div class="col-sm-3">
+                    <ul class="footer-menu-list">
+                        <li class="PipoLi">درباره صاحیب مال</li>
+                        <li><a href="@Url.Action("PageDetail","Page",new {ID=184})">درباره ما</a></li>
+                        <li><a href="#">راهنمای کار با صاحیب مال</a></li>
+                        <li><a href="#">اخبار و مجله اقتصادی</a></li>
+                        <li><a href="#">قوانین و مقررات</a></li>
+                        <li><a href="#">شرکای ما</a></li>
+                        <li><a href="#">پشتیبانی</a></li>
+                        <li><a href="#">تماس با ما</a></li>
+                    </ul>
+                </div>
+                <div class="col-sm-3">
+                    <ul class="footer-menu-list">
+                        <li class="PipoLi">خدمات بازرگانی</li>
+                        <li> <a href="@Url.Action("FormDetail","Item",new {ID=388, FormName="فرم درخواست قیمت حمل و نقل" })">حمل و نقل، بیمه</a></li>
+                        <li> <a href="#">بازرسی ، استاندارد ها</a></li>
+                        <li> <a href="#">ایزو و استانداردهای بین المللی</a></li>
+                        <li> <a href="#">ثبت سفارش ، ترخیص</a></li>
+                        <li> <a href="#">پرداخت مالی و بانکی</a></li>
+                        <li> <a href="#">مناقصات داخلی و خارجی</a></li>
+                        <li> <a href="#">چاپ و بسته بندی</a></li>
+                    </ul>
+                </div>
+                <div class="col-sm-3">
+                    <ul class="footer-menu-list">
+                        <li class="PipoLi">ویژه فروشندگان و خریداران</li>
+                        <li> <a href="#">تعاریف</a></li>
+                        <li> <a href="#">عضویت سالانه</a></li>
+                        <li> <a href="#">رتبه بندی تامین کنندگان</a></li>
+                        <li> <a href="@Url.Action("FormDetail","Item",new {ID=389, FormName="فرم درخواست قیمت" })">درخواست قیمت</a></li>
+                        <li> <a href="#">نمایش مناقصات</a></li>
+                        <li> <a href="#">پرداخت</a></li>
+                    </ul>
+                </div>
+                <div class="col-sm-3">
+                    <ul class="footer-menu-list">
+                        <li class="PipoLi">ما را دنبال کنید</li>
+                        <li> <a href="#"> شرایط و ضوابط </a></li>
+                    </ul>
+                </div>
+            </div>
+            <p style="margin-top:25px;" class="text-center">تمامي حقوق این وب سایت، متعلق به صاحیب مال میباشد © 2018</p>
+        </div><!-- /#footer-menu-box -->
+    </div>
+</footer>

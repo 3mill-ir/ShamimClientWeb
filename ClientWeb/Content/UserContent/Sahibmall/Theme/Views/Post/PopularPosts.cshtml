@@ -1,0 +1,28 @@
+﻿@model IEnumerable<ClientWeb.Models.DataModels.PostDataModel>
+<div class="block left-module">
+    <p class="title_block">محبوب ترین پست ها</p>
+    <div class="block_content">
+        <!-- layered -->
+        <div class="layered">
+            <div class="layered-content">
+                <ul class="blog-list-sidebar clearfix">
+                    @foreach (var item in Model)
+                    {
+                        <li>
+                            <div class="post-thumb">
+                                <a href="@Url.Action("PostDetail","Post", new {profile=TempData["UserName"], lang = item.Language, id = item.ID })"><img src="@(!string.IsNullOrEmpty(item.ImagePath) ? ViewBag.PrePath + item.ImagePath : "/Content/DefaultContent/Imgs/No_Image.png")" alt="Blog"></a>
+                            </div>
+                            <div class="post-info">
+                                <h5 class="entry_title" style="text-align:justify;"><a href="#">@item.Tittle</a></h5>
+                                <div class="post-meta">
+                                    <span class="date"><i class="fa fa-calendar"></i>@ClientWeb.Models.BLL.Tools.SpecialJalaliFormat(item.CreatedOnUTC ?? default(DateTime))</span>
+                                </div>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+        <!-- ./layered -->
+    </div>
+</div>

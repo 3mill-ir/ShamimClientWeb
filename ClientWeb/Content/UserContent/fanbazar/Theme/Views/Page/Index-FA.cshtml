@@ -1,0 +1,156 @@
+﻿@using ClientWeb.Models.BLL;
+@using ClientWeb.Models;
+
+@if (string.IsNullOrEmpty( (TempData["FanBazar_User"] as AccountAuthorizeModel).UserName) )
+{
+@section css_requested{
+    <!--  MASTER SLIDER -->
+    <link rel="stylesheet" href="@TempData["WebsiteThemePath"]rtl/masterslider/css/masterslider.css" />
+    <link href="@TempData["WebsiteThemePath"]rtl/masterslider/css/style.css" rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="@TempData["WebsiteThemePath"]rtl/masterslider/css/layer-style.css">
+    <link href="@TempData["WebsiteThemePath"]rtl/masterslider/css/ms-staff-style.css" rel='stylesheet' type='text/css'>
+    <!-- Google Fonts -->
+    <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900%7cOpen+Sans:400,600,700" rel="stylesheet" type="text/css">
+    <link href="@TempData["WebsiteThemePath"]rtl/css/nouislider.min.css" rel="stylesheet">
+}
+@section js_requested{
+    <script src="@TempData["WebsiteThemePath"]rtl/js/imagesloaded.js"></script>
+    <script src="@TempData["WebsiteThemePath"]rtl/js/isotope.min.js"></script>
+    <script type="text/javascript">
+        (function ($) {
+            "use strict";
+            $('#cats-masonry').imagesLoaded(function () {
+                $('#cats-masonry').isotope({
+                    layoutMode: 'masonry',
+                    transitionDuration: '0.3s'
+                });
+            });
+        })
+        (jQuery);
+    </script>
+
+<script src="@TempData["WebsiteThemePath"]rtl/js/nouislider.min.js"></script>
+<script src="@TempData["WebsiteThemePath"]rtl/js/wNumb.js"></script>
+<script src="@TempData["WebsiteThemePath"]rtl/masterslider/js/masterslider.min.js"></script>
+<script type="text/javascript">
+    (function ($) {
+        "use strict";
+        var slider = new MasterSlider();
+        // adds Arrows navigation control to the slider.
+        slider.control('arrows');
+        slider.control('bullets');
+
+        slider.setup('masterslider', {
+            width: 1400,    // slider standard width
+            height: 625,   // slider standard height
+            space: 0,
+            speed: 45,
+            layout: 'fillwidth',
+            loop: true,
+            preload: 0,
+            autoplay: true,
+            view: "parallaxMask"
+        });
+    })(jQuery);
+</script>
+
+@*<script type="text/javascript">
+    var slider = document.getElementById('keyboard');
+    noUiSlider.create(slider, {
+        start: 10,
+        step: 2,
+        connect: [true, false],
+        range: {
+            'min': 0,
+            'max': 20
+        },
+        format: wNumb({
+            decimals: 3,
+            thousand: '.',
+            prefix: ' Radius  = ',
+            postfix: ' (Km) ',
+        })
+    });
+    keyboard.noUiSlider.on('update', function (values, handle) {
+        keyboardspan.innerHTML = values[handle];
+    });
+    var handle = slider.querySelector('.noUi-handle');
+    handle.setAttribute('tabindex', 0);
+    handle.addEventListener('click', function () {
+        this.focus();
+    });
+    handle.addEventListener('keydown', function (e) {
+        var value = Number(slider.noUiSlider.get());
+        switch (e.which) {
+            case 37: slider.noUiSlider.set(value - 10);
+                break;
+            case 39: slider.noUiSlider.set(value + 10);
+                break;
+        }
+    });
+</script>*@
+
+}
+<section class="slider-container" style="margin-bottom: 125px;margin-top: 5px;">
+    @Html.Action("Slider", "Utility")
+</section>
+<section class="cat-tabs">
+    @Html.Action("LatestItems", "Utility")
+</section>
+<section class="call-to-action-1">
+    @Html.Action("Introduction", "Utility")
+</section>
+<section class="featured-ads">
+    @Html.Action("LatestCompanies", "Utility")
+</section>
+<section class="facts">
+    @Html.Action("Facts", "Utility")
+</section>
+<section class="papular-post-slider paddingtop0">
+    @Html.Action("RecentPostsHomesecond", "Post", new { profile = TempData["UserName"], F_MenuID = -1 })
+</section>
+<section class="download-app" style="padding:0 0 50px;">
+    @Html.Action("SideLinks", "Utility")
+</section>
+
+}
+else
+{
+
+    <section class="dashboard-menu dashboard-menu-2 light-blue">
+        @Html.Action("SpecialMenu", "Utility", new { profile = TempData["UserName"], CurrentState = "News", lang = ViewBag.lang })
+    </section>
+    <section class="dashboard light-blue">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-sm-12 col-xs-12 col-md-push-8">
+                    @Html.Action("UserIntroduction", "Utility",new { profile = TempData["UserName"]})
+                </div>
+                <div class="col-md-8 col-sm-12 col-xs-12 col-md-pull-4">
+                    <div class="all-ads-list-box2">
+                        @{ 
+                            PostManagement pm = new PostManagement();
+                            var mod = pm.RecentPosts(-1, 10, TempData["UserName"] as string);
+
+                        foreach (var item in mod as List<ClientWeb.Models.DataModels.PostDataModel>)
+                        {
+                            <div class="ad-box ad-box-2" style="width: 100%;">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="ad-box-2-detail">
+                                        <div class="ad-title-box">
+                                            <div class="ad-title"><a href="@Url.Action("PostDetail", "Post", new { id = item.ID, lang = ViewBag.lang, profile = ViewBag.profile })">@item.Tittle</a></div>
+                                        </div>
+                                        <div class="ad-bottom-area">
+                                            <a href="@Url.Action("PostDetail", "Post", new { id = item.ID, lang = ViewBag.lang, profile = ViewBag.profile })" class="btn btn-default pull-right flip">ادامه مطلب ...<i class="fa fa-angle-double-right"></i> </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+}

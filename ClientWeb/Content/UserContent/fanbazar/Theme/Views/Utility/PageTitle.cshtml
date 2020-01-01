@@ -1,0 +1,40 @@
+﻿@model ClientWeb.Models.DataModels.PageTitleDataModel
+@{ var item = Model;}
+<style>
+    .rtl .ad-breadcrumb .breadcrumb > li + li::before {
+    color: #6bc242;
+    content: "\f100";
+    padding: 0 5px;
+    font-family: FontAwesome;
+}
+.rtl .ad-breadcrumb .breadcrumb > li + li::after {
+    content: "";
+}
+</style>
+<div class="container page-banner">
+    <div class="row">
+        <div class="col-sm-6 col-md-6">
+            <h1>@ViewBag.Type@item.Name</h1>
+        </div>
+        <div class="col-sm-6 col-md-6">
+            <ol class="breadcrumb pull-right flip" style="direction:ltr;">
+                @while (item != null)
+                {
+                    if (item.Type == "DynamicPost")
+                    {
+                        <li><a href="@Url.Action("ListPost", "Post",new { profile = TempData["UserName"], lang = "FA", id = item.Id})">@item.Name</a></li>
+                    }
+                    else if (item.Type == "StaticPost")
+                    {
+                        <li><a href="@Url.Action("PageDetail", "Page",new { profile = TempData["UserName"], lang = "FA", id = item.Id})">@item.Name</a></li>
+                    }
+                    else if (item.Type == "NoneStaticDynamic")
+                    {
+                        <li><a href="#">@item.Name</a></li>
+                    }
+                    item = item.Menu2;
+                }
+            </ol>
+        </div>
+    </div>
+</div>

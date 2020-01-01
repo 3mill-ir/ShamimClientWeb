@@ -1,0 +1,17 @@
+﻿@model IEnumerable<ClientWeb.Models.DataModels.SliderModel>
+<div class="col-sm-12 header-top-right">
+    <div class="homeslider">
+        <div class="content-slide">
+            <ul id="contenhomeslider">
+                @foreach (var item in Model)
+                {
+                    string path = string.IsNullOrEmpty(item.Img) ? TempData["WebsiteThemePath"]+"DefaultContent/Slider/NoImage.jpg" : ViewBag.ImgPath + item.Img;
+                    <li><img alt="" src="@path" title="@item.Title" style="height:400px;"/></li>
+                }
+            </ul>
+        </div>
+    </div>
+    <div class="header-banner banner-opacity">
+        <a href="#"><img alt="Funky roots" src="@TempData["WebsiteThemePath"]assets/images/VerticalImg.jpg" style="height:400px;" /></a>
+    </div>
+</div>

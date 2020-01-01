@@ -1,0 +1,29 @@
+﻿@model IEnumerable<ClientWeb.Models.DataModels.ItemDataModel>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12 nopadding">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="Heading-title black">
+                    <h1>آخرین شرکت های ثبت شده</h1>
+                </div>
+            </div>
+            @foreach (var item in Model)
+            {
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="featured-image-box">
+                        <div class="img-box"><img style="width: 100%;height: 250px;" src="@(!string.IsNullOrEmpty(item.Image) ? ViewBag.PrePath + item.Image : "/Content/DefaultContent/Imgs/No_Image.png")" class="img-responsive center-block" alt=""></div>
+                        <div class="content-area">
+                            <div class="">
+                                <h4><a>@item.Name</a></h4>
+                            </div>
+                            <div class="feature-post-meta">
+                                <a> <i class="fa fa-clock-o" style="margin-right:1px;margin-left:5px;"></i>@ClientWeb.Models.BLL.Tools.SpecialJalaliFormat(item.CreatedDateOnUTC??default(DateTime))</a>
+                            </div>
+                            <div class="feature-post-meta-bottom"> <a style="width: 100%;text-align: center;" href="@Url.Action("ItemDetail","Item",new {ID=item.ID,Type="Company",lang=TempData["lang"],profile=TempData["UserName"]})" class="apply">جزئیات ...</a> </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

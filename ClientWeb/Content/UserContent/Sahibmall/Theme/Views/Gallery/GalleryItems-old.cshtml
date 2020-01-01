@@ -1,0 +1,61 @@
+﻿@model PagedList.IPagedList<ClientWeb.Models.DataModels.GalleryModelAdmin>
+@using PagedList.Mvc;
+
+
+<section id="portfolio">
+    <div class="container">
+        <div class="row">
+            <h2 class="page-heading" style="text-align:center;">
+                <span class="page-heading-title2">گالری چند رسانه ای</span>
+            </h2>
+            <ul class="portfolio-filter text-center">
+
+                @foreach (var item in ViewBag.Folders as List<string>)
+                {
+                    <li @(item == ViewBag.FolderName ? "class=active" : "")>
+                      
+                        <a class="btn btn-default @(item == ViewBag.FolderName ? "active" : "")" href="@Url.Action("GalleryItems", "Gallery", new {lang=ViewBag.lang, FolderName = item, profile = TempData["UserName"] })" data-filter="*">
+                        @item
+                        </a>
+                    </li>
+                }
+               
+            </ul><!--/#portfolio-filter-->
+
+            <div  style="direction:rtl">
+            <div class="portfolio-items isotope" style="position: relative; overflow: hidden; height: 1328px;">
+           @foreach (var item in Model)
+           {
+                <div class="col-xs-6 col-sm-4 col-md-3 portfolio-item branded logos isotope-item"style="float: right;">
+
+                       <div class="portfolio-wrapper">
+                        <div class="portfolio-single">
+                            <div class="portfolio-thumb">
+                                <img src="@ViewBag.PrePath@item.Path"style="width:261px;height:269px;" class="img-responsive" alt="">
+                            </div>
+                            <div class="portfolio-view"style="border-radius: 6px;">
+                                <ul class="nav nav-pills">
+                                    <li><a href="@ViewBag.PrePath@item.Path"target="_blank"><i class="fa fa-link"></i></a></li>
+                                    <li><a href="@ViewBag.PrePath@item.Path" data-lightbox="example-set"><i class="fa fa-eye"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="portfolio-info ">
+                            <h2 style="text-align:center;background:lightgrey;border-radius: 3px;">@item.Text</h2>
+                        </div>
+                    </div>
+
+                </div>
+                  }
+            </div>
+              </div>
+            <div class="portfolio-pagination">
+
+                <ul class="pagination">
+                   @Html.PagedListPager(Model, page => Url.Action("GalleryItems", "Gallery", new { page, FolderName = ViewBag.FolderName, profile = ViewBag.Profile, }))
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+ 

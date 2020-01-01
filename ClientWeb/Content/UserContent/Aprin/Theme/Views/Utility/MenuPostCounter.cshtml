@@ -1,0 +1,16 @@
+﻿<div class="sidebar-item categories">
+    <h3>آرشیو</h3>
+    <ul class="nav navbar-stacked">
+         @{ string current = "";}
+        @foreach (var m in Model.MenuCount)
+        {
+            current = "";
+            if (m.MenuId == ViewBag.currentid)
+            {
+                current = "color:#b2d233;";
+            }
+            <li><a  style="@current" href="@Url.Action("ListPost", "Post",new { profile = TempData["UserName"], lang = "FA", id = m.MenuId})">@m.MenuName<span class="pull-right">@m.PostCount</span></a></li>
+
+         }
+    </ul>
+</div>

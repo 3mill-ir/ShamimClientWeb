@@ -1,0 +1,122 @@
+﻿@model ClientWeb.Models.DataModels.ItemNew
+@using ClientWeb.Models.BLL
+@{
+    ViewBag.CurrentState = "Offer";
+}
+<div class="columns-container">
+    <div class="container" id="columns">
+        <!-- row -->
+        <div class="row">
+            <!-- Center colunm-->
+            <div class="center_column col-xs-12 col-sm-9" id="center_column">
+                <h2 class="page-heading" style="margin-bottom: 20px;margin-top: 7px;border-bottom:none;">
+                    جزئیات محصول
+                </h2>
+                <div class="dashboard-main-disc">
+                    <div class="heading-inner">
+                        <p class="title">(@Model.Name)</p>
+                    </div>
+                    <div style="padding: 10px 10px;width: 250px;float: left;margin-top: -80px;text-align: center;" class="alert alert-@(Model.SubmitedState=="Accepted"?"success":Model.SubmitedState=="Seen"?"info":Model.SubmitedState=="Sent"?"info":Model.SubmitedState=="Reject"?"danger":"warning")" role="alert">
+                        <h3 class="alert-heading">وضعیت : @(Model.SubmitedState == "Accepted" ? "تایید شده" : Model.SubmitedState == "Seen" ? "رویت شده" : Model.SubmitedState == "Sent" ? "ارسال شده" : Model.SubmitedState == "Reject" ? "مردود" : "در حال بررسی")</h3>
+                        <p>@Model.AdminDescription</p>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <div class="slick-gallery-slideshow" style="text-align:center;" dir="rtl">
+                                <div class="slider gallery-slideshow gallery-slideshow-not-tab">
+                                    <div>
+                                        <div class="image"><img style="width: 50%;height: 300px;" src="@(!string.IsNullOrEmpty(Model.Image) ? ViewBag.PrePath + Model.Image : "/Content/DefaultContent/Imgs/No_Image.png")" alt="image" /></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="padding:10px;margin:20px 0;border-bottom: 2px solid #6bc242;border-top: 2px solid #6bc242;" class="col-md-12 col-sm-12">
+                        <div class="form-group">
+                            <label>دسته بندی : </label>
+                            @Html.DisplayFor(model => model.Menu.Name)
+                        </div>
+                        <div class="form-group">
+                            <label>نام محصول : </label>
+                            @Html.DisplayFor(model => model.Name)
+                        </div>
+                        <div class="form-group">
+                            <label>توضیحات محصول : </label>
+                            @Html.DisplayFor(model => model.Description)
+                        </div>
+                        <div class="form-group">
+                            <a style="width:100%;" href="@Url.Action("PutItem","Item",new {ID=Model.ID,lang=ViewBag.lang,Type=ViewBag.Type,profile=TempData["UserName"] })" class="btn btn-default btn-search-submit pull-right flip">ویرایش </a>
+                        </div>
+                    </div>
+                    @{
+                        ItemManagement im = new ItemManagement();
+                        var dd = Tools.MenuParents(Model.Menu.ID);
+                        while (dd.Menu2 != null)
+                        {
+                            dd = dd.Menu2;
+                        }
+                        var temp = System.Threading.Tasks.Task.Run(() => im.GuestDetailItemsByMenu(TempData["UserName"].ToString(), "", Model.ID, dd.Id)).Result;
+                        var Pipo = Model.Menu.AttributeGroup.ToList(); Pipo.AddRange(temp.AttributeGroup);
+                    }
+                    <div id="AjaxResult" style="padding:10px;border-bottom: 2px solid #6bc242;" class="col-md-12 col-sm-12">
+                        @if (Model.Menu != null)
+                        {
+                            @FormGenerator(Pipo.Where(u => u.F_AttributeGroupID == null), 0)
+                        }
+                        @helper FormGenerator(IEnumerable<ClientWeb.Models.DataModels.AttributeGroupNew> AttributeGroups, int count)
+                        {
+foreach (var item in AttributeGroups)
+{
+    var temp = item.AttributeGroup1;
+        <div style="margin-right:@(count*50)px;">
+            <div class="col-md-12 col-sm-12" style="margin:0 0 20px">
+                <div class="ad-detail-heading">
+                    <h4>@item.Name</h4>
+                </div>
+            </div>
+            @foreach (var attribute in item.Attribute)
+        {
+                @Attr_AttrItem(attribute, 0, false)
+            }
+        </div>
+    if (temp.Count() > 0)
+    {
+            @FormGenerator(temp, count + 1)
+    }
+}
+}
+                        @helper Attr_AttrItem(ClientWeb.Models.DataModels.AttributeNew attribute, int count2, bool flag, string IDName = "", string ClassName = "")
+                        {
+var PipoValue = attribute.AttributeValue.Count > 0 ? attribute.AttributeValue[0].Value : null;
+    <div class="col-md-12 col-sm-12" style="margin-bottom:10px;">
+        <div style="margin-right:@(50 * count2)px" class="form-group">
+            <label style="background-color: #f0f1f2;padding: 5px 15px;" class="col-sm-4 col-form-label">@attribute.Name</label>
+            <div style="background-color: #f7f9fa;padding: 5px 15px;margin-right:20px;" class="col-sm-7">
+                <span>@PipoValue</span>
+            </div>
+        </div>
+        @foreach (var item in attribute.AttributeItem1)
+        {
+            foreach (var attr in item.Attribute)
+            {
+                if (attr.AttributeValue.Count > 0)
+                {
+                    @Attr_AttrItem(attr, count2 + 1, true, "Attr_" + item.ID, "ParentAttr_" + attribute.ID)
+                }
+            }
+        }
+    </div>
+}
+                    </div>
+                </div>
+            </div>
+            <!-- ./ Center colunm -->
+            <!-- Left colunm -->
+            <div class="column col-xs-12 col-sm-3" id="left_column">
+                @Html.Action("UserIntroduction", "Utility")
+            </div>
+            <!-- ./left colunm -->
+        </div>
+        <!-- ./row-->
+    </div>
+</div>

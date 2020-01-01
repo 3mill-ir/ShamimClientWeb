@@ -1,0 +1,21 @@
+﻿<div class="block left-module">
+    <p class="title_block">آرشیو</p>
+    <div class="block_content">
+        <div class="layered layered-category">
+            <div class="layered-content">
+                <ul class="tree-menu">
+                    @{ string current = "";}
+                    @foreach (var m in Model.MenuCount)
+                    {
+                        current = "";
+                        if (m.MenuId == ViewBag.currentid)
+                        {
+                            current = "color:#b2d233;";
+                        }
+                        <li><a style="margin-left: 10px;@current" href="@Url.Action("ListPost", "Post",new { profile = TempData["UserName"], lang = "FA", id = m.MenuId})">@m.MenuName</a><span class="text-muted">@m.PostCount</span></li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,88 @@
+﻿<style>
+    .product-list li:hover img{
+        transform:none;
+    }
+</style>
+<nav class="navbar nav-menu nav-menu-@ViewBag.Color  show-brand">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-brand"><a href="#">@ViewBag.CategoryName</a></div>
+        <span class="toggle-menu"></span>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a data-toggle="tab" href="#tab-4_@ViewBag.Adad">جدید ترین ها</a></li>
+                <li><a data-toggle="tab" href="#tab-5_@ViewBag.Adad">پر بازدید ترین ها</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+    <div id="elevator-@ViewBag.Adad" class="floor-elevator">
+        <a href="#elevator-@(ViewBag.Adad-1)" class="btn-elevator up fa fa-angle-up"></a>
+        <a href="#elevator-@(ViewBag.Adad+1)" class="btn-elevator down fa fa-angle-down"></a>
+    </div>
+</nav>
+<div class="product-featured clearfix" >
+    <div class="banner-featured">
+        <div class="banner-img">
+            <a><img style="height:265px;" src="@TempData["WebsiteThemePath"]DefaultContent/Imgs/ItemBox_@(ViewBag.Adad).jpg"></a>
+        </div>
+    </div>
+    <div class="product-featured-content" style="height:265px;">
+        <div class="product-featured-list">
+            <div class="tab-container">
+                <!-- tab product -->
+                <div class="tab-panel active" id="tab-4_@ViewBag.Adad">
+                    <ul class="product-list owl-carousel" data-dots="false" data-loop="true" data-nav="true" data-margin="0" data-autoplayTimeout="1000" data-autoplayHoverPause="true" data-responsive='{"0":{"items":1},"600":{"items":3},"1000":{"items":4}}'>
+                        @foreach (var item in ViewBag.LatestItems as List<ClientWeb.Models.DataModels.ItemNew>)
+                        {
+                            <li>
+                                <div class="left-block">
+                                    <a href="@Url.Action("ItemDetail","Item", new {profile=TempData["UserName"], ID = item.ID,lang=TempData["lang"],Type=ViewBag.Type })">
+                                        <img style="height: 200px;width: 180px;" class="img-responsive" alt="product" src="@(!string.IsNullOrEmpty(item.Image) ? ViewBag.PrePath + item.Image :TempData["WebsiteThemePath"]+ "DefaultContent/Imgs/No_Image.png")" />
+                                    </a>
+                                    @*<div class="quick-view">
+                                        <a title="افزودن به علایق" class="heart" href="#"></a>
+                                        <a title="مقایسه" class="compare" href="#"></a>
+                                        <a title="جزئیات محصول" class="search" href="@Url.Action("ItemDetail","Item", new {profile=TempData["UserName"], ID = item.ID,lang=TempData["lang"],Type=ViewBag.Type })"></a>
+                                    </div>*@
+                                    <div class="add-to-cart">
+                                            <a href="@Url.Action("ItemDetail","Item", new {profile=TempData["UserName"], ID = item.ID,lang=TempData["lang"],Type=ViewBag.Type })">مشاهده محصول</a>
+                                        </div>
+                                </div>
+                                <div class="right-block">
+                                    <h5 class="product-name" style="text-align:center;"><a href="#">@item.Name</a></h5>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+                <!-- tab product -->
+                <div class="tab-panel" id="tab-5_@ViewBag.Adad">
+                    <ul class="product-list owl-carousel" data-dots="false" data-loop="true" data-nav="true" data-margin="0" data-autoplayTimeout="1000" data-autoplayHoverPause="true" data-responsive='{"0":{"items":1},"600":{"items":3},"1000":{"items":4}}'>
+                        @foreach (var item in ViewBag.MostVisitedItems as List<ClientWeb.Models.DataModels.ItemNew>)
+                        {
+                            <li>
+                                <div class="left-block">
+                                    <a href="@Url.Action("ItemDetail","Item", new {profile=TempData["UserName"], ID = item.ID,lang=TempData["lang"],Type=ViewBag.Type })">
+                                        <img style="height: 200px;width: 180px;" class="img-responsive" alt="product" src="@(!string.IsNullOrEmpty(item.Image) ? ViewBag.PrePath + item.Image : TempData["WebsiteThemePath"]+"DefaultContent/Imgs/No_Image.png")" />
+                                    </a>
+                                    @*<div class="quick-view">
+                                        <a title="افزودن به علایق" class="heart" href="#"></a>
+                                        <a title="مقایسه" class="compare" href="#"></a>
+                                        <a title="جزئیات محصول" class="search" href="@Url.Action("ItemDetail","Item", new {profile=TempData["UserName"], ID = item.ID,lang=TempData["lang"],Type=ViewBag.Type })#"></a>
+                                    </div>*@
+                                    <div class="add-to-cart">
+                                        <a href="@Url.Action("ItemDetail","Item", new {profile=TempData["UserName"], ID = item.ID,lang=TempData["lang"],Type=ViewBag.Type })">مشاهده محصول</a>
+                                    </div>
+                                </div>
+                                <div class="right-block">
+                                    <h5 class="product-name" style="text-align:center;"><a href="#">@item.Name</a></h5>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,202 @@
+﻿@using ClientWeb.Models.DataModels;
+@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<!--[if IE 8]>			<html class="ie ie8"> <![endif]-->
+<!--[if IE 9]>			<html class="ie ie9"> <![endif]-->
+<!--[if gt IE 9]><!-->
+<html>
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.PageTittle | پارک علم و فناوری آذربایجان غربی</title>
+    <meta name="keywords" content="پارک علم و فناوری,آذربایجان غربی" />
+    <meta name="description" content="وب سایت پارک علم و فناوری" />
+    <meta name="Author" content="شرکت توسعه تجارت الکترونیک هزاره سوم" />
+
+    <!-- mobile settings -->
+    <meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1, user-scalable=0" />
+    <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+    <!-- WEB FONTS : use %7C instead of | (pipe) -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400%7CRaleway:300,400,500,600,700%7CLato:300,400,400italic,600,700" rel="stylesheet" type="text/css" />
+
+    <!-- CORE CSS -->
+    <link href="~/Content/Smarty_assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- THEME CSS -->
+    <link href="~/Content/Smarty_assets/css/essentials.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/Smarty_assets/css/layout.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/Smarty_assets/plugins/bootstrap/RTL/bootstrap-rtl.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/Smarty_assets/plugins/bootstrap/RTL/bootstrap-flipped.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/Smarty_assets/css/layout-RTL.css" rel="stylesheet" type="text/css" />
+
+    <!-- PAGE LEVEL SCRIPTS -->
+    <link href="~/Content/Smarty_assets/css/header-1.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/Smarty_assets/css/color_scheme/green.css" rel="stylesheet" type="text/css" id="color_scheme" />
+    <style>
+        .Blured-Box {
+            border: none;
+            bottom: 0;
+            padding-bottom:50px !important;
+        }
+
+            .Blured-Box > div {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                filter: blur(3px);
+                background-position: center;
+            }
+
+            .Blured-Box > a {
+                position: absolute;
+                color: white;
+                width: 100%;
+            }
+    </style>
+</head>
+
+<!--
+    AVAILABLE BODY CLASSES:
+
+    smoothscroll 			= create a browser smooth scroll
+    enable-animation		= enable WOW animations
+
+    bg-grey					= grey background
+    grain-grey				= grey grain background
+    grain-blue				= blue grain background
+    grain-green				= green grain background
+    grain-blue				= blue grain background
+    grain-orange			= orange grain background
+    grain-yellow			= yellow grain background
+
+    boxed 					= boxed layout
+    pattern1 ... patern11	= pattern background
+    menu-vertical-hide		= hidden, open on click
+
+    BACKGROUND IMAGE [together with .boxed class]
+    data-background="assets/images/boxed_background/1.jpg"
+-->
+<body class="boxed bg-grey  enable-animation" data-background="../Content/DefaultContent/Imgs/parkview.jpg" style="height:auto !important ;background-color:rgba(241, 242, 247, .9)">
+    <!-- wrapper -->
+    <div id="wrapper">
+        <div class="row">
+            <div class="col-sm-3 margin-top-10">
+                <img class="wow flip img-responsive" src="~/Content/DefaultContent/Imgs/parklogo.png" data-wow-delay="0.4s">
+            </div>
+            <div class="col-sm-8 margin-top-50">
+                <p class="justify" style="line-height: 25px;">
+                    پارک علم و فناوری استان آذربایجان غربی فلسفه وجودی خود را “بسترسازی برای تولید ثروت از طریق علم  و فناوری” می داند. این نهاد بعنوان یکی از ارکان مهم شکل گیری و توسعه اقتصاد دانش­ بنیان تلاش می­کند تا با استفاده از موقعیت ممتاز همجواری با ۳ کشور آسیایی و اروپایی و دارا بودن ۷ مرز رسمی در سطح کشور، به حمایت همه جانبه از شرکت­های مبتنی بر دانایی و خلاقیت و جذب سرمایه­ گذار پرداخته و زمینه تجاری سازی و بازاریابی ایده­ های نوآورانه و فناورانه را فراهم ساخته و نقش کلیدی برای کمک به حضور فعال این شرکتها در سطوح ملی و بین المللی داشته باشد.
+                </p>
+            </div>
+        </div>
+        <div class="maintenance margin-top-0">
+
+            <div class="row">
+                @foreach (var p in ViewBag.LangList as List<LanguageDataModel>)
+                {
+
+                    <div class="col-sm-3">
+                        <a href="@Url.Action("Index","Home",new { profile=TempData["Username"],lang=@p.Language})" class="btn btn-danger btn-featured wow fadeInDownBig" data-wow-delay="0.4s">
+                            <span>@p.LanguageName</span>
+                            <i> <img class="flag-lang" src="~/Content/Smarty_assets/images/flags/@p.Image" width="16" height="11" alt="lang" /></i>
+                        </a>
+                    </div>
+
+                }
+            </div>
+
+            <hr />
+
+            <ul class="row clients-dotted list-inline">
+                <li class="col-md-3 col-sm-3 col-xs-6 margin-bottom-3 Blured-Box" style="position:relative;">
+                    <div style="background-image:url(../../.../../Content/DefaultContent/Imgs/7.jpg);"></div>
+                    <a href="http://inc.wastp.ir/">
+                        مرکز رشد جامع واحد های فناور آذربایجان غربی
+                    </a>
+                </li>
+                <li class="col-md-3 col-sm-3 col-xs-6 margin-bottom-3 Blured-Box" style="position:relative;">
+                    <div style="background-image:url(../../.../../Content/DefaultContent/Imgs/8.jpg);"></div>
+                    <a href="http://miandoab.wastp.ir/">
+                        مرکز رشد واحدهای فناور شهرستان میاندواب
+                    </a>
+                </li>
+                <li class="col-md-3 col-sm-3 col-xs-6 margin-bottom-3 Blured-Box" style="position:relative;">
+                    <div style="background-image:url(../../.../../Content/DefaultContent/Imgs/6.png);"></div>
+                    <a href="http://rosha.wastp.ir/">
+                        رویداد شتاب آذربایجان غربی
+                    </a>
+                </li>
+                <li class="col-md-3 col-sm-3 col-xs-6 margin-bottom-3 Blured-Box" style="position:relative;">
+                    <div style="background-image:url(../../.../../Content/DefaultContent/Imgs/5.jpg);"></div>
+                    <a href="http://wastp.ir/?news=%D8%A8%D8%B1%D8%AA%D8%B1%DB%8C%D9%86-%D9%87%D8%A7%DB%8C-%D8%AC%D8%B4%D9%86%D9%88%D8%A7%D8%B1%D9%87-%D8%A7%DB%8C%D8%AF%D9%87%E2%80%8C%D9%87%D8%A7%DB%8C-%D8%A8%D8%B1%D8%AA%D8%B1-%D8%A2%D8%B0%D8%B1%D8%A8">
+                        جشتواره ایده های برتر آذربایجان غربی
+                    </a>
+                </li>
+                <li class="col-md-3 col-sm-3 col-xs-6 margin-bottom-3 Blured-Box" style="position:relative;">
+                    <div style="background-image:url(../../.../../Content/DefaultContent/Imgs/4.jpg);"></div>
+                    <a href="http://didgah.wastp.ir/Pages/UserLogin.aspx?rqt=2">
+                        اتوماسیون مکاتبات اداری
+                    </a>
+                </li>
+                <li class="col-md-3 col-sm-3 col-xs-6 margin-bottom-3 Blured-Box" style="position:relative;">
+                    <div style="background-image:url(../../.../../Content/DefaultContent/Imgs/3.jpg);"></div>
+                    <a href="http://mis.wastp.ir/Account/Login.aspx?ReturnUrl=%2f">
+                        سامانه پذیرش آنلاین
+                    </a>
+                </li>
+                <li class="col-md-3 col-sm-3 col-xs-6 margin-bottom-3 Blured-Box" style="position:relative;">
+                    <div style="background-image:url(../../.../../Content/DefaultContent/Imgs/2.jpg);"></div>
+                    <a href="http://webmail.wastp.ir/Login.aspx">
+                        سامانه پست الکترونیکی
+                    </a>
+                </li>
+                <li class="col-md-3 col-sm-3 col-xs-6 margin-bottom-3 Blured-Box" style="position:relative;">
+                    <div style="background-image:url(../../.../../Content/DefaultContent/Imgs/1.png);"></div>
+                    <a href="#">
+                        پنل مدیریت
+                    </a>
+                </li>
+            </ul>
+
+            <hr />
+
+            <!-- socials -->
+            <p>
+                <span class="block">آذربایجان غربی - ارومیه - کیلومتر 11 بلوار دانشگاه، روبروی پردیس نازلوی دانشگاه ارومیه کد پستی: 5756115322 صندوق پستی: 333  &nbsp;	&nbsp;	<strong><i class="fa fa-map-marker"></i></strong> </span>
+                <span class="block"> <a href="tel:04432751240"> 04432751240 - 42</a> &nbsp;	 &nbsp;	<strong><i class="fa fa-phone"></i></strong></span>
+                <span class="block"> <a href="mailto: info@wastp.ir"> info@wastp.ir</a> &nbsp;	&nbsp;	<strong><i class="fa fa-envelope"></i></strong></span>
+            </p>
+            <!-- /socials -->
+
+
+        </div><!-- /maintenance -->
+
+
+    </div>
+    <!-- /wrapper -->
+    <!-- SCROLL TO TOP -->
+    <a href="#" id="toTop"></a>
+
+
+    <!-- PRELOADER -->
+    <div id="preloader">
+        <div class="inner">
+            <span class="loader"></span>
+        </div>
+    </div><!-- /PRELOADER -->
+    <!-- JAVASCRIPT FILES -->
+    <script type="text/javascript">var plugin_path = '../Content/Smarty_assets/plugins/';</script>
+    <script type="text/javascript" src="~/Content/Smarty_assets/plugins/jquery/jquery-2.1.4.min.js"></script>
+
+    <script type="text/javascript" src="~/Content/Smarty_assets/js/scripts.js"></script>
+
+    <!-- STYLESWITCHER - REMOVE -->
+    <script async type="text/javascript" src="~/Content/Smarty_assets/plugins/styleswitcher/styleswitcher.js"></script>
+</body>
+</html>

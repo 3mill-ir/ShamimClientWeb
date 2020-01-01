@@ -1,0 +1,22 @@
+﻿@model ClientWeb.Models.DataModels.ScriptsModel
+<div class="col-md-3 ">
+    <!-- widgets column left -->
+    <ul class="list-unstyled clear-margins">
+        <!-- widgets -->
+        <li class="widget-container widget_nav_menu">
+            <!-- widgets list -->
+            <h1 class="title-widget">آمار سایت</h1>
+            @*<ul>
+                <li><a href="#">تعداد بازدید های امروز :۲۱</a></li>
+                <li><a href="#">تعداد بازدید های کل :۳۴۵۷۲</a></li>
+                <li><a href="#">تعداد یور های ثبت نامی : ۱۲۶۵۴</a></li>
+                <li><a href="#">تعداد افراد تایید شده :۹۳۴۲</a></li>
+                <li><a href="#">موارد امنیتی</a></li>
+                <li><a href="#">توصیه ها حفاظتی</a></li>
+                <li><a href="#">راهنما</a></li>
+                <li><a href="#">دیگر</a></li>
+            </ul>*@
+            @Html.Raw(Model.Script)
+        </li>
+    </ul>
+</div>

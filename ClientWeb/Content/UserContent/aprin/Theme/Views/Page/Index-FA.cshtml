@@ -1,0 +1,194 @@
+﻿@using ClientWeb.Models.BLL;
+@using ClientWeb.Models;
+@using ClientWeb.Models.DataModels;
+<link rel="stylesheet" type="text/css" href="@TempData["WebsiteThemePath"]assets/slick/slick.css" />
+<link rel="stylesheet" type="text/css" href="@TempData["WebsiteThemePath"]assets/slick/slick-theme.css" />
+<section id="home-slider" style="margin-top: -70px;margin-bottom: 30px;">
+    <div class="container">
+        <div class="row">
+            <div class="main-slider" style="height:370px;">
+                <div class="slide-text">
+                    <h1>به آپرین خوش آمدید</h1>
+                    <p>به وب سایت گروه تخصصی آپرین خوش آمدید. افتخار این را داریم که از سال ۱۳۸۰ تاکنون، دوستان زیادی پیدا کرده ایم. از تولید کنندگان، تا صادرکنندگان، وارد کنندگان، سازمان های دولتی، شرکتهاوموسسات کوچک و بزرگ، هنرمندان و کلیه افرادی که به کالا و خدمات خود می بالند</p>
+                    <a href="@Url.Action("RegisterUser", "Account",new { profile=TempData["UserName"],lang="FA"})" class="btn btn-common">ثبت نام</a>
+                </div>
+                <img src="@TempData["WebsiteThemePath"]assets/images/home/slider/hill.png" class="slider-hill" alt="slider image">
+                <img src="@TempData["WebsiteThemePath"]assets/images/home/slider/house.png" class="slider-house" alt="slider image">
+                <img src="@TempData["WebsiteThemePath"]assets/images/home/slider/sun.png" class="slider-sun" alt="slider image">
+                <img src="@TempData["WebsiteThemePath"]assets/images/home/slider/birds1.png" class="slider-birds1" alt="slider image">
+                <img src="@TempData["WebsiteThemePath"]assets/images/home/slider/birds2.png" class="slider-birds2" alt="slider image">
+            </div>
+        </div>
+    </div>
+    <div class="preloader"><i class="fa fa-sun-o fa-spin"></i></div>
+</section>
+<section>
+    <div class="container">
+        <div class="row">
+            <h2 style="text-align: center;margin-bottom: 25px;">مشتریان ما</h2>
+            <div class="center slider">
+                <div>
+                    <img src="@TempData["WebsiteThemePath"]assets/images/a.jpg" class="img-responsive" style="height: 62px; border-radius: 3px;" alt="">
+                </div>
+                <div>
+                    <img src="@TempData["WebsiteThemePath"]assets/images/b.jpg" class="img-responsive" style="height: 62px; border-radius: 3px;" alt="">
+                </div>
+                <div>
+                    <img src="@TempData["WebsiteThemePath"]assets/images/c.jpg" class="img-responsive" style="height: 62px; border-radius: 3px;" alt="">
+                </div>
+                <div>
+                    <img src="@TempData["WebsiteThemePath"]assets/images/d.jpg" class="img-responsive" style="height: 62px; border-radius: 3px;" alt="">
+                </div>
+                <div>
+                    <img src="@TempData["WebsiteThemePath"]assets/images/e.jpg" class="img-responsive" style="height: 62px; border-radius: 3px;" alt="">
+                </div>
+                <div>
+                    <img src="@TempData["WebsiteThemePath"]assets/images/f.jpg" class="img-responsive" style="height: 62px; border-radius: 3px;" alt="">
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="preloader"><i class="fa fa-sun-o fa-spin"></i></div>
+</section>
+<!--/#home-slider-->
+
+<section id="services" style="margin-top:-40px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="300ms">
+                <div class="single-service">
+                    <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="300ms">
+                        <img src="@TempData["WebsiteThemePath"]assets/images/res.png" style="border-radius: 6px;" alt="">
+                    </div>
+                    <h2>کاملا ریسپانسیو</h2>
+                    <p>با ما در اجرای طرح های تبلیغاتی خود نگران تناسب رنگ ها و کامپوننت ها یااشیاء نباشید وآسوده انتخاب کنید</p>
+                </div>
+            </div>
+            <div class="col-sm-4 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="600ms">
+                <div class="single-service">
+                    <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="600ms">
+                        <img src="@TempData["WebsiteThemePath"]assets/images/typo.jpg" style="border-radius: 6px;" alt="">
+                    </div>
+                    <h2>تایپوگرافی برتر</h2>
+                    <p>متد های جدید و زیبای تبلیغات در هر زمینه را به دست بهترین متخصصین برای شما فراهم می آوریم تا همواره بهترین باشید</p>
+                </div>
+            </div>
+            <div class="col-sm-4 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="900ms">
+                <div class="single-service">
+                    <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="900ms">
+                        <img src="@TempData["WebsiteThemePath"]assets/images/rapid.jpg" style="border-radius: 6px;" alt="">
+                    </div>
+                    <h2>طراحی سریع و مدرن</h2>
+                    <p>کیفیت فقط تنها مزیت ما نیست بلکه سرعت در تحویل و طراحی هم از تخصص های ما به حساب می آید پس مقایسه کنید و انتخاب</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--/#services-->
+
+<section id="action" class="responsive">
+    <div class="vertical-center">
+        <div class="container">
+            <div class="row">
+                <div class="action take-tour">
+                    <div class="col-sm-5 text-center wow fadeInRight" data-wow-duration="700ms" data-wow-delay="500ms">
+                        <div class="tour-button">
+                            <a href="#" class="btn btn-common">مشاهده محصولات</a>
+                        </div>
+                    </div>
+                    <div class="col-sm-7 wow fadeInLeft" data-wow-duration="500ms" data-wow-delay="300ms">
+                        <h1 class="title">طرح تبلیغاتی تخصصی</h1>
+                        <p>طرح های مدرن که در عین زیبایی واکنش گرا هم می باشند</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--/#action-->
+
+<section id="features">
+    <div class="container">
+        <div class="row">
+            <div class="single-features">
+                <div class="col-sm-5 wow fadeInLeft" data-wow-duration="500ms" data-wow-delay="300ms">
+                    <img src="@TempData["WebsiteThemePath"]assets/images/BI2QCZ0IR0X4.jpg" style="border-radius: 6px;" class="img-responsive" alt="">
+                </div>
+                <div class="col-sm-6 wow fadeInRight" data-wow-duration="500ms" data-wow-delay="300ms">
+                    <h2>تجربه و اشتیاق</h2>
+                    <P>وقتی که صحبت از تبلیغات در قرن حاضر می‌شود، نمی‌توان نامی از تبلیغات اینترنتی نیاورد. تبلیغاتی که مزایای بسیاری در خود دارد: ارزان است، فراگیر است، ماندگار است، هوشمندانه‌است، شبانه‌روزی است، هر زمان که شما بخواهید، قابل تغییر است</P>
+                </div>
+            </div>
+            <div class="single-features">
+                <div class="col-sm-6 col-sm-offset-1 align-right wow fadeInLeft" data-wow-duration="500ms" data-wow-delay="300ms">
+                    <h2>تبلیغات متناسب با صنعت روز دنیا</h2>
+                    <P>در سرویس پست مستقیم تبلیغات با ماندگاری بیشتری صورت می‌گیرد و اطلاعات زیادی را از این طریق به مشتریان می‌توان منتقل کرد</P>
+                </div>
+                <div class="col-sm-5 wow fadeInRight" data-wow-duration="500ms" data-wow-delay="300ms">
+                    <img src="@TempData["WebsiteThemePath"]assets/images/0X4LUMV0Z0DV.jpg" style="border-radius: 6px;" class="img-responsive" alt="">
+                </div>
+            </div>
+            <div class="single-features">
+                <div class="col-sm-5 wow fadeInLeft" data-wow-duration="500ms" data-wow-delay="300ms">
+                    <img src="@TempData["WebsiteThemePath"]assets/images/A40QCGQJ49Q5.jpg" style="border-radius: 6px;" class="img-responsive" alt="">
+                </div>
+                <div class="col-sm-6 wow fadeInRight" data-wow-duration="500ms" data-wow-delay="300ms">
+                    <h2>ترکیب زیبای هنر و کاربرد</h2>
+                    <P>شامل نمایش بنر در پایین اپلیکیشن‌های موبایل، ارسال نوتیفیکیشن و... می‌باشد. توجه داشته باشید که تبلیغ در موبایل و تبلت هزینه کمتری نسبت به سایت‌های اینترنتی دارند. این روش از تبلیغ، آمار و ارقام خوبی برای تجزیه و تحلیل بازار در اختیار شما قرار خواهد داد که منجر به بهینه‌سازی عملکرد شما و شناسایی نیاز مردم خواهد شد</P>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--/#features-->
+
+<section id="clients">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="clients text-center wow fadeInUp" data-wow-duration="500ms" data-wow-delay="300ms">
+                    <p><img src="@TempData["WebsiteThemePath"]assets/images/home/clients.png" class="img-responsive" alt=""></p>
+                    <h1 class="title">رضایت مشتریان</h1>
+                    <p>احساس يا نگرش يك مشتري نسبت به يك محصول يا خدمت بعد از استفاده از آن است<br> رضايت مندي مشتري نتيجه اصلي فعاليت بازارياب است كه به عنوان ارتباطي بين مراحل مختلف رفتار خريد مصرف كننده عمل مي کند</p>
+                </div>
+                <div class="clients-logo wow fadeIn" data-wow-duration="1000ms" data-wow-delay="600ms">
+                    <div class="col-xs-3 col-sm-2">
+                        <a href="#"><img src="@TempData["WebsiteThemePath"]assets/images/a.jpg" class="img-responsive" style="height: 62px; border-radius: 3px;" alt=""></a>
+                    </div>
+                    <div class="col-xs-3 col-sm-2">
+                        <a href="#"><img src="@TempData["WebsiteThemePath"]assets/images/b.jpg" class="img-responsive" style="height: 62px; border-radius: 3px;" alt=""></a>
+                    </div>
+                    <div class="col-xs-3 col-sm-2">
+                        <a href="#"><img src="@TempData["WebsiteThemePath"]assets/images/c.jpg" class="img-responsive" style="height: 62px; border-radius: 3px;" alt=""></a>
+                    </div>
+                    <div class="col-xs-3 col-sm-2">
+                        <a href="#"><img src="@TempData["WebsiteThemePath"]assets/images/d.jpg" class="img-responsive" style="height: 62px; border-radius: 3px;" alt=""></a>
+                    </div>
+                    <div class="col-xs-3 col-sm-2">
+                        <a href="#"><img src="@TempData["WebsiteThemePath"]assets/images/e.jpg" class="img-responsive" style="height: 62px; border-radius: 3px;" alt=""></a>
+                    </div>
+                    <div class="col-xs-3 col-sm-2">
+                        <a href="#"><img src="@TempData["WebsiteThemePath"]assets/images/f.jpg" class="img-responsive" style="height: 62px; border-radius: 3px;" alt=""></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--/#clients-->
+<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="@TempData["WebsiteThemePath"]assets/slick/slick.min.js"></script>
+
+<script type="text/javascript">
+    $(".center").slick({
+        dots: true,
+        infinite: true,
+        centerMode: true,
+        slidesToShow: 5,
+        slidesToScroll: 3,
+        autoplay:true
+    });
+</script>

@@ -1,0 +1,63 @@
+﻿@using ClientWeb.Models.DataModels
+@using ClientWeb.Models.BLL
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 col-md-3 col-xs-12">
+                <div class="footer_block">
+                    <a href="@Url.Action("PageDetail", "Page", new { profile =TempData["UserName"], lang = TempData["lang"], id = 0 })" class="f_logo"><img src="@TempData["WebsiteThemePath"]DefaultContent/brand.png" class="img-responsive" alt="logo"></a>
+                    <p>فن‌بازار به معنای بازار فناوری، محلی برای مبادلات فناوری است. در واقع فن‌بازار یك بنگاه معاملات فناوری است كه با ایفای نقش واسطه اطلاعاتی و حقوقی، وظیفه نزدیك كردن طرف‌های «عرضه» و «تقاضا» در حوزه فناوری و محصولات پیشرفته را بر عهده دارد.</p>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-3 col-xs-12">
+                @Html.Action("Footer_Links", "Utility", new { profile = ViewBag.profile })
+            </div>
+            <div class="col-sm-6 col-md-3 col-xs-12">
+                @Html.Action("RecentPostsHome", "Post", new { F_MenuID = -1, count = 3, profile = ViewBag.profile })
+
+            </div>
+            <div class="col-sm-6 col-md-3 col-xs-12">
+                @Html.Action("Footer_ContactUs", "Utility", new { profile = ViewBag.profile })
+            </div>
+        </div>
+    </div>
+</footer>
+<section class="footer-bottom-section light-blue">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="footer-bottom">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <p> © ۱۳۹۶, توسعه تجارت الکترونیک, تمامی حقوق محفوظ است</p>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12 hidden-xs hidden-sm">
+                            <ul class="footer-menu">
+                                <li> <a href="//tabriz.techmart.ir">آذربایجان شرقی</a></li>
+                                <li> <a href="//isfahan.techmart.ir">اصفهان</a> </li>
+                                <li> <a href="//alborz.techmart.ir">البرز</a> </li>
+                                <li> <a href="//tehran.techmart.ir">تهران</a> </li>
+                                <li> <a href="//mashad.techmart.ir">خراسان رضوی</a></li>
+                                <li> <a href="//ahwaz.techmart.ir">خوزستان</a></li>
+                                <li> <a href="//zanjan.techmart.ir">زنجان</a></li>
+                                <li> <a href="//semnan.techmart.ir">سمنان</a></li>
+                                <li> <a href="//sb.techmart.ir">سیستان و بلوچستان</a></li>
+                                <li> <a href="//fars.techmart.ir">فارس</a></li>
+                                <li> <a href="//techmart.ir">فن‌بازار ملی ایران</a></li>
+                                <li> <a href="//qazvin.techmart.ir">قزوین</a></li>
+                                <li> <a href="//qom.techmart.ir">قم</a></li>
+                                <li> <a href="//lorestan.techmart.ir">لرستان</a></li>
+                                <li> <a href="//arak.techmart.ir">مرکزی</a> </li>
+                                <li> <a href="//hormozgan.techmart.ir">هرمزگان</a> </li>
+                                <li> <a href="//hamedan.techmart.ir">همدان</a> </li>
+                                <li> <a href="//kerman.techmart.ir">کرمان</a> </li>
+                                <li> <a href="//kermanshah.techmart.ir">کرمانشاه</a> </li>
+                                <li> <a href="//yazd.techmart.ir">یزد</a> </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

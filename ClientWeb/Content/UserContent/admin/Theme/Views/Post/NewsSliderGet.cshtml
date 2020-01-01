@@ -1,0 +1,63 @@
+﻿@model IEnumerable<ClientWeb.Models.DataModels.PostDataModel>
+<div role="tabpanel" class="tab-pane fade in active" id="Section1" style="width:100%;margin-right:0;margin-top:-20px;">
+    <div class="col-xs-11 col-md-12 col-centered" style="">
+        <div id="carousel" class="carousel slide" data-ride="carousel" data-type="multi" data-interval="2500">
+            <div class="carousel-inner" style="height:490px;">
+                @{ int count = 1;}
+                @foreach (var item in Model)
+                {
+                    <div class="item active">
+                        <div class="carousel-col">
+                            <div class="block red img-responsive" style="height: 490px;">
+                                <a href="#">
+                                    <img src="~/Content/UserContent/DynamicPageImages/@item.ImagePath" class="img-responsive" data-toggle="modal" data-target="#exampleModalslider" style="height:50%;padding:4px;" />
+                                </a>
+                                <!--modal-->
+                                <div id="alie" class="modal fade" tabindex="0" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-body" style="margin-top:240px;padding-bottom:70px;">
+                                                <img src="~/Content/UserContent/DynamicPageImages/@item.ImagePath" class="img-responsive" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--modal-->
+                                <a href="#">
+                                    <div class="cc" data-toggle="modal" data-target="#exampleModal">
+                                        @item.Tittle
+                                    </div>
+                                </a>
+                                <div class="news-date">
+                                    @ClientWeb.Models.BLL.Tools.GetDateTimeReturnJalaliDate(item.CreatedOnUTC ?? default(DateTime))
+                                </div>
+                                <div class="ct">
+                                    @item.Description
+                            </div>
+                            <a href="@Url.Action("PostDetail","Post")" class="btn btn-success">ادامه مطلب</a>
+                        </div>
+                        <div class="carousel-caption">
+                            خبر @count
+                        </div>
+                    </div>
+                </div>
+                    count++;
+                }
+            </div>
+            <!-- Controls -->
+            <div class="left carousel-control">
+                <a href="#carousel" role="button" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                    <span class="sr-only">قبلی</span>
+                </a>
+            </div>
+            <div class="right carousel-control">
+                <a href="#carousel" role="button" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                    <span class="sr-only">بعدی</span>
+                </a>
+            </div>
+        </div>
+
+    </div>
+</div>

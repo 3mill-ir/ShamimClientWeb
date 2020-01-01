@@ -1,0 +1,26 @@
+﻿@{
+    Layout = null;
+}
+<div class="col-sm-12 text-center">
+    @if (ViewBag.PollSuccess != null)
+    {
+        <div class="alert alert-success">
+            <p>@ViewBag.PollSuccess</p>
+            <i class="icons icon-cancel-circle-1"></i>
+        </div>
+    }
+    else if (ViewBag.PollError != null)
+    {
+        <div class="alert alert-danger">
+            <p>@ViewBag.PollError</p>
+            <i class="icons icon-cancel-circle-1"></i>
+        </div>
+    }
+    else if (ViewBag.PollWarning != null)
+    {
+        <div class="alert alert-warning">
+            <p>@ViewBag.PollWarning</p>
+            <i class="icons icon-cancel-circle-1"></i>
+        </div>
+    }
+</div>

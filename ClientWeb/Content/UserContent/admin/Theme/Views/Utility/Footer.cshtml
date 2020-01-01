@@ -1,0 +1,100 @@
+﻿@using ClientWeb.Models.DataModels
+<style>
+    @@media(max-width:767px){
+        .FoterResponsive{
+            text-align:center !important;
+        }
+        .SocialResponsive{
+            margin-right: 24%;
+        }
+    }
+        @@media(min-width:768px)and (max-width:992px){
+        .FoterResponsive{
+            text-align:center !important;
+        }
+        .SocialResponsive{
+            margin-right: 38%;
+        }
+    }
+</style>
+@{ 
+    string lang = TempData["lang"].ToString();
+}
+<!-- FOOTER -->
+<footer id="footer">
+    <div class="container" style="margin-bottom:10px;">
+
+        <div class="row FoterResponsive" style="margin-top: -40px;">
+
+            <div class="col-md-3 col-sm-push-4 col-xs-push-3 col-md-push-0">
+                <!-- Footer Logo -->
+                <img class="footer-logo " src="@TempData["WebsiteThemePath"]DefaultContent/Imgs/parklogo.png" alt="پارک علم و فناوری اذربایجان غربی" width="200"  style="-webkit-filter:drop-shadow(0px 0px 8px rgb(239, 239, 241))"/>
+                <!-- Small Description -->
+                <p class="text-right" style="@(lang=="FA"? "" : "float:left;font-size: 11px;")">@(lang == "FA" ? "پارک علم و فناوری آذربایجان غربی" : lang == "EN" ? "West Azarbaijan Science and Technology Park" : lang == "TR" ? "Batı Azerbaycan'ın Bilim ve Teknoloji Parkı" : "حديقة العلوم والتكنولوجيا في غرب أزربايجان")</p>
+            </div>
+
+            <div class="col-md-3">
+
+                <!-- Latest Blog Post -->
+                <h4 class="letter-spacing-1">@(lang == "FA" ? "پیوند های مفید" : lang == "EN" ? "Useful links" : lang == "TR" ? "Faydalı linkler" : "روابط مفيدة")</h4>
+                @Html.Action("Footer_Links", "Utility", new { profile = TempData["UserName"] })
+                <!-- /Latest Blog Post -->
+
+            </div>
+
+            <div class="col-md-2">
+
+                <!-- Links -->
+                <h4 class="letter-spacing-1">@(lang == "FA" ? "دسترسی سریع" : lang == "EN" ? "Quick access" : lang == "TR" ? "Hızlı erişim" : "الوصول السريع")</h4>
+                <ul class="footer-links list-unstyled">
+                    @foreach (var menu in (ViewBag.Menu as List<MenuDataModel>).Where(u => u.DisplayInFooter == true))
+                    {
+                        if (menu.Type == "DynamicPost")
+                        {
+                            <li>
+                                <a href="@Url.Action("ListPost", "Post",new { profile = TempData["UserName"], lang = lang, id = menu.ID})">
+                                    @menu.Name
+                                </a>
+                            </li>
+                        }
+                        else if (menu.Type == "StaticPost")
+                        {
+                            <li>
+                                <a href="@Url.Action("PageDetail", "Page",new { profile = TempData["UserName"], lang = lang, id = menu.ID})">
+                                    @menu.Name
+                                </a>
+                            </li>
+                        }
+                        else if (menu.Type == "NoneStaticDynamic")
+                        {
+                            <li>
+                                <a class="dropdown-toggle" href="#">
+                                    @menu.Name
+                                </a>
+                            </li>
+                        }
+                    }
+                </ul>
+                <!-- /Links -->
+
+            </div>
+
+            <div class="col-md-4">
+
+                <!-- ContactUs -->
+                <h4 class="letter-spacing-1">@(lang == "FA" ? "درباره ما" : lang == "EN" ? "About us" : lang == "TR" ? "Hakkımızda" : "معلومات عنا")</h4>
+                @Html.Action("Footer_ContactUs","Utility",new { profile= TempData["UserName"] })
+                <!-- /ContactUs -->
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="copyright text-center" style="margin-bottom: -15px;">
+        <div class="container" style="margin-top: -15px;">
+            @(lang == "FA" ? "تمامي حقوق این وب سایت، متعلق به پارک علم و فناوری آذربایجان غربی میباشد    © 2018" : lang == "EN" ? "All rights reserved by West Azarbaijan Science and Technology Park © 2018" : lang == "TR" ? "Tüm hakları Batı Azerbaycan Bilim ve Teknoloji Parkı'na aittir. © 2018" : "جميع الحقوق محفوظة لشركة ويست ازربايجان للعلوم والتكنولوجيا © 2018")
+        </div>
+    </div>
+</footer>
+<!-- /FOOTER -->

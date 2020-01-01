@@ -1,0 +1,68 @@
+﻿@model ClientWeb.Models.DataModels.PostDataModel
+@using ClientWeb.Models.BLL;
+
+@section jsForThisPage{
+<script type="text/javascript" src="@TempData["WebsiteThemePath"]js/contact.js"></script>
+<script>
+    //document.getElementById("Content").setCustomValidity("فیلد متن درخواست را کامل کنید");
+    </script>
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryajax")
+}
+
+<section class="page-header dark page-header-xs">
+    @Html.Action("PageTitle", "Utility", new { F_MenuID = 445 })
+</section>
+<!-- -->
+<section class="parallax parallax-2" style="background-image: url('@TempData["WebsiteThemePath"]/DefaultContent/Imgs/welcomepage.jpg');background-position: 50% 50px;">
+    <div class="overlay dark-2"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-push-1">
+                @using (Ajax.BeginForm("AddTicketPost", null, new { profile = TempData["UserName"] }, new AjaxOptions
+                {
+                    UpdateTargetId = "AjaxTicketBox",
+                    InsertionMode = InsertionMode.Replace,
+                    LoadingElementId = "AjaxTicketBox_Loading",
+                    HttpMethod = "Post"
+                }, null))
+                {
+                    <fieldset>
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <label for="contact:message">متن درخواست</label>
+                                    <textarea required="" maxlength="10000" rows="8" class="form-control" name="Content" id="Content"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                @*<div class="col-md-7">
+                                    <label for="contact:attachment">فایل پیوست<small style="float: left;color: white;" class="text-muted block">(zip/pdf/jpg/png/mp3)</small></label>
+                                    <input class="custom-file-upload" type="file" id="file" name="MediaFile" data-btn-text="انتخاب فایل" />
+                                </div>*@
+                                <div class="form-group">
+                                    <div class="col-md-5">
+                                        <label for="contact:subject">کد پیگیری (در صورتی که قبلا درخواست ارسال نموده اید)</label>
+                                        <input type="text" value="" class="form-control" name="TrackingCode" id="">
+                                    </div>
+                                    <div class="col-md-7" style="margin-top: 26px;">
+                                        <button style="float:right;" type="submit" class="btn btn-primary"><i class="fa fa-check"></i>ارسال</button>
+                                        <div class="margin-bottom-10" id="AjaxTicketBox_Loading" style="display:none;float: right;margin-right: 10px;">
+                                            <img src="@TempData["WebsiteThemePath"]DefaultContent/Imgs/ajax-load.gif" class="img-responsive" style="width:35px;" />
+                                        </div>
+                                        <div id="AjaxTicketBox" style="float: right;margin-right: 20px;margin-top: -10px;">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+<!-- / -->
